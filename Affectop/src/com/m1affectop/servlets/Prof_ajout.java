@@ -50,10 +50,12 @@ public class Prof_ajout extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+      //String name = basereader.nameRequest(token);
+        String name = "name";
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        //String firstname = basereader.firstNameRequest(token);
+        String firstname = "";
         request.setAttribute("firstname", firstname);
         request.setAttribute("path", new File(".").getCanonicalPath());
         
@@ -64,7 +66,7 @@ public class Prof_ajout extends HttpServlet {
 			return;
 		}
         
-        bw.writeStudent(2018, "AISSA", "abdulmaged", "15031366", "lattazdy.fall@etu.univ-amu.fr",tokenlist.get(0), "SIN301");
+        bw.writeStudent(2018, "AISSA", "abdulmaged", "15031366", "lattazdy.fall@etu.univ-amu.fr","qg9zkjpuydlhsdhjg4d2", "SIN301");
         bw.writeStudent(2018, "AIT-ALI", "maxime", "12082486", "latdazdty.fall@etu.univ-amu.fr",tokenlist.get(1), "SIN301");
         bw.writeStudent(2018, "BENAHMED", "martin", "13000771", "ldadatty.fall@etu.univ-amu.fr",tokenlist.get(2), "SIN301");
         bw.writeStudent(2018, "EL BOURSOUMI", "vadym", "14006268", "lafezeftty.fall@etu.univ-amu.fr",tokenlist.get(3), "SIN301");
@@ -74,6 +76,7 @@ public class Prof_ajout extends HttpServlet {
         bw.writeStudent(2018, "LALAMI", "chriss", "15021392", "latukty.fall@etu.univ-amu.fr",tokenlist.get(7), "SIN301");
         bw.writeStudent(2018, "MIMOUNI", "soufiane", "11520172", "latdzdaty.fall@etu.univ-amu.fr",tokenlist.get(8), "SIN301");
         bw.writeStudent(2018, "NAZEF", "robin", "13014239", "latfdbbty.fall@etu.univ-amu.fr",tokenlist.get(9), "SIN301");
+        bw.writeStudent(2018, "TEST", "test", "13014239", "test.test@etu.univ-amu.fr","", "SIN301");
 
         //er.request("./opt/tomcat/Affectop/Webcontent/datas/Saint_Charles.xlsx");
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_ajout.jsp").forward(request, response);
@@ -90,10 +93,12 @@ public class Prof_ajout extends HttpServlet {
         String token = request.getParameter("token");
         request.setAttribute("token", token);
 
-        String name = basereader.nameRequest(token);
+        //String name = basereader.nameRequest(token);
+        String name = "name";
         request.setAttribute("name", name);
-
-        String firstname = basereader.firstNameRequest(token);
+        
+        //String firstname = basereader.firstNameRequest(token);
+        String firstname = "";
         request.setAttribute("firstname", firstname);
 
         /*// On récupère le champ du fichier

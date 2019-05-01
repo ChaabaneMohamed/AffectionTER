@@ -37,10 +37,12 @@ public class Accueil extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        //String name = basereader.nameRequest(token);
+        String name = "name";
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        //String firstname = basereader.firstNameRequest(token);
+        String firstname = "";
         request.setAttribute("firstname", firstname);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);

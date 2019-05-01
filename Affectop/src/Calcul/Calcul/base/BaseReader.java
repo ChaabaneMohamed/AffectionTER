@@ -33,7 +33,7 @@ public class BaseReader extends BaseHandler {
 			// create our mysql database connection
 			String myDriver = "org.hsqldb.jdbcDriver";
 
-			String myUrl = "jdbc:hsqldb:file:data/affectop";
+			String myUrl = "jdbc:hsqldb:file:data/affectation";
 			System.out.println(myUrl);
 			Class.forName(myDriver);
 			System.out.println("test");

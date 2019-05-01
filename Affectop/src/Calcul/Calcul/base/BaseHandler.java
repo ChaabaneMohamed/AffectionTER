@@ -18,7 +18,7 @@ public class BaseHandler {
 			// create our mysql database connection
 			String myDriver = "org.hsqldb.jdbcDriver";
 			
-			String myUrl = "jdbc:hsqldb:file:data/affectop";
+			String myUrl = "jdbc:hsqldb:file:data/affectation";
 			
 			Class.forName(myDriver);
 			Connection conn = DriverManager.getConnection(myUrl, "SA", "");
