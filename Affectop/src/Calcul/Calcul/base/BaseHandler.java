@@ -16,12 +16,13 @@ public class BaseHandler {
 		 */
 		try {
 			// create our mysql database connection
-			String myDriver = "org.hsqldb.jdbcDriver";
+			String myDriver = "com.mysql.cj.jdbc.Driver";
 			
-			String myUrl = "jdbc:hsqldb:file:data/affectation";
+			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false";
 			
 			Class.forName(myDriver);
-			Connection conn = DriverManager.getConnection(myUrl, "SA", "");
+			Connection conn = DriverManager.getConnection(myUrl, "root", "1234");
+
 			
 			st = conn.createStatement();
 

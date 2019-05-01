@@ -31,13 +31,13 @@ public class BaseReader extends BaseHandler {
 		 */
 		try {
 			// create our mysql database connection
-			String myDriver = "org.hsqldb.jdbcDriver";
-
-			String myUrl = "jdbc:hsqldb:file:data/affectation";
+			String myDriver = "com.mysql.cj.jdbc.Driver";
+			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false";
+			
 			System.out.println(myUrl);
 			Class.forName(myDriver);
 			System.out.println("test");
-			conn = DriverManager.getConnection(myUrl, "SA", "");
+			conn = DriverManager.getConnection(myUrl, "root", "1234");
 
 			System.out.println("connexion etablie");
 		} catch (Exception e) {
