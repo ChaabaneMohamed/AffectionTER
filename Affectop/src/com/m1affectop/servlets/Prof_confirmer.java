@@ -47,7 +47,7 @@ public class Prof_confirmer extends HttpServlet {
         request.setAttribute("firstname", firstname);
 		
         request.setAttribute("options", basereader.getOptions(2018));
-        request.setAttribute("eleves", basereader.getStudents(2018));
+        request.setAttribute("eleves", basereader.getStudents(2017));
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_confirmer.jsp").forward(request, response);
 	}
 
@@ -67,7 +67,7 @@ public class Prof_confirmer extends HttpServlet {
         request.setAttribute("firstname", firstname);
 		
         request.setAttribute("options", basereader.getOptions(2018));
-        request.setAttribute("eleves", basereader.getStudents(2018));
+        request.setAttribute("eleves", basereader.getStudents(2017));
 		
 		String mail = request.getParameter("mail");
 		

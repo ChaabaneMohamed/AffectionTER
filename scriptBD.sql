@@ -38,7 +38,6 @@ CREATE TABLE IF NOT EXISTS Repeaters (
 
 CREATE TABLE IF NOT EXISTS GroupOp (
 	groupId INT NOT NULL PRIMARY KEY,
-	order INT,
 	optionId INTEGER,
 	FOREIGN KEY fk_grop(optionId)
 	REFERENCES Options(optionId));

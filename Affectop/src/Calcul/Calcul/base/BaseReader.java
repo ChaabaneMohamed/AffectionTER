@@ -62,12 +62,12 @@ public class BaseReader extends BaseHandler {
 				String intitule = rs.getString("intitule");
 				
 				int size = rs.getInt("size");
-				int optionGroup = rs.getInt("optionGroup");
+				int groupId = rs.getInt("groupId");
 				int id = rs.getInt("id");
 				
-				Option o = new Option(size, intitule, optionGroup,id);
+				Option o = new Option(size, intitule, groupId,id);
 				options.put(id,o);
-				result.get(optionGroup-1).add(o);
+				result.get(groupId-1).add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
 			}
 			return result;
@@ -165,12 +165,12 @@ public class BaseReader extends BaseHandler {
 	
 	public int getNbDays(int year) {
 		String query = 
-				"select MAX(optionGroup) from Options where year ="+year+";" ;
+				"select MAX(groupId) from Options where year ="+year+";" ;
 		ResultSet rs = getResultOfQuery(query);
 		
 		try {
 			if(rs.next())
-				return  rs.getInt("MAX(optionGroup)");
+				return  rs.getInt("MAX(groupId)");
 		}
 		catch(Exception e) {
 			System.out.println("ERROR");
@@ -240,11 +240,11 @@ public class BaseReader extends BaseHandler {
 				String intitule = rs.getString("intitule");
 				
 				int size = rs.getInt("size");
-				int optionGroup = rs.getInt("optionGroup");
+				int groupId = rs.getInt("groupId");
 				int id = rs.getInt("optionId");
 				String description = rs.getString("description");
 				
-				Option o = new Option(size, intitule, optionGroup,id);
+				Option o = new Option(size, intitule, groupId,id);
 				o.setDescription(description);
 				options.put(id,o);
 				result.add(o);
