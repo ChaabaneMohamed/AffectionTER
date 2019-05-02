@@ -56,6 +56,7 @@ public class Eleve_choix extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BaseReader basereader = new BaseReader();
 		BaseWriter bw = new BaseWriter();
+		bw.initConnection();
 		
 		Option op = new Option(0, null, 0, 0);
         
@@ -70,7 +71,7 @@ public class Eleve_choix extends HttpServlet {
 		
 		List<String> choix = new ArrayList<>();
 		
-		ArrayList<Student> students = basereader.getStudents(2018);
+		ArrayList<Student> students = basereader.getStudents(2017);
 		ArrayList<Option> options = basereader.getOptions(2018);
 		
 		for(int i = 0; i< options.size(); i++) {

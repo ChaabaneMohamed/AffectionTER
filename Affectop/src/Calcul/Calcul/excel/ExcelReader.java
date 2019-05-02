@@ -47,7 +47,8 @@ public class ExcelReader implements ExcelAdapter {
 	@Override
 	public void request(String path) {
 		BaseWriter bw = new BaseWriter();
-
+		bw.initConnection();
+		
 		Workbook wb = fileReader(path);
 		Position p = getPosition("A2");
 		ArrayList<String> tokenlist;
@@ -65,18 +66,15 @@ public class ExcelReader implements ExcelAdapter {
 			String token = tokenlist.get(cpt);
 			String lastname = e.getValue().get(0).getStringCellValue();
 			String firstname = e.getValue().get(1).getStringCellValue();
-			String numetudiant = e.getKey();
+			int numetudiant = Integer.parseInt(e.getKey());
 
 			String mail = e.getValue().get(6).getStringCellValue();
 			String step = e.getValue().get(2).getStringCellValue();
 			Cell c = e.getValue().get(5);
 			
 			int year = c.getCellType() == CellType.NUMERIC ? (int) c.getNumericCellValue() : Integer.parseInt(c.getStringCellValue());
-			System.out.println(token + " " + lastname + " " + firstname + " " + numetudiant + " " + mail + " " + step
-					+ " " + year);
 			cpt++;
-			bw.writeStudent(year, lastname, firstname, numetudiant, mail,token, step);
-
+			bw.writeStudent(year, lastname, firstname, numetudiant, mail, token, step);
 		}
 	}
 

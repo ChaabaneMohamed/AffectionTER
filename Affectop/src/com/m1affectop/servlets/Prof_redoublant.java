@@ -48,7 +48,7 @@ public class Prof_redoublant extends HttpServlet {
         request.setAttribute("firstname", firstname);
         
         request.setAttribute("options", basereader.getOptions(2018));
-        request.setAttribute("eleves", basereader.getStudents(2018));
+        request.setAttribute("eleves", basereader.getStudents(2017));
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_redoublant.jsp").forward(request, response);
 	}
 
@@ -70,21 +70,21 @@ public class Prof_redoublant extends HttpServlet {
         request.setAttribute("firstname", firstname);
 
         ArrayList<Option> options = basereader.getOptions(2018);
-        ArrayList<Student> students = basereader.getStudents(2018);
+        ArrayList<Student> students = basereader.getStudents(2017);
         
 		request.setAttribute("options", basereader.getOptions(2018));
-        request.setAttribute("eleves", basereader.getStudents(2018));
+        request.setAttribute("eleves", basereader.getStudents(2017));
 		
         for(int i = 1; i <= options.size(); i++) {
         	for (int j = 1; j <= students.size(); j++) {
         		if(request.getParameter("valide"+i+"_"+j) != null)
-        			bw.writeOneRepeater(basereader.numEtudiantRequest(token), options.get(i-1).id, 2018);
+        			bw.writeOneRepeater(basereader.numEtudiantRequest(token), options.get(i-1).id, 2017);
         	}
         }
         
         request.setAttribute("options", options);
         request.setAttribute("eleves", students);
-        request.setAttribute("redoublants", basereader.getRepeater(2018));
+        request.setAttribute("redoublants", basereader.getRepeater(2017));
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_redoublant.jsp").forward(request, response);
 	}
 

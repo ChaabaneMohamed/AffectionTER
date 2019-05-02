@@ -27,7 +27,8 @@ public class Prof_ajout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	public static final int TAILLE_TAMPON = 10240;
-    public static final String CHEMIN_FICHIERS = ""; // A changer
+	public static final String CHEMIN = "chemin";
+    public static final String CHEMIN_FICHIERS = "/temp/"; // A changer
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -50,12 +51,10 @@ public class Prof_ajout extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-      //String name = basereader.nameRequest(token);
-        String name = "name";
+        String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
         
-        //String firstname = basereader.firstNameRequest(token);
-        String firstname = "";
+        String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         request.setAttribute("path", new File(".").getCanonicalPath());
         
@@ -92,20 +91,24 @@ public class Prof_ajout extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BaseReader basereader = new BaseReader();
-        //ExcelReader er = new ExcelReader();
+        ExcelReader er = new ExcelReader();
 
         String token = request.getParameter("token");
         request.setAttribute("token", token);
 
-        //String name = basereader.nameRequest(token);
-        String name = "name";
+        String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
         
-        //String firstname = basereader.firstNameRequest(token);
-        String firstname = "";
+        String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
 
-        /*// On récupère le champ du fichier
+        /*
+         * Lecture du paramètre 'chemin' passé à la servlet via la déclaration
+         * dans le web.xml
+         */
+        String chemin = this.getServletConfig().getInitParameter( CHEMIN );
+        
+        // On récupère le champ du fichier
         Part part = request.getPart("fichier");
 
         // On vérifie qu'on a bien reçu un fichier
@@ -114,14 +117,20 @@ public class Prof_ajout extends HttpServlet {
         // Si on a bien un fichier
         if (nomFichier != null && !nomFichier.isEmpty()) {
             String nomChamp = part.getName();
-
+            
+            /*
+            * On doit donc faire en sorte de ne sélectionner que le nom et
+            * l'extension du fichier, et de se débarrasser du superflu.
+            */
+            nomFichier = nomFichier.substring( nomFichier.lastIndexOf( '/' ) + 1 )
+                   .substring( nomFichier.lastIndexOf( '\\' ) + 1 );
+            	
             // On écrit définitivement le fichier sur le disque
-            ecrireFichier(part, nomFichier, CHEMIN_FICHIERS);
+            ecrireFichier(part, nomFichier, chemin);
 
             request.setAttribute(nomChamp, nomFichier);
         }
-        */
-        //er.request("data/2017 11 23 IA Saint-Charles.xlsx");
+        er.request("C:/temp/Saint_Charles.xlsx");
         this.getServletContext().getRequestDispatcher("/WEB-INF/prof_ajout.jsp").forward(request, response);
     }
 	
@@ -132,6 +141,10 @@ public class Prof_ajout extends HttpServlet {
             entree = new BufferedInputStream(part.getInputStream(), TAILLE_TAMPON);
             sortie = new BufferedOutputStream(new FileOutputStream(new File(chemin + nomFichier)), TAILLE_TAMPON);
 
+            /*
+             * Lit le fichier reçu et écrit son contenu dans un fichier sur le
+             * disque.
+             */
             byte[] tampon = new byte[TAILLE_TAMPON];
             int longueur;
             while ((longueur = entree.read(tampon)) > 0) {

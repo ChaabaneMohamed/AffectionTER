@@ -94,48 +94,24 @@ public class BaseWriter extends BaseHandler{
 			e.printStackTrace();
 		}
 	}	
-	
-	/*public void createTableStudent(int year,
-			String lastName,
-			String firstName,
-			String numEtu,
-			String mail,
-			String token,
-			String step) {
-
-				String query = "CREATE TABLE Students ("
-						+ "id INT NOT NULL"
-						+ "year INT NOT NULL,"
-						+ "lastName VARCHAR(50),"
-						+ "firstName VARCHAR(50),"
-						+ "numEtudiant VARCHAR(8),"
-						+ "mail VARCHAR(50),"
-						+ "token VARCHAR(50),"
-						+ "step VARCHAR(50)"
-						+ "PRIMARY KEY (id));";
-							
-				try {
-				System.out.println(query);
-				st.executeUpdate(query);
-				}
-				catch (Exception e) {
-				e.printStackTrace();
-				}
-			}*/
 
 	public void writeStudent(int year,
 							String lastName,
 							String firstName,
-							String numEtu,
+							int numEtu,
 							String mail,
 							String token,
 							String step) {
 		
-		String query = "INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)"+
-							"VALUES("+year+",'"+lastName+"','"+firstName+"','"+numEtu+"','"+mail+"','"+token+"','"+step+"')";
+		StringBuilder query = new StringBuilder();
+		
+		query.append("INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step) VALUES\n");
+		query.append("('"+year+"','"+lastName+"','"+firstName+"',"+numEtu+",'"+mail+"','"+token+"','"+step+"'),");
+		query.replace(query.length()-1, query.length(), ";");
+		
 		try {
 			System.out.println(query);
-			st.executeUpdate(query);
+			st.executeUpdate(query.toString());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -158,7 +134,7 @@ public class BaseWriter extends BaseHandler{
         int index = 1;
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO Preferences (choice,optionId,numEtudiant) \nVALUES\n");
-        for(Option opt : preferences) {
+        for(Option opt : preferences) {       	
             query.append("("+index+","+opt.id+","+numEtudiant+"),");
             index ++;
         }
@@ -207,8 +183,24 @@ public class BaseWriter extends BaseHandler{
 	
 	public void writeOneOption(Option opt, int year) {
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO Options (intitule,description,size,optionGroup,year) \nVALUES\n");
+		query.append("INSERT INTO Options (intitule,description,size,groupId,year) \nVALUES\n");
 		query.append("('"+opt.nom+"','"+opt.getDescription()+"',"+opt.size+","+opt.day+","+year+"),");
+		query.replace(query.length()-1, query.length(), ";");
+		
+		try {
+			System.out.println(query);
+			st.executeUpdate(query.toString());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void writeOneGroupOp(int groupId , int optionId) {
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO Options (groupId, optionId) \nVALUES\n");
+		//query.append("('"+opt.nom+"','"+opt.getDescription()+"',"+opt.size+","+opt.day+","+year+"),");
 		query.replace(query.length()-1, query.length(), ";");
 		
 		try {

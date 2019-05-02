@@ -241,7 +241,7 @@ public class BaseReader extends BaseHandler {
 				
 				int size = rs.getInt("size");
 				int optionGroup = rs.getInt("optionGroup");
-				int id = rs.getInt("id");
+				int id = rs.getInt("optionId");
 				String description = rs.getString("description");
 				
 				Option o = new Option(size, intitule, optionGroup,id);
@@ -260,13 +260,13 @@ public class BaseReader extends BaseHandler {
 
 	private String studentsQueryBuilder(String col, String token) {
 
-		return "SELECT " + col + " FROM Students WHERE token=\"" + token + "\";";
+		return "SELECT " + col + " FROM Students WHERE token=" + token + ";";
 	}
 
 	private String studentsQueryRequest(String col, String token) {
 
 		String query = studentsQueryBuilder(col, token);
-		System.out.println(query);
+		//System.out.println(query);
 		Statement st;
 		String res = "";
 		try {
@@ -300,7 +300,7 @@ public class BaseReader extends BaseHandler {
 	private String teachersQueryRequest(String col, String token) {
 
 		String query = teachersQueryBuilder(col, token);
-		System.out.println(query);
+		//System.out.println(query);
 		Statement st;
 		String res = "";
 		try {

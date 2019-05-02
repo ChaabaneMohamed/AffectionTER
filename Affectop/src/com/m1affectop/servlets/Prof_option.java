@@ -83,8 +83,10 @@ public class Prof_option extends HttpServlet {
         
 		List<String> groupes = new ArrayList<>();
 		
+		// On ajoute le groupe dans l'option si il est coché
 		for(int i = 1; i <= Integer.parseInt(group); i++)
-			groupes.add(request.getParameter("groupe_" + i));
+			if(request.getParameter("groupe_" + i) != null)
+				groupes.add(request.getParameter("groupe_" + i));
 		
 		String test = request.getParameter("nom");
 		if(test != null) {
@@ -100,6 +102,8 @@ public class Prof_option extends HttpServlet {
 			
 			basewriter.writeOneOption(option, 2018);
 		}
+		
+		
 		request.setAttribute("options", basereader.getOptions(2018));
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_option.jsp").forward(request, response);
 	}

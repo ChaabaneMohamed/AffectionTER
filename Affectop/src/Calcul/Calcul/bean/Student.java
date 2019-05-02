@@ -28,7 +28,7 @@ public class Student {
 	private List<Option>  optionValidé;	
 	private List<Option>  optionPref; // a enlever
 	
-	private String numEtudiant;
+	private int numEtudiant;
 	
 	public int nbDays;
 
@@ -144,11 +144,11 @@ public class Student {
 		this.optionPref = optionPref;
 	}
 
-	public String getNumEtudiant() {
+	public int getNumEtudiant() {
 		return numEtudiant;
 	}
 
-	public void setNumEtudiant(String numEtudiant) {
+	public void setNumEtudiant(int numEtudiant) {
 		this.numEtudiant = numEtudiant;
 	}
 }
