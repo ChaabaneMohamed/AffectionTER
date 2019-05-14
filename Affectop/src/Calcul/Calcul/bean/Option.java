@@ -17,10 +17,25 @@ public class Option {
 	//la liste des étudiants
 	public LinkedList<Student> accepted;
 	//le nom de l'option
-	public String nom;
-	//le groupe d'options auquel il appartient (le jour)
-	public int day;
+	public String nom;	
+
 	
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int id;
 	
 	public int year;
@@ -34,7 +49,6 @@ public class Option {
 	}
 
 	public String description;
-	private List<String> groupes;
 	
 	private String mail_prof;
 
@@ -46,20 +60,12 @@ public class Option {
 		this.mail_prof = mail_prof;
 	}
 
-	public Option(int size, String intitule,int day, int id){
+	public Option(int size, String intitule, String mail, int id){
 		accepted = new LinkedList<Student>();
 		this.size = size;
 		this.nom = intitule;
-		this.day = day;
 		this.id = id;
-	}
-
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int day) {
-		this.day = day;
+		this.mail_prof = mail;
 	}
 
 	public String getNom() {
@@ -77,14 +83,6 @@ public class Option {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public List<String> getGroupes() {
-		return groupes;
-	}
-
-	public void setGroupes(List<String> groupes) {
-		this.groupes = groupes;
-	}
 	
 	/**
 	 * @return vrai si l'option est pleine
@@ -94,12 +92,9 @@ public class Option {
 	}
 	
 	public String toString() {
-		return "Nom de l'option : " + nom;
+		return "Nom de l'option : " + nom+"| Mail : "+ mail_prof;
 	}
-
-	public void setGroupe(int day) {
-		this.day = day;
-	}
+	
 	public Option nameToOption(ArrayList<Option> options, String name) {
 		for (Option option : options) {
 			if(option.nom.equals(name))

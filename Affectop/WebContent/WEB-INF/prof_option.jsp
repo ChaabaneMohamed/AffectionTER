@@ -24,7 +24,6 @@
 	<section>
 		<h2>Ajout des options</h2>
 	</section>
-		<h4>"Nom de la promotion"</h4>
     <ul>
 	    <c:forEach var="option"  items="${ options }">
 	       <li>
@@ -32,7 +31,12 @@
 	           	Nom : <c:out value="${ option.getNom() }" /> </br>  	
 	         </p>
 	         <p class="option">
-	           	Jour : <c:out value="${ option.getGroupes() }" /> </br>  	
+	        	 Option :
+	         	<c:forEach var="gr"  items="${ groupOp }" >
+	         		<c:if test="${ gr.getOptionId() == option.getId() }">
+	           			<c:out value="${ gr.getGroupId() }" /> 
+	           		</c:if>
+	           	</c:forEach>	
 	         </p>
 	       
 	       
@@ -45,16 +49,15 @@
 	<c:if test="${ group == null }">
 		<form method="post" action="prof_option?token=${ token }" id="groupform">
 			<div class="field-text">
-				   	<label for="group" class="font">Nombre de groupe<span class="fb-required">*</span> :</label>
+				   	<label for="group" class="font">Nombre d'UE à choisir<span class="fb-required">*</span> :</label>
 				   	<input type="number" class="form-control" name="group" id="group" required="required" aria-required="true">
 			   	</div>
 			   	
-			<input type="submit" value="Valider le nombre de groupe"/>
+			<input type="submit" value="Valider le nombre de d'option"/>
 		</form>
 	</c:if>
 	
 	<c:if test="${ group != null }">
-	<p id="groupform">Nombre de groupe :  ${ !empty group ? group : '' }</p>
 
    	<form method="post" action="prof_option?token=${ token }" id="opform">
 	   	<div class="rendered-form">
@@ -63,19 +66,24 @@
 			   	<input type="text" class="form-control" name="nom" id="nom" required="required" aria-required="true">
 		   	</div>
 		   	
-		   	<p class="font">Description<span class="fb-required">*</span> : </p>
-		   	<textarea rows="4" cols="50" name="description" form="opform" required="required">Description ...</textarea>
+		   	<!--<p class="font">Description<span class="fb-required">*</span> : </p>
+		   	<textarea rows="4" cols="50" name="description" form="opform" required="required">Description ...</textarea>  -->
 		   	
 		   	<div class="field-text">
 			   	<label for="mail_prof" class="font">Mail de l'enseignant<span class="fb-required">*</span> :</label>
 			   	<input type="text" class="form-control" name="mail_prof" id="mail_prof" required="required" aria-required="true">
 		   	</div>
 		   	
-		   	<p class="font">Donnez le groupe<span class="fb-required">*</span> :</p>
+		   	<div class="field-text">
+			   	<label for="size" class="font">Effectif<span class="fb-required">*</span> :</label>
+			   	<input type="number" class="form-control" name="size" id="size" required="required" aria-required="true">
+		   	</div>
+		   	
+		   	<p class="font">Donnez les Différentes UE<span class="fb-required">*</span> :</p>
 		   	<div class="checkbox-group groupes">
 		   			<c:forEach var="i" begin="1" end="${ group }">
 		   			<input type="checkbox" id="groupe_${ i }" name="groupe_${ i }" value="groupe_${ i }" required>
-				    <label for="groupe_${ i }">Groupe <c:out value="${ i }"></c:out></label>
+				    <label for="groupe_${ i }">UE <c:out value="${ i }"></c:out></label>
 					</c:forEach>
 		   	</div>
 	   	</div>

@@ -17,9 +17,9 @@
 		<p>Partie élève</p>
 		<li><a href="/Affectop/eleve_accueil?token=${ token }">Accueil élève</a></li>
 		
-		<li><a href="/Affectop/eleve_desc?token=${ token }">Description des options</a></li>
+		<!--<li><a href="/Affectop/eleve_desc?token=${ token }">Description des options</a></li>-->
 		
-		<li><a href="/Affectop/eleve_choix?token=${ token }">Choix des options</a></li>
+		<li><a href="/Affectop/eleve_choix?token=${ token }">Choix des options</a></li> 
 		
 		<li><a href="/Affectop/eleve_valider?token=${ token }">Validation des options</a></li>
 		

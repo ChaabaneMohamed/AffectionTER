@@ -54,14 +54,14 @@ public class Prof_algo extends HttpServlet {
         request.setAttribute("firstname", firstname);
        
         // On lance l'algo avec des students et options aléatoire
-		ArrayList<ArrayList<Option>> options= AffectopTest.randomOptions(nbDays,new int[]{2,2,2,2,2},new int[]{4,4,4,4,4},new int[]{40,40,40,40,40},new int[]{50,50,50,50,50});
-		ArrayList<Student> students = AffectopTest.randomStudents(300,options, nbDays);
-		HashMap<Option, LinkedList<Option>> incompatibilities = AffectopTest.makeRandomIncompatibilities(options);
-		System.out.println(">>>"+Affectop.affectTop(students, options, incompatibilities, 5, 2));
+		//ArrayList<ArrayList<Option>> options= AffectopTest.randomOptions(nbDays,new int[]{2,2,2,2,2},new int[]{4,4,4,4,4},new int[]{40,40,40,40,40},new int[]{50,50,50,50,50});
+		//ArrayList<Student> students = AffectopTest.randomStudents(300,options, nbDays);
+		//HashMap<Option, LinkedList<Option>> incompatibilities = AffectopTest.makeRandomIncompatibilities(options);
+		//System.out.println(">>>"+Affectop.affectTop(students, options, incompatibilities, 5, 2));
         
 		
-        request.setAttribute("options", options);
-        request.setAttribute("eleves", students);
+        request.setAttribute("options", basereader.getOptions(2018));
+        request.setAttribute("eleves", basereader.getStudents(2017));
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_algo.jsp").forward(request, response);
 	}

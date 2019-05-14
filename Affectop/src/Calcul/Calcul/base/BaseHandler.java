@@ -18,7 +18,7 @@ public class BaseHandler {
 			// create our mysql database connection
 			String myDriver = "com.mysql.cj.jdbc.Driver";
 			
-			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false";
+			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf-8";
 			
 			Class.forName(myDriver);
 			Connection conn = DriverManager.getConnection(myUrl, "root", "1234");

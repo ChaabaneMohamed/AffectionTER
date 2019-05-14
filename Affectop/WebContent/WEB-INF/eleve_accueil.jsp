@@ -21,7 +21,7 @@ Une fois triées, les options vous seront attribuées ultérieurement en fonctio
 	<footer>
 		<div class="bouton">
 			<p>
-				<a href="eleve_desc?token=${ token }">Suivant</a>
+				<a href="eleve_choix?token=${ token }">Suivant</a>
 			</p>
 		</div>
 	</footer>

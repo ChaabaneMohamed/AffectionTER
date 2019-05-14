@@ -69,7 +69,6 @@
 
 	<a href="datas/temp.xlsx" download>Cliquez ici pour télecharger un exemple</a>
 
-    <c:if test="${ !empty fichier }"><p><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
     <form id="upload" method="post" action="prof_ajout?token=${ token }" enctype="multipart/form-data">
         <fieldset>
 		<legend>Ajoutez votre fichier</legend>
@@ -86,6 +85,7 @@
 		
 		</fieldset>
     </form>
+    <c:if test="${ !empty fichier }"><p class="erreur"><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
     
 
 	<footer>

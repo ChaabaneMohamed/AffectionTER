@@ -27,14 +27,14 @@
 
 	<form method="post" action="prof_mail?token=${ token }" id="mailform" class="mail">   
 		<h4>Mail pour les élèves</h4>
-		
+		<p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;LISTE_AFFECTATION&gt;</p>
 		<textarea rows="10" cols="150" name="mail_eleve" form="mailform" required="required">${ !empty mail_eleve ? mail_eleve : 'Ecrivez le contenu du mail...' }</textarea>
 	    <c:if test="${ result1.size() > 0 }">
     		<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result1 }"><c:out value="${ r }"/> </c:forEach></p>
  		</c:if>
 	    
 	    <h4>Mail pour le secrétariat</h4>
-	    
+	    <p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;LISTE_AFFECTATION&gt;</p>
 	    <textarea rows="10" cols="150" name="mail_secretariat" form="mailform" required="required">${ !empty mail_secretariat ? mail_secretariat : 'Ecrivez le contenu du mail...' }</textarea>
 	    <c:if test="${ result2.size() > 0 }">
     		<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result2 }"><c:out value="${ r }"/> </c:forEach></p>

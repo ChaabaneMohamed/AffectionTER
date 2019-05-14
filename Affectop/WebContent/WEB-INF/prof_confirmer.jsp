@@ -12,6 +12,7 @@
 	<style>
 		<%@ include file="css/stylesheet.css"%>
 	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body> 
@@ -25,8 +26,9 @@
 		<h2>Récapitulatif</h2>
 	</section>
 	
-	<h2>Contenu du mail</h2> 
+	<h2>Contenu du mail à envoyer au élèves</h2> 
 	</br>
+	<p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;LISTE_AFFECTATION&gt;</p> 
 	<form method="post" action="prof_confirmer?token=${ token }" id="mailform" class="mail">   
 		<textarea rows="10" cols="150" name="mail" form="mailform" required="required">${ !empty mail ? mail : 'Ecrivez le contenu du mail...' }</textarea>
 	    </br>
@@ -59,19 +61,18 @@
    	</table>     
         
     <h2>Liste des options :</h2>
-    <div class="listeop">  
-    <ul>
-	    <c:forEach var="option"  items="${ options }">
-	       <li>
-	         <p class="option">
-	           	<c:out value="${ option.nom }" /> : </br>  	
-	         </p>
-	       	 <p>
-		        Description : <c:out value="${ option.description }" />
-	         </p>
-	        </li>
-	    </c:forEach>
-   	</ul>   
+    <div class="list-group">	
+		<c:forEach var="option"  items="${ options }">
+			    <a class="list-group-item list-group-item-action flex-column align-items-start">
+			       <div class="d-flex w-100 justify-content-between">
+				      <h5 class="mb-1"><c:out value="${ option.nom }" /></h5>
+				   </div>
+			       <p class="mb-1">
+			       <c:out value="${ option.mail_prof }" /> 	
+			       </p>
+			       <small>Effectif: <c:out value="${ option.size }"/></small>
+			    </a> 
+		</c:forEach>
    	</div>     
    	
 	

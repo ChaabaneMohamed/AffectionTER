@@ -3,6 +3,7 @@ package Calcul.Calcul.bean;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 public class Student {
@@ -23,7 +24,7 @@ public class Student {
 	/**
 	 * la liste des preferences de l'étudiant par ordre décroissant d'interet pour chaques jours 
 	 */
-	public ArrayList<LinkedList<Option>> preferences;
+	public Map<Integer, List<Option>> preferences;
 	
 	private List<Option>  optionValidé;	
 	private List<Option>  optionPref; // a enlever
@@ -39,13 +40,13 @@ public class Student {
 	 * @param preferences les prefereces de l'etudiants par jours
 	 * @return un etudiant
 	 */
-	public Student(String mail,ArrayList<LinkedList<Option>> preferences,int nbDays, int numEtu) {
+	public Student(String mail,Map<Integer, List<Option>> preferences,int nbDays, int numEtu) {
 		this.mail = mail;
 		this.preferences = preferences;
 		this.affected = new Option[nbDays];
 		this.numEtu = numEtu;
 	}
-	public Student(String mail,ArrayList<LinkedList<Option>> preferences,int nbDays) {
+	public Student(String mail,Map<Integer, List<Option>> preferences,int nbDays) {
 		this.mail = mail;
 		this.preferences = preferences;
 		this.affected = new Option[nbDays];
@@ -100,18 +101,19 @@ public class Student {
 		return satis * satis;
 	}
 	
-	public LinkedList<Option> getPreferences(int d) {
-		return this.preferences.get(d);
+	public Map<Integer, List<Option>> getPreferences() {
+		return this.preferences;
 	}
 	
+	/*
 	/**
 	 * @param opt
 	 * @return true if the student is affected to this option
-	 */
+	 *
 	public boolean isAffectedTo(Option opt) {
 		return affected[opt.day] == opt;
 	}
-	
+	*/
 	/**
 	 * remove all affected option from this student
 	 */

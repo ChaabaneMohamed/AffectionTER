@@ -16,36 +16,44 @@
 </head>
 <body>   
 	<div class= "content">
-	<p>Triez les options dans l'ordre de préférence pour chaque jour
-	allant de 1 à <c:out value="${ options.size() } :"/></p>
+	<p>Triez les options dans l'ordre de préférence pour chaque UE
+	allant de 1 à n</p>
 	
-   	<form method="post" action="eleve_choix?token=${ token }">
-       <table id="t01">
-       <tr> <th>Nom de l'option </th>
-           <c:forEach var="i"  begin="1" end="${ options.size() }">
-           <th> <c:out value="${i}"></c:out> </th>
-           </c:forEach>
-            </tr>
-    <c:forEach var="option"  items="${ options }">
-     <p class="option">
-                <tr> <td class = "nameOption"> <label for="option"><c:out value="${ option.nom }"/> </label> </td>
-                <c:forEach var="i"  begin="1" end="${ options.size() }">
-                    <td> <input type="radio" id="i" name="<c:out value="${ i }"/>" value ="<c:out value="${ option.nom }" />" required>
-                </c:forEach> </tr>
-      </p>
-        </c:forEach>
-    </table>
-        <input type="submit" value="Valider votre choix"/> 
-    </form>
-	
+	   	<form method="post" action="eleve_choix?token=${ token }">
+	   		<c:forEach var="j"  begin="1" end="${ groupOp.size() }" >
+		   		<h3>Option n°<c:out value="${ j }"></c:out>: </h3>
+		       	<table id="t01">
+		      	<tr> <th>Nom de l'UE </th>
+		           <c:forEach var="i"  begin="1" end="${ groupOp.get(j).size() }">
+		           		<th> <c:out value="${i}"></c:out> </th>
+		           </c:forEach>
+		      	</tr>
+		    	<c:forEach var="option"  items="${ options }">
+		    		<c:if test="${ groupOp.get(j).contains(option.getId()) }">
+			     	<p class="option">
+			                <tr> <td class = "nameOption"> <label for="option"><c:out value="${ option.nom }"/> </label> </td>
+			                <c:forEach var="i"  begin="1" end="${ groupOp.get(j).size() }">
+			                    <td> <input type="radio" id="i<c:out value="${j}"></c:out>" name="<c:out value="${ i }"/><c:out value="${j}"></c:out>" value ="<c:out value="${ option.nom }" />" required>
+			                </c:forEach> </tr>
+			     	</p>
+			     	</c:if>
+		        </c:forEach>
+	    	</table>
+	    </c:forEach>
+	        <input type="submit" value="Valider vos choix"/> 
+	    </form>
+    
 	<ul>
 	    <c:forEach var="c"  items="${ choix }">
 	       <li>
 	       	 <p>
-		     	<c:out value="${ choix.indexOf(c) +1}" /> : <c:out value="${ c}" />
+		     	<c:out value="${ c.toString()}" />
 	         </p>
 	        </li>
 	    </c:forEach>
+	    <c:if test="${ choix != null }">
+			<p class="erreur">Vos préférences ont été enregistré</p>
+		</c:if>
    	</ul> 
 	
 	<footer>

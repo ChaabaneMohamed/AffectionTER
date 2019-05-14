@@ -4,8 +4,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Student;
 
@@ -16,6 +18,7 @@ import Calcul.Calcul.bean.Student;
 public class BaseReader extends BaseHandler {
 	Map<Integer,Option> options = new HashMap<Integer, Option>();
 	Map<Integer,Student> students = new HashMap<Integer, Student>();
+	Map<Integer,GroupOp> groupOp = new HashMap<Integer, GroupOp>();
 	Statement st;
 	
 	private Connection conn;
@@ -32,7 +35,7 @@ public class BaseReader extends BaseHandler {
 		try {
 			// create our mysql database connection
 			String myDriver = "com.mysql.cj.jdbc.Driver";
-			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false";
+			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf-8";
 			
 			System.out.println(myUrl);
 			Class.forName(myDriver);
@@ -46,13 +49,13 @@ public class BaseReader extends BaseHandler {
 
 	}
 	
-	public ArrayList<ArrayList<Option>> getOptionsPerDays(int year){
-		String query = "SELECT * FROM Options where year = "+year+" ;";
+	public ArrayList<ArrayList<Option>> getOptionsPerDays(int groupId){
+		String query = "SELECT * FROM Options o;";
 
 		ResultSet rs = getResultOfQuery(query);		
 		ArrayList<ArrayList<Option>> result = new ArrayList<>();
 		
-		int nbDays = getNbDays(year);
+		int nbDays = getNbDays();
 		for(int d = 0 ; d < nbDays ; d++) {
 			result.add(new ArrayList<>());
 		}
@@ -60,12 +63,12 @@ public class BaseReader extends BaseHandler {
 		try {
 			while (rs.next()) {
 				String intitule = rs.getString("intitule");
+				String mail = rs.getString("mail");
 				
 				int size = rs.getInt("size");
-				int groupId = rs.getInt("groupId");
 				int id = rs.getInt("id");
 				
-				Option o = new Option(size, intitule, groupId,id);
+				Option o = new Option(size, intitule,mail, id);
 				options.put(id,o);
 				result.get(groupId-1).add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
@@ -110,7 +113,7 @@ public class BaseReader extends BaseHandler {
 		
 		ArrayList<Student> result = new ArrayList<>();
 		
-		int nbDays = getNbDays(year);
+		int nbDays = getNbDays();
 		// iterate through the java resultset
 		try {
 			while (rs.next()) {
@@ -120,8 +123,8 @@ public class BaseReader extends BaseHandler {
 				String lastName = rs.getString("lastName");
 				String firstName = rs.getString("firstName");
 				
-				ArrayList<LinkedList<Option>> preferences = getStudentPreference(nbDays, numEtu, year);
-				Student s =new Student(mail, preferences, nbDays,numEtu); 
+				//Map<Integer, List<Option>> preferences = getStudentPreferences(numEtu, year);
+				Student s = new Student(mail, null, nbDays,numEtu); 
 				s.setNom(lastName);
 				s.setPrenom(firstName);
 				students.put(numEtu,s);
@@ -135,37 +138,54 @@ public class BaseReader extends BaseHandler {
 		return result;
 	}
 	
-	public ArrayList<LinkedList<Option>> getStudentPreference(int nbDays, int studentID, int year){
-		ArrayList<LinkedList<Option>> result = new ArrayList<>();
+	public List<Option> getStudentPreferenceByGroup(int groupId, int studentID, int year){
 		String query = 
-			"SELECT * FROM Preferences where numEtudiant = '"+studentID+"' ORDER BY choice;" ;
+			"SELECT * FROM Preferences where numEtudiant = '"+studentID+"' AND groupId = '"+groupId+"' ORDER BY choice;" ;
+		System.out.println(query);
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		ResultSet rs = getResultOfQuery(query);
-		ArrayList<Option> optionsAllDaysSortedByPreferences = new ArrayList<>();
+		ArrayList<Option> optionsSorted = new ArrayList<>();
 		try {
 			while (rs.next()) {
-				optionsAllDaysSortedByPreferences.add(options.get(rs.getInt("optionId")));
+				optionsSorted.add(options.get(rs.getInt("optionId")));
 			}
-			
-			for(int d = 1 ; d <= nbDays ; d ++) {
-				LinkedList<Option> todayPreference = new LinkedList<>() ;
-				for (Option opt : optionsAllDaysSortedByPreferences) {
-					if(opt.day == d)
-						todayPreference.addLast(opt);
-				}
-				result.add(todayPreference);
-			}				
-			
-			return result;
+			return optionsSorted;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return result;
+			return optionsSorted;
 		}
 	}
 	
-	public int getNbDays(int year) {
+	public Map<Integer, List<Option>> getStudentPreferences(int studentID, int year){
+		int nbGroup = getNbGroups();
+		 Map<Integer, List<Option>> tmp = new HashMap<Integer, List<Option>>();
+		
+		 for(int i = 1; i <= nbGroup; i++) {
+			 tmp.put(i, getStudentPreferenceByGroup(i, studentID, year));
+		 }
+		return tmp;
+	}
+	
+	private int getNbGroups() {
 		String query = 
-				"select MAX(groupId) from Options where year ="+year+";" ;
+				"select COUNT(DISTINCT(groupId)) from GroupOp;" ;
+		ResultSet rs = getResultOfQuery(query);
+		
+		try {
+			if(rs.next())
+				return  rs.getInt("COUNT(DISTINCT(groupId))");
+		}
+		catch(Exception e) {
+			System.out.println("ERROR");
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public int getNbDays() {
+		String query = 
+				"select MAX(groupId) from GroupOp;" ;
 		ResultSet rs = getResultOfQuery(query);
 		
 		try {
@@ -177,6 +197,22 @@ public class BaseReader extends BaseHandler {
 			e.printStackTrace();
 		}
 		return 1;
+	}
+	
+	public int getNbOptions() {
+		String query = 
+				"select COUNT(*) from Options;" ;
+		ResultSet rs = getResultOfQuery(query);
+		
+		try {
+			if(rs.next())
+				return  rs.getInt("COUNT(*)");
+		}
+		catch(Exception e) {
+			System.out.println("ERROR");
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	
 
@@ -238,14 +274,12 @@ public class BaseReader extends BaseHandler {
 		try {
 			while (rs.next()) {
 				String intitule = rs.getString("intitule");
+				String mail = rs.getString("mail");
 				
 				int size = rs.getInt("size");
-				int groupId = rs.getInt("groupId");
 				int id = rs.getInt("optionId");
-				String description = rs.getString("description");
 				
-				Option o = new Option(size, intitule, groupId,id);
-				o.setDescription(description);
+				Option o = new Option(size, intitule,mail, id);
 				options.put(id,o);
 				result.add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
@@ -257,6 +291,53 @@ public class BaseReader extends BaseHandler {
 			return result;
 		}
 	}
+	
+	public ArrayList<GroupOp> getGroupOptions() {
+		String query = "SELECT * FROM GroupOp;";
+
+		ResultSet rs = getResultOfQuery(query);		
+		ArrayList<GroupOp> result = new ArrayList<>();
+		
+		groupOp.clear();
+		
+		try {
+			while (rs.next()) {
+				int groupId = rs.getInt("groupId");
+				int optionId = rs.getInt("optionId");
+				
+				GroupOp grOp = new GroupOp(groupId, optionId);
+				groupOp.put(groupId, grOp);
+				result.add(grOp);
+			}
+			return result;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return result;
+		}
+	}
+	
+	public Map<Integer, List<Integer>> getGroupOPs(ArrayList<GroupOp> result){
+		Map<Integer, List<Integer>> groupOps = new HashMap<Integer, List<Integer>>();
+		int Max = 0;
+		for (GroupOp groupOp : result) {
+			if(groupOp.getGroupId() > Max) {
+				Max = groupOp.getGroupId();
+			}
+				
+		}
+		for(int i = 1; i <= Max; i++) {
+			List<Integer> tmp = new ArrayList<Integer>();
+			for (GroupOp groupOp : result) {
+				if(groupOp.getGroupId() == i) {
+					tmp.add(groupOp.getOptionId());
+				}
+			}
+			groupOps.put(i, tmp);
+		}
+		return groupOps;
+	}
+	
 
 	private String studentsQueryBuilder(String col, String token) {
 

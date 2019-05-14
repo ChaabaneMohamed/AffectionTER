@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import Calcul.Calcul.bean.Option;
@@ -23,7 +24,7 @@ public class BaseWriter extends BaseHandler{
 			// create our mysql database connection
 			String myDriver = "com.mysql.cj.jdbc.Driver";
 			
-			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false";
+			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf-8";
 			
 			Class.forName(myDriver);
 			Connection conn = DriverManager.getConnection(myUrl, "root", "1234");
@@ -130,14 +131,18 @@ public class BaseWriter extends BaseHandler{
 		}
 	}
 	
-	public void writePreference(int numEtudiant, ArrayList<Option> preferences) {
-        int index = 1;
+	public void writePreference(int numEtudiant, Map<Integer, List<Option>> prefs) {
+        int index;
         StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO Preferences (choice,optionId,numEtudiant) \nVALUES\n");
-        for(Option opt : preferences) {       	
-            query.append("("+index+","+opt.id+","+numEtudiant+"),");
-            index ++;
-        }
+        query.append("INSERT INTO Preferences (groupId, choice,optionId,numEtudiant) \nVALUES\n");
+        for (int i = 1; i <= prefs.size(); i++) {
+        	index = 1;
+        	for(Option opt : prefs.get(i)) { 
+        		System.out.println("("+i+","+index+","+numEtudiant+"),");
+                query.append("("+i+","+index+","+opt.id+","+numEtudiant+"),");
+                index ++;
+            }
+		}
         query.replace(query.length()-1, query.length(), ";");
         
         try {
@@ -165,9 +170,9 @@ public class BaseWriter extends BaseHandler{
 	
 	public void writeOptions(ArrayList<Option> options, int year) {
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO Options (intitule,description,size,optionGroup,year) \nVALUES\n");
+		query.append("INSERT INTO Options (intitule,description,size,year) \nVALUES\n");
 		for(Option opt : options) {
-			query.append("('"+opt.nom+"','"+opt.description+"',"+opt.size+","+opt.day+","+year+"),");
+			query.append("('"+opt.nom+"','"+opt.description+"',"+opt.size+","+year+"),");
 		}
 		query.replace(query.length()-1, query.length(), ";");
 		
@@ -183,8 +188,8 @@ public class BaseWriter extends BaseHandler{
 	
 	public void writeOneOption(Option opt, int year) {
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO Options (intitule,description,size,groupId,year) \nVALUES\n");
-		query.append("('"+opt.nom+"','"+opt.getDescription()+"',"+opt.size+","+opt.day+","+year+"),");
+		query.append("INSERT INTO Options (intitule, mail,size,year) \nVALUES\n");
+		query.append("('"+opt.nom+"','"+opt.getMail_prof()+"',"+opt.size+","+year+"),");
 		query.replace(query.length()-1, query.length(), ";");
 		
 		try {
@@ -199,8 +204,8 @@ public class BaseWriter extends BaseHandler{
 	
 	public void writeOneGroupOp(int groupId , int optionId) {
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO Options (groupId, optionId) \nVALUES\n");
-		//query.append("('"+opt.nom+"','"+opt.getDescription()+"',"+opt.size+","+opt.day+","+year+"),");
+		query.append("INSERT INTO GroupOp (groupId, optionId) \nVALUES\n");
+		query.append("("+groupId+","+optionId+"),");
 		query.replace(query.length()-1, query.length(), ";");
 		
 		try {

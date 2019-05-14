@@ -13,11 +13,29 @@ INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
 INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
 	VALUES(2018,'SBROGGIO','ilef','15026324','test.test@etu.univ-amu.fr','1238','SIN301');
 
-INSERT INTO Options (intitule,description,size,groupId,year)
-	VALUES('Complexite','Rappels sur les notions d analyse de la complexité des algorithmes et des problèmes. Notion de problèmes (décision, recherche, dénombrement, énumération, optimisation). Bornes inférieures de complexité. Classes P et NP. Problèmes NP-complets. Méthodes de résolution des problèmes NP-Complets. Contenu en cours d actualisation .', 6, null, 2018);
+INSERT INTO GroupOp (groupId, optionId)
+	VALUES(1, 1);
 	
-INSERT INTO Options (intitule,description,size,groupId,year)
-	VALUES('Architecture JEE','Architecture n-tiers partie accès aux données (JDBC/JPA) partie métier (Spring, IoC, Composants métier) partie application WEB (JSP/Servlet, Spring MVC, bootstrap)', 3, null, 2018);
+INSERT INTO GroupOp (groupId, optionId)
+	VALUES(1, 2);
 	
+INSERT INTO GroupOp (groupId, optionId)
+	VALUES(1, 3);
 	
+INSERT INTO GroupOp (groupId, optionId)
+	VALUES(2, 2);
 	
+INSERT INTO GroupOp (groupId, optionId)
+	VALUES(2, 4);
+	
+INSERT INTO Options (intitule, mail,size, year)
+	VALUES('Complexite', 'kevin.perrot@lis-lab.fr', 6, 2018);
+	
+INSERT INTO Options (intitule, mail,size,year)
+	VALUES('Architecture JEE','jean-luc.massat@univ-amu.fr', 3, 2018);
+
+INSERT INTO Options (intitule, mail,size,year)
+	VALUES('Fiabilite Logiciel', 'denis.lugiez@univ-amu.fr', 3, 2018);
+	
+INSERT INTO Options (intitule, mail,size,year)
+	VALUES('Genie Logiciel', 'pablo.ARRIGHI@univ-amu.fr',6, 2018);

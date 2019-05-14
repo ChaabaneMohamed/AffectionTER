@@ -96,7 +96,7 @@ public class AffectopTest {
 	}
 	
 	
-	public static ArrayList<Student> randomStudents(int nbStudents, ArrayList<ArrayList<Option>> options, int nbDays){
+	public static ArrayList<Student> randomStudents(int nbStudents, ArrayList<Option> options, int nbDays){
 		ArrayList<Student> result = new ArrayList<>();
 		for(int s = 0 ; s < nbStudents; s ++) {
 			ArrayList<LinkedList<Option>> preferences = new ArrayList<>();
@@ -155,7 +155,7 @@ public class AffectopTest {
 			int nbOptionToday = minNbOptions[d]+Math.abs(r.nextInt()%(1+maxNbOptions[d]-minNbOptions[d]));
 			for(int o = 0; o < nbOptionToday ; o++) {
 				int opSize = minSizeOptions[d]+Math.abs(r.nextInt()%(1+maxSizeOptions[d]-minSizeOptions[d]));
-				todayOptions.add(new Option(opSize, "o"+o+"_"+d, d, 0));
+				todayOptions.add(new Option(opSize, "o"+o+"_"+d, ""+d, 0));
 			}
 			answers.add(todayOptions);
 		}

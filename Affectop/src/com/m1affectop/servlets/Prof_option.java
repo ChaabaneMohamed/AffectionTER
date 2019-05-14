@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import Calcul.Calcul.base.BaseReader;
 import Calcul.Calcul.base.BaseWriter;
+import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
 
 /**
@@ -90,19 +92,24 @@ public class Prof_option extends HttpServlet {
 		
 		String test = request.getParameter("nom");
 		if(test != null) {
-			Option option = new Option(0, request.getParameter("nom"), 0, (int)Math.random() * ( 1000 - 0 ));
+			int nbOptions = basereader.getNbOptions();
+			Option option = new Option(0, request.getParameter("nom"), null,nbOptions+1);
 			for (String g : groupes) {
 				if(g != null)
-					option.setGroupe(Integer.parseInt(g.substring(7)));
+					basewriter.writeOneGroupOp(Integer.parseInt(g.substring(7)), option.getId());
 			}
 			
-			option.setDescription(request.getParameter("description"));
+			option.setSize(Integer.parseInt(request.getParameter("size")));
 			option.setMail_prof(request.getParameter("mail_prof"));
 			option.setYear(2018);
+			System.out.println(option.toString());
 			
 			basewriter.writeOneOption(option, 2018);
 		}
 		
+		ArrayList<GroupOp> tmp = basereader.getGroupOptions();
+		
+		request.setAttribute("groupOp", tmp);
 		
 		request.setAttribute("options", basereader.getOptions(2018));
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_option.jsp").forward(request, response);

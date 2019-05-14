@@ -73,11 +73,11 @@ public class Prof_apercu extends HttpServlet {
 		
 		List<Option> optionPref = new ArrayList<>();
 		
-		Option option1 = new Option(0, "Option test 1", 0, 0);
+		Option option1 = new Option(0, "Option test 1", null, 0);
 		option1.setDescription("Lorem ipsum");
-		Option option2 = new Option(0, "Option test 2", 0, 0);
+		Option option2 = new Option(0, "Option test 2", null, 0);
 		option2.setDescription("Lorem ipsum");
-		Option option3 = new Option(0, "Option test 3", 0, 0);
+		Option option3 = new Option(0, "Option test 3", null, 0);
 		option3.setDescription("Lorem ipsum");
 		
 		optionPref.add(option1);
