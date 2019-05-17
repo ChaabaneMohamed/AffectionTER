@@ -1,0 +1,38 @@
+option en UE et group en option
+
+Creer les token prof et comment en creer sans aller sur le site
+
+ajouter num étu bandeau
+
+bouton valider pour élève choix
+
+prof choix message vert ou rouge selon test et update tableau
+
+Option pas UE
+
+afficher effectif prof_option
+
+tableau prof option
+
+ajouter mot redoublant prof_redoublant
+
+UE deja validée : on ne l'affiche pas ( 0 pioints a l'interieur )
+nombre de points de l'étudiant redoublant : total des points ( comme un étudiant non redoublant)
+
+Balises : NOM PRENOM NUMETU LIEN_FORM
+
+prof_apercu: ajouter pourcentage/ Nb eleve qui on répondu
++ popup algo
+
+présentation des résultat de l'affectation( pour chaque UE la liste des etudiant et l'effectif par rapport au max) au prof + antho % etc
+ajouter la possibilité de éditer l'Ue de l'élève 
+
+Mail secrétariat(liste par élève des UE et liste par UE des élèves) , Mail éleve, Mail prof mais que son UE avec mail des elèves séparé par virgule
+
+Balises FIN : NOM PRENOM NUMETU LIENPDF(lien vers site) LISTE_AFFECTATION(par étu)
+
+changer nom bd pour faire différentes affectation.
+
+AJOUTER PAGE INSTALLATIONS DEPLOIEMENT SITE
+
+commencer rapport
