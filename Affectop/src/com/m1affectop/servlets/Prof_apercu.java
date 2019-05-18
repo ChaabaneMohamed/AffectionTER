@@ -46,6 +46,9 @@ public class Prof_apercu extends HttpServlet {
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
+        
 		List<Student> students = new ArrayList<>();
 		
 		Student eleve1 = new Student(null, null, 0);
@@ -113,6 +116,9 @@ public class Prof_apercu extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
         
         this.getServletContext().getRequestDispatcher("/WEB-INF/prof_apercu.jsp").forward(request, response);
 	}

@@ -38,6 +38,9 @@ public class Prof_valider extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_valider.jsp").forward(request, response);
 	}
@@ -56,6 +59,9 @@ public class Prof_valider extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_valider.jsp").forward(request, response);
 	}

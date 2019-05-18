@@ -44,6 +44,9 @@ public class Eleve_desc extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
 		request.setAttribute("options", basereader.getOptions(2018));
 
@@ -64,6 +67,9 @@ public class Eleve_desc extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/eleve_desc.jsp").forward(request, response);;
 	}

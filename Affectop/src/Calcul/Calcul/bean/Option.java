@@ -18,6 +18,8 @@ public class Option {
 	public LinkedList<Student> accepted;
 	//le nom de l'option
 	public String nom;	
+	
+	public int credit;
 
 	
 	public int getSize() {

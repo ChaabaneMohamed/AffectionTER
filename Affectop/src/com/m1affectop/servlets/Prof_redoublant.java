@@ -47,6 +47,9 @@ public class Prof_redoublant extends HttpServlet {
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
+        
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_redoublant.jsp").forward(request, response);
@@ -68,6 +71,9 @@ public class Prof_redoublant extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 
         ArrayList<Option> options = basereader.getOptions(2018);
         ArrayList<Student> students = basereader.getStudents(2017);

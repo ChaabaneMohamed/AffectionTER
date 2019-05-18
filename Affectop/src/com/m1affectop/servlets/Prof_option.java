@@ -47,6 +47,9 @@ public class Prof_option extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
         //request.setAttribute("options", basereader.getOptions(2018));
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_option.jsp").forward(request, response);
@@ -68,6 +71,9 @@ public class Prof_option extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 
         String group = request.getParameter("group");
         
@@ -93,7 +99,7 @@ public class Prof_option extends HttpServlet {
 		String test = request.getParameter("nom");
 		if(test != null) {
 			int nbOptions = basereader.getNbOptions();
-			Option option = new Option(0, request.getParameter("nom"), null,nbOptions+1);
+			Option option = new Option(0, request.getParameter("nom"), null, nbOptions+1);
 			for (String g : groupes) {
 				if(g != null)
 					basewriter.writeOneGroupOp(Integer.parseInt(g.substring(7)), option.getId());

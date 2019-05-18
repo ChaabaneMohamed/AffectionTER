@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import Calcul.Calcul.bean.Option;
+import Calcul.Calcul.bean.Preference;
 import Calcul.Calcul.bean.Student;
 import Calcul.Calcul.algorithms.calcul.Result;
 import Calcul.Calcul.algorithms.calcul.Result.Affectation;
@@ -131,7 +132,7 @@ public class BaseWriter extends BaseHandler{
 		}
 	}
 	
-	public void writePreference(int numEtudiant, Map<Integer, List<Option>> prefs) {
+	public void writePreferences(int numEtudiant, Map<Integer, List<Option>> prefs) {
         int index;
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO Preferences (groupId, choice,optionId,numEtudiant) \nVALUES\n");
@@ -154,6 +155,36 @@ public class BaseWriter extends BaseHandler{
         }
         
     }
+	
+	public void writePreference(int numEtudiant, int groupId, int choice, int optionId) {
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO Preferences (groupId, choice,optionId,numEtudiant) \nVALUES\n");
+       
+        query.append("("+groupId+","+choice+","+optionId+","+numEtudiant+");");
+        
+        try {
+            System.out.println(query);
+            st.executeUpdate(query.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }     
+    }
+	
+	public void writePreference(Preference p) {
+		StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO Preferences (groupId, choice,optionId,numEtudiant) \nVALUES\n");
+       
+        query.append("("+p.getGroupId()+","+p.getChoice()+","+p.getOptionId()+","+p.getNumEtudiant()+");");
+        
+        try {
+            System.out.println(query);
+            st.executeUpdate(query.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
 	
 	public void deleteOption(int id) {
 		String query = "DELETE FROM Options WHERE id ="+id+";";
@@ -217,5 +248,8 @@ public class BaseWriter extends BaseHandler{
 		}
 		
 	}
+
+
+	
 	
 }

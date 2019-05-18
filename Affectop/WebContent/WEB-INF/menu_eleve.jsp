@@ -6,7 +6,7 @@
 </head>
 <body>
     <h3 class="id">
-		Bonjour ${ !empty firstname ? firstname : '' } ${ !empty name ? name : '' }
+		Bonjour ${ !empty firstname ? firstname : '' } ${ !empty name ? name : '' } ${ !empty numEtudiant ? (numEtudiant) : '' }
 	</h3>
     
 </body>

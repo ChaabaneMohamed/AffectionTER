@@ -30,7 +30,7 @@ public class Prof_accueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BaseReader basereader = new BaseReader();
         
-        String token = request.getParameter("token");
+		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
         String name = basereader.nameRequest(token);
@@ -38,6 +38,9 @@ public class Prof_accueil extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_accueil.jsp").forward(request, response);
 	}
@@ -48,14 +51,17 @@ public class Prof_accueil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 BaseReader basereader = new BaseReader();
         
-        String token = request.getParameter("token");
-        request.setAttribute("token", token);
-        
-        String name = basereader.nameRequest(token);
-        request.setAttribute("name", name);
-        
-        String firstname = basereader.firstNameRequest(token);
-        request.setAttribute("firstname", firstname);
+String token = request.getParameter("token");
+request.setAttribute("token", token);
+
+String name = basereader.nameRequest(token);
+request.setAttribute("name", name);
+
+String firstname = basereader.firstNameRequest(token);
+request.setAttribute("firstname", firstname);
+
+int numEtudiant = basereader.numEtudiantRequest(token);
+request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_accueil.jsp").forward(request, response);
 	}

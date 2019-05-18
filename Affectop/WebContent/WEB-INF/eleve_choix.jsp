@@ -21,20 +21,18 @@
 	
 	   	<form method="post" action="eleve_choix?token=${ token }">
 	   		<c:forEach var="j"  begin="1" end="${ groupOp.size() }" >
-		   		<h3>UE n°<c:out value="${ j }"></c:out>: </h3>
 		       	<table id="t01">
-		      	<tr> <th>Nom de l'UE </th>
-		           <c:forEach var="i"  begin="1" end="${ groupOp.get(j).size() }">
-		           		<th> <c:out value="${i}"></c:out> </th>
-		           </c:forEach>
+		      	<tr>
+			      	<th>Nom de l'UE </th>
+			      	<th>Option n°<c:out value="${ j }"></c:out></th>
 		      	</tr>
-		    	<c:forEach var="option"  items="${ options }">
-		    		<c:if test="${ groupOp.get(j).contains(option.getId()) }">
+		    	<c:forEach var="i"  begin="1" end="${ options.size() }">
+		    		<c:if test="${ groupOp.get(j).contains(options.get(i-1).getId()) }">
 			     	<p class="option">
-			                <tr> <td class = "nameOption"> <label for="option"><c:out value="${ option.nom }"/> </label> </td>
-			                <c:forEach var="i"  begin="1" end="${ groupOp.get(j).size() }">
-			                    <td> <input type="radio" id="i<c:out value="${j}"></c:out>" name="<c:out value="${ i }"/><c:out value="${j}"></c:out>" value ="<c:out value="${ option.nom }" />" required>
-			                </c:forEach> </tr>
+			                <tr>
+				                <td class = "nameOption"> <label for="option"><c:out value="${ options.get(i-1).nom }"/> </label> </td>
+				                <td><input type="number"  name="<c:out value="${ i-1 }"/><c:out value="${j}"></c:out>" value ="" required>
+			                </tr>
 			     	</p>
 			     	</c:if>
 		        </c:forEach>
@@ -44,14 +42,14 @@
 	    </form>
     
 	<ul>
-	    <c:forEach var="c"  items="${ choix }">
+	    <c:forEach var="p"  items="${ prefPerGroup }">
 	       <li>
 	       	 <p>
-		     	<c:out value="${ c.toString()}" />
+		     	<c:out value="${ p.toString()}" />
 	         </p>
 	        </li>
 	    </c:forEach>
-	    <c:if test="${ choix != null }">
+	    <c:if test="${ prefPerGroup != null }">
 			<p class="erreur">Vos préférences ont été enregistré</p>
 		</c:if>
    	</ul> 

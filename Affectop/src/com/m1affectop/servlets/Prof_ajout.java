@@ -56,6 +56,10 @@ public class Prof_ajout extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
+        
         request.setAttribute("path", new File(".").getCanonicalPath());
         
         try {
@@ -95,13 +99,16 @@ public class Prof_ajout extends HttpServlet {
 
         String token = request.getParameter("token");
         request.setAttribute("token", token);
-
+        
         String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
-
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
+        
         /*
          * Lecture du paramètre 'chemin' passé à la servlet via la déclaration
          * dans le web.xml

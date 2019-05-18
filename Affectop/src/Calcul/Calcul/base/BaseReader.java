@@ -9,6 +9,7 @@ import java.util.Map;
 
 import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
+import Calcul.Calcul.bean.Preference;
 import Calcul.Calcul.bean.Student;
 
 /**
@@ -68,7 +69,7 @@ public class BaseReader extends BaseHandler {
 				int size = rs.getInt("size");
 				int id = rs.getInt("id");
 				
-				Option o = new Option(size, intitule,mail, id);
+				Option o = new Option(size, intitule, mail, id);
 				options.put(id,o);
 				result.get(groupId-1).add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
@@ -138,34 +139,39 @@ public class BaseReader extends BaseHandler {
 		return result;
 	}
 	
-	public List<Option> getStudentPreferenceByGroup(int groupId, int studentID, int year){
+	public List<Preference> getStudentPreferences(int numEtudiant){
 		String query = 
-			"SELECT * FROM Preferences where numEtudiant = '"+studentID+"' AND groupId = '"+groupId+"' ORDER BY choice;" ;
+			"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY choice;" ;
 		System.out.println(query);
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		ResultSet rs = getResultOfQuery(query);
-		ArrayList<Option> optionsSorted = new ArrayList<>();
+		ArrayList<Preference> pref = new ArrayList<>();
 		try {
 			while (rs.next()) {
-				optionsSorted.add(options.get(rs.getInt("optionId")));
+				int choice = rs.getInt("choice");
+				int optionId = rs.getInt("optionId");
+				int groupId = rs.getInt("groupId");
+				
+				Preference p = new Preference(groupId, choice, optionId, numEtudiant);
+				pref.add(p);
 			}
-			return optionsSorted;
+			return pref;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return optionsSorted;
+			return pref;
 		}
 	}
 	
-	public Map<Integer, List<Option>> getStudentPreferences(int studentID, int year){
+	/*
+	public Map<Integer, List<Option>> getStudentPreferencesbis(int studentID){
 		int nbGroup = getNbGroups();
 		 Map<Integer, List<Option>> tmp = new HashMap<Integer, List<Option>>();
 		
 		 for(int i = 1; i <= nbGroup; i++) {
-			 tmp.put(i, getStudentPreferenceByGroup(i, studentID, year));
+			 tmp.put(i, getStudentPreferenceByGroup(i, studentID));
 		 }
 		return tmp;
-	}
+	}*/
 	
 	private int getNbGroups() {
 		String query = 
@@ -279,7 +285,7 @@ public class BaseReader extends BaseHandler {
 				int size = rs.getInt("size");
 				int id = rs.getInt("optionId");
 				
-				Option o = new Option(size, intitule,mail, id);
+				Option o = new Option(size, intitule, mail, id);
 				options.put(id,o);
 				result.add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);

@@ -42,6 +42,9 @@ public class Prof_mail extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_mail.jsp").forward(request, response);
 	}
@@ -60,6 +63,9 @@ public class Prof_mail extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
+        
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
 		
 		String mail_eleve = request.getParameter("mail_eleve");
 		request.setAttribute("mail_eleve", mail_eleve);

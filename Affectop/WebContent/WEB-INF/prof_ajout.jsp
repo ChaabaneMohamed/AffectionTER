@@ -21,7 +21,7 @@
 		progress(1);
 	</script>
 	<div class= "content">
-	<p>Ajoutez un fichier excel dans le format suivant: <c:out value="${ path }"/></p>
+	<p>Ajoutez un fichier excel dans le format suivant:</p>
 	<div class="tableau">
 	<table>
 	  <tr>

@@ -16,6 +16,7 @@ import Calcul.Calcul.base.BaseReader;
 import Calcul.Calcul.base.BaseWriter;
 import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
+import Calcul.Calcul.bean.Preference;
 import Calcul.Calcul.bean.Student;
 
 /**
@@ -48,7 +49,11 @@ public class Eleve_choix extends HttpServlet {
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
+        
 		request.setAttribute("options", basereader.getOptions(2018));
+		System.out.println(basereader.getOptions(2018).size()+"AAA");
 		
 		ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		
@@ -65,7 +70,7 @@ public class Eleve_choix extends HttpServlet {
 		BaseWriter bw = new BaseWriter();
 		bw.initConnection();
 		
-		Option op = new Option(0, null,null, 0);
+		Option op = new Option(0, null, null, 0);
         
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
@@ -76,42 +81,42 @@ public class Eleve_choix extends HttpServlet {
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
-        ArrayList<GroupOp> tmp = basereader.getGroupOptions();
+        int numEtudiant = basereader.numEtudiantRequest(token);
+        request.setAttribute("numEtudiant", numEtudiant);
         
-       
+        ArrayList<GroupOp> tmp = basereader.getGroupOptions();
         
 		Map<Integer, List<String>> choix = new HashMap<Integer, List<String>>();
 		
 		ArrayList<Option> options = basereader.getOptions(2018);
 		
-		 Map<Integer, List<Integer>> groupOps = basereader.getGroupOPs(tmp);
 		
+		Map<Integer, List<Integer>> groupOps = basereader.getGroupOPs(tmp);
+		
+		List<Preference> prefs = new ArrayList<Preference>();
+		 
 		for (int j = 1; j <= groupOps.size(); j++) {
-			List<String> ops = new ArrayList<String>();
-			for(int i = 0; i< groupOps.get(j).size(); i++) {
-				ops.add(request.getParameter("" + (i + 1) + j));
+			for(int i = 1; i<= options.size(); i++) {
+				if(request.getParameter("" + (i-1) + j) != null) {
+					Preference p = new Preference(j, Integer.parseInt(request.getParameter("" + (i-1) + j)), i, numEtudiant);
+					bw.writePreference(p);
+					prefs.add(p);
+				}
 			}
-			choix.put(j, ops);
 		}
 		
-		Map<Integer, List<Option>> prefs = new HashMap<Integer, List<Option>>();
+		Map<Integer, List<Preference>> prefPerGroup = new HashMap<Integer, List<Preference>>();
 		
-		
-		for (int i = 1; i <= groupOps.size(); i++) {
-			List<Option> opPref = new ArrayList<Option>();
-			for (String c : choix.get(i)) {
-				opPref.add(op.nameToOption(options, c));
+		for(int i = 1; i <= basereader.getNbDays(); i++) {
+			List<Preference> liste = new ArrayList<Preference>();
+			for (Preference preference : prefs) {
+				if(preference.getGroupId() == i)
+					liste.add(preference);
 			}
-			System.out.println(opPref.toString());
-			prefs.put(i, opPref);
+			prefPerGroup.put(i, liste);
 		}
 		
-		int numEtudiant = basereader.numEtudiantRequest(token);
-        //System.out.println(prefs.toString());
-		
-		bw.writePreference(numEtudiant, prefs);
-		
-		request.setAttribute("prefs", prefs);
+		request.setAttribute("prefPerGroup", prefPerGroup);
 		request.setAttribute("options", options);
 		request.setAttribute("choix", choix);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/eleve_choix.jsp").forward(request, response);
