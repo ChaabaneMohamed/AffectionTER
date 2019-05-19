@@ -60,7 +60,7 @@
 	    </c:forEach>  
    	</table>     
         
-    <h2>Liste des options :</h2>
+    <h2>Liste des UE :</h2>
     <div class="list-group">	
 		<c:forEach var="option"  items="${ options }">
 			    <a class="list-group-item list-group-item-action flex-column align-items-start">

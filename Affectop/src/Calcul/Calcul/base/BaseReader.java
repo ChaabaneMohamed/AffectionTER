@@ -124,10 +124,7 @@ public class BaseReader extends BaseHandler {
 				String lastName = rs.getString("lastName");
 				String firstName = rs.getString("firstName");
 				
-				//Map<Integer, List<Option>> preferences = getStudentPreferences(numEtu, year);
-				Student s = new Student(mail, null, nbDays,numEtu); 
-				s.setNom(lastName);
-				s.setPrenom(firstName);
+				Student s = new Student(firstName, lastName, mail,  numEtu); 
 				students.put(numEtu,s);
 				result.add(s);
 			}
@@ -141,7 +138,7 @@ public class BaseReader extends BaseHandler {
 	
 	public List<Preference> getStudentPreferences(int numEtudiant){
 		String query = 
-			"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY choice;" ;
+			"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
 		System.out.println(query);
 		ResultSet rs = getResultOfQuery(query);
 		ArrayList<Preference> pref = new ArrayList<>();
@@ -160,6 +157,15 @@ public class BaseReader extends BaseHandler {
 			e.printStackTrace();
 			return pref;
 		}
+	}
+	
+	public Map<Integer, List<Preference>> getPreferencesPerStudent(List<Student> liste){
+		Map<Integer, List<Preference>> prefs = new HashMap<Integer, List<Preference>>();
+		for (Student student : liste) {
+			int numEtudiant = student.getNumEtudiant();
+			prefs.put(numEtudiant, getStudentPreferences(numEtudiant));
+		}
+		return prefs;
 	}
 	
 	/*

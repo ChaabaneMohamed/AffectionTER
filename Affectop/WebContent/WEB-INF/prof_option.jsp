@@ -49,7 +49,7 @@
 	<c:if test="${ group == null }">
 		<form method="post" action="prof_option?token=${ token }" id="groupform">
 			<div class="field-text">
-				   	<label for="group" class="font">Nombre d'UE à choisir<span class="fb-required">*</span> :</label>
+				   	<label for="group" class="font">Nombre d'option à choisir<span class="fb-required">*</span> :</label>
 				   	<input type="number" class="form-control" name="group" id="group" required="required" aria-required="true">
 			   	</div>
 			   	

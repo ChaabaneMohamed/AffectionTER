@@ -21,10 +21,11 @@
 	
 	   	<form method="post" action="eleve_choix?token=${ token }">
 	   		<c:forEach var="j"  begin="1" end="${ groupOp.size() }" >
+	   			<h3>Option n°<c:out value="${ j }"></c:out></h3>
 		       	<table id="t01">
 		      	<tr>
 			      	<th>Nom de l'UE </th>
-			      	<th>Option n°<c:out value="${ j }"></c:out></th>
+			      	<th>Crédit</th>
 		      	</tr>
 		    	<c:forEach var="i"  begin="1" end="${ options.size() }">
 		    		<c:if test="${ groupOp.get(j).contains(options.get(i-1).getId()) }">

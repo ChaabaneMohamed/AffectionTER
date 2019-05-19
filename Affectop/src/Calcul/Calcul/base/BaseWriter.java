@@ -54,7 +54,7 @@ public class BaseWriter extends BaseHandler{
 		
 		for(Student s : repeaters.keySet()) {
 			for(Option opt : repeaters.get(s))
-				query.append("("+s.numEtu+","+opt.id+","+year+"),");
+				query.append("("+s.getNumEtudiant()+","+opt.id+","+year+"),");
 		}
 		query.replace(query.length()-1, query.length(), ";");
 		try {
@@ -87,7 +87,7 @@ public class BaseWriter extends BaseHandler{
 		try {
 			for (Affectation aff : r.results) {
 				for(Option opt : aff.options)
-					query.append("(" +opt.id+" "+aff.s.numEtu+"),\n"); 
+					query.append("(" +opt.id+" "+aff.s.getNumEtudiant()+"),\n"); 
 			}
 			query.replace (query.length()-2,query.length()-1,";");
 			System.out.println(query.toString());

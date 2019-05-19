@@ -20,29 +20,43 @@
 		progress(5);
 	</script>
 	<div class= "content">
-	<h2>Liste des élèves et leurs préférences d'options</h2>
-	</br>
-	<table>
-    	<tr>
-    		<td id="gris">Prénom</td>
-   			<td id="gris">Nom</td>
-   		</tr>
-	    <c:forEach var="eleve"  items="${ eleves }">
-	       <tr>
-	         <td class="eleve" id="gris">
-	           	<c:out value="${ eleve.nom }" />	
-	         </td>
-	       	 <td id="gris">
-		        <c:out value="${ eleve.prenom }" />
-	         </td>
-	         <c:forEach var="option"  items="${ eleve.optionPref }">
-   				<td>
-   					<c:out value="${ option.nom }"></c:out>
-   				</td>
-   			</c:forEach>
-	       </tr>
-	    </c:forEach>  
-   	</table>
+	<h2>Liste des élèves et leurs préférences d'UE pour chaque options</h2>
+	<form method="post" action="prof_apercu?token=${ token }" id="redform">  
+		<div>
+	    	<button type="submit">rafraîchir</button>
+	 	</div>
+	 	<c:forEach var="j"  begin="1" end="${ groupOp.size()}">
+	 		<h3>Option n°<c:out value="${ j }"></c:out></h3>
+			<table>
+		    	<tr>
+		    		<th id="gris">Prénom</th>
+		   			<th id="gris">Nom</th>
+		   			<c:forEach var="option"  items="${ options }">
+		   				<c:if test="${ groupOp.get(j).contains(option.getId()) }">
+		   					<th><c:out value="${ option.nom }"/></th>
+		   				</c:if>
+		   			</c:forEach>
+		   		</tr>
+			    <c:forEach var="e"  begin="0" end="${ eleves.size()-1 }">
+			       <tr>
+			         <td class="eleve" id="gris">
+			           	<c:out value="${ eleves.get(e).getNom() }" />	
+			         </td>
+			       	 <td id="gris">
+				        <c:out value="${ eleves.get(e).getPrenom() }" />
+			         </td>
+			         <c:forEach var="o"  begin="1" end="${ options.size() }">
+			         	<c:if test="${ groupOp.get(j).contains(options.get(0).getId()) }">
+			         		<c:forEach var="p"  begin="1" end="${ prefs.get(eleves.get(e).getNumEtudiant()).size() }">
+			         			<td>a</td>
+			         		</c:forEach>
+		   				</c:if>
+		   			</c:forEach>
+			       </tr>
+			    </c:forEach>  
+		   	</table>
+	   	</c:forEach>
+ 	</form>
    	
  	<footer>
 		<div class="bouton">

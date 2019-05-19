@@ -1,8 +1,7 @@
+/////////////////////////////////////TODO/////////////////////////////////
 option en UE et group en option
 
 Creer les token prof et comment en creer sans aller sur le site
-
-ajouter num étu bandeau
 
 bouton valider pour élève choix
 
@@ -36,3 +35,6 @@ changer nom bd pour faire différentes affectation.
 AJOUTER PAGE INSTALLATIONS DEPLOIEMENT SITE
 
 commencer rapport
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\FINI\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+ajouter num étu bandeau OK

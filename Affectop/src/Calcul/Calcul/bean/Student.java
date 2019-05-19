@@ -9,49 +9,27 @@ import java.util.Map;
 public class Student {
 	private String nom;
 	private String prenom;
-	public int numEtu;
 
 	private Promotion promotion;
 	/** 
 	 * le mail de l'étudiant
 	 */
 	public String mail;
-	/**
-	 * les options où l'étudiant a été accepté
-	 */
-	public Option [] affected;
-
-	/**
-	 * la liste des preferences de l'étudiant par ordre décroissant d'interet pour chaques jours 
-	 */
-	public Map<Integer, List<Option>> preferences;
-	
-	private List<Option>  optionValidé;	
-	private List<Option>  optionPref; // a enlever
 	
 	private int numEtudiant;
-	
-	public int nbDays;
-
 	
 	/**
 	 * le constructeur de la classe student
 	 * @param mail le mail de l'étudiant
-	 * @param preferences les prefereces de l'etudiants par jours
 	 * @return un etudiant
 	 */
-	public Student(String mail,Map<Integer, List<Option>> preferences,int nbDays, int numEtu) {
+	public Student(String prenom, String nom, String mail, int numEtudiant) {
+		this.nom = nom;
+		this.prenom = prenom;
 		this.mail = mail;
-		this.preferences = preferences;
-		this.affected = new Option[nbDays];
-		this.numEtu = numEtu;
+		this.numEtudiant = numEtudiant;
 	}
-	public Student(String mail,Map<Integer, List<Option>> preferences,int nbDays) {
-		this.mail = mail;
-		this.preferences = preferences;
-		this.affected = new Option[nbDays];
-		this.numEtu = 0;
-	}
+	
 	/*
 	public Eleve(String nom, String prenom, String adresseMail, Promotion promotion, List<Option> optionValidé,
 			String numEtudiant) {
@@ -63,7 +41,7 @@ public class Student {
 		this.numEtudiant = numEtudiant;
 	}*/
 	public String toString() {
-		return nom + " " +prenom + " "  + mail +" ";
+		return nom + " " +prenom + " "  + mail +" " + numEtudiant;
 	}
 	/**
 	 * Donne la satisfaction de l'étudiant définie par
@@ -92,35 +70,6 @@ public class Student {
 		this.prenom = prenom;
 		this.nom = nom;
 	}
-	public int getSatisfaction() {
-		int satis = 0;
-		for(int d = 0 ; d < affected.length; d ++) {
-			satis += preferences.get(d).size();
-			satis -= preferences.get(d).indexOf(affected[d]);
-		}
-		return satis * satis;
-	}
-	
-	public Map<Integer, List<Option>> getPreferences() {
-		return this.preferences;
-	}
-	
-	/*
-	/**
-	 * @param opt
-	 * @return true if the student is affected to this option
-	 *
-	public boolean isAffectedTo(Option opt) {
-		return affected[opt.day] == opt;
-	}
-	*/
-	/**
-	 * remove all affected option from this student
-	 */
-	public void clearAffected() {
-		for(int d = 0; d < nbDays; d++)
-			affected[d] = null;
-	}
 	
 	public Promotion getPromotion() {
 		return promotion;
@@ -128,22 +77,6 @@ public class Student {
 
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
-	}
-
-	public List<Option> getOptionValidé() {
-		return optionValidé;
-	}
-
-	public void setOptionValidé(List<Option> optionValidé) {
-		this.optionValidé = optionValidé;
-	}
-	
-	public List<Option> getOptionPref() {
-		return optionPref;
-	}
-
-	public void setOptionPref(List<Option> optionPref) {
-		this.optionPref = optionPref;
 	}
 
 	public int getNumEtudiant() {
