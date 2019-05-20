@@ -71,7 +71,7 @@
 		   	
 		   	<div class="field-text">
 			   	<label for="mail_prof" class="font">Mail de l'enseignant<span class="fb-required">*</span> :</label>
-			   	<input type="text" class="form-control" name="mail_prof" id="mail_prof" required="required" aria-required="true">
+			   	<input type="email" class="form-control" name="mail_prof" id="mail_prof" required="required" aria-required="true">
 		   	</div>
 		   	
 		   	<div class="field-text">

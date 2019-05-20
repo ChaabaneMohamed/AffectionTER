@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top, navnav">
   <div class="container">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="index?token=${ token }">
           <img src="images/logo2.png" alt="">
         </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

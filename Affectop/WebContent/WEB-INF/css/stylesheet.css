@@ -35,4 +35,8 @@
 background-color: black;
 height: 1pt;
 width: 100%;
+
+
+input:invalid {
+  border-color: red;
 }
