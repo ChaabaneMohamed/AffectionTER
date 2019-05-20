@@ -66,11 +66,10 @@ public class BaseWriter extends BaseHandler{
 		}
 	}
 	
-	public void writeOneRepeater(int numEtudiant, int optionId, int year) {
+	public void writeOneRepeater(int numEtudiant, int optionId) {
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO Repeaters (numEtudiant,optionId,year)\nVALUES\n");
-		query.append("("+numEtudiant+","+optionId+","+year+"),");
-		query.replace(query.length()-1, query.length(), ";");
+		query.append("INSERT INTO Repeaters (numEtudiant,optionId)\nVALUES\n");
+		query.append("("+numEtudiant+","+optionId+");");
 		try {
 			System.out.println(query);
 			st.executeUpdate(query.toString());

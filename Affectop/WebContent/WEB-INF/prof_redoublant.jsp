@@ -20,7 +20,7 @@
 		progress(3);
 	</script>
 	<div class= "content">
-	<h2>Sélectionnez les UE validées pour chaque étudiants</h2>
+	<h2>Sélectionnez les UE validées pour chaque étudiant redoublant</h2>
 	</br>
 	<form method="post" action="prof_redoublant?token=${ token }" id="redform">  
 		<table>
@@ -28,20 +28,20 @@
 	    		<td id="gris">Prénom</td>
 	   			<td id="gris">Nom</td>
 	   			<c:forEach var="option"  items="${ options }">
-	   			<td><c:out value="${ option.nom }"/></td>
+	   			<td id="gris"><c:out value="${ option.nom }"/></td>
 	   			</c:forEach>
 	   		</tr>
-		    <c:forEach var="eleve"  items="${ eleves }">
+		    <c:forEach var="e"  begin="0" end="${ eleves.size()-1 }">
 		       <tr>
 		         <td class="eleve" id="gris">
-		           	<c:out value="${ eleve.getNom() }" />	
+		           	<c:out value="${ eleves.get(e).getNom() }" />	
 		         </td>
 		       	 <td id="gris">
-			        <c:out value="${ eleve.getPrenom() }" />
+			        <c:out value="${ eleves.get(e).getPrenom() }" />
 		         </td>
-		         <c:forEach var="option"  items="${ options }">
+		         <c:forEach var="o"  begin="0" end="${ options.size()-1 }">
 	   				<td>
-	   					<input type="checkbox" id="redoublant" name="valide${ eleves.indexOf(eleve) +1}_${ options.indexOf(option) +1}" value="${ eleve.prenom } ${ eleve.nom } a valide ${ option.nom }">
+	   					<input type="checkbox" id="redoublant" name="valide${e}_${o}" value="${ true }">
 	    				<label for="redoublant"></label>
 	   				</td>
 	   			</c:forEach>

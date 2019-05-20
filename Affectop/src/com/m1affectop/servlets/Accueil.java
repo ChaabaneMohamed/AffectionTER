@@ -33,7 +33,6 @@ public class Accueil extends HttpServlet {
 		BaseWriter bw = new BaseWriter();
 		bw.initConnection();
 		
-        
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
@@ -42,9 +41,6 @@ public class Accueil extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	}
@@ -63,9 +59,6 @@ public class Accueil extends HttpServlet {
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	}

@@ -139,7 +139,7 @@ public class BaseReader extends BaseHandler {
 	public List<Preference> getStudentPreferences(int numEtudiant){
 		String query = 
 			"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
-		System.out.println(query);
+		//System.out.println(query);
 		ResultSet rs = getResultOfQuery(query);
 		ArrayList<Preference> pref = new ArrayList<>();
 		try {
@@ -147,7 +147,7 @@ public class BaseReader extends BaseHandler {
 				int choice = rs.getInt("choice");
 				int optionId = rs.getInt("optionId");
 				int groupId = rs.getInt("groupId");
-				
+				System.out.println("Preference " + groupId + " " + optionId + " " + choice);
 				Preference p = new Preference(groupId, choice, optionId, numEtudiant);
 				pref.add(p);
 			}
@@ -386,7 +386,7 @@ public class BaseReader extends BaseHandler {
 	}
 
 	private String teachersQueryBuilder(String col, String token) {
-		return "SELECT " + col + " FROM Teachers WHERE token=\"" + token + "\";";
+		return "SELECT " + col + " FROM Teachers WHERE token=" + token + ";";
 
 	}
 
@@ -428,6 +428,18 @@ public class BaseReader extends BaseHandler {
 
 		return studentsQueryRequest("firstname", token);
 	}
+	
+	
+	public String nameRequestTeacher(String token) {
+		return teachersQueryRequest("lastname", token);
+
+	}
+
+	public String firstNameRequestTeacher(String token) {
+
+		return teachersQueryRequest("firstname", token);
+	}
+	
 	
 	public int numEtudiantRequest(String token) {
 

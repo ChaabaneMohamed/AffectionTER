@@ -33,37 +33,37 @@ public class Prof_accueil extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
         
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
-		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_accueil.jsp").forward(request, response);
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
+        this.getServletContext().getRequestDispatcher("/WEB-INF/prof_accueil.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-BaseReader basereader = new BaseReader();
+		BaseReader basereader = new BaseReader();
+		        
+		String token = request.getParameter("token");
+        request.setAttribute("token", token);
         
-String token = request.getParameter("token");
-request.setAttribute("token", token);
-
-String name = basereader.nameRequest(token);
-request.setAttribute("name", name);
-
-String firstname = basereader.firstNameRequest(token);
-request.setAttribute("firstname", firstname);
-
-int numEtudiant = basereader.numEtudiantRequest(token);
-request.setAttribute("numEtudiant", numEtudiant);
+        String name = basereader.nameRequestTeacher(token);
+        request.setAttribute("name", name);
+        
+        String firstname = basereader.firstNameRequestTeacher(token);
+        request.setAttribute("firstname", firstname);
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_accueil.jsp").forward(request, response);
+        if(name == null) {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
+        this.getServletContext().getRequestDispatcher("/WEB-INF/prof_accueil.jsp").forward(request, response);
 	}
 
 }
