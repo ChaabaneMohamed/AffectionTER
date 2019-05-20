@@ -28,7 +28,7 @@
 	
 	<h2>Contenu du mail à envoyer au élèves</h2> 
 	</br>
-	<p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;LISTE_AFFECTATION&gt;</p> 
+	<p>Balises autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;LISTE_AFFECTATION&gt;</p> 
 	<form method="post" action="prof_confirmer?token=${ token }" id="mailform" class="mail">   
 		<textarea rows="10" cols="150" name="mail" form="mailform" required="required">${ !empty mail ? mail : 'Ecrivez le contenu du mail...' }</textarea>
 	    </br>

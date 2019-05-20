@@ -39,7 +39,9 @@
 		        </c:forEach>
 	    	</table>
 	    </c:forEach>
-	        <input type="submit" value="Valider vos choix"/> 
+	    <c:if test="${ prefPerGroup == null }">
+	        <input type="submit" value="Valider vos choix"/>
+	        </c:if> 
 	    </form>
     
 	<ul>
@@ -56,11 +58,13 @@
    	</ul> 
 	
 	<footer>
-			<div class="bouton">
+	<c:if test="${ prefPerGroup != null }">
+			<div class="bouton" >
 				<p>
 					<a href="eleve_valider?token=${ token }">Valider</a>
 				</p>
 			</div>
+			</c:if>
 			<div class="bouton_retour">
 				<p>
 					<a href="eleve_desc?token=${ token }">Précédent</a>
