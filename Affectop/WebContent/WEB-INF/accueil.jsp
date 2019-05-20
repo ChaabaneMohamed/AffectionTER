@@ -11,7 +11,7 @@
 		<%@ include file="menu_eleve.jsp" %>
 	</head>
 	<body>
-	<div class= "content">
+	<div class= "container">
 		<h2>Bienvenue sur Affectop !</h2>
 		
 		<p>Partie élève</p>

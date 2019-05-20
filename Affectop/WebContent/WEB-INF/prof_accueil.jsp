@@ -12,7 +12,7 @@
 		<%@ include file="menu_eleve.jsp" %>
 	</head>
 	<body>
-	<div class= "content">
+	<div class= "container">
 		<h2>Bienvenue sur Affectop !</h2>
 		
 		<p>Bienvenue sur le site Affectop, créé dans le but de permettre aux élèves de classer les choix de leurs options par ordre de préférence.
@@ -20,9 +20,9 @@ Une fois triées, les options vous seront attribuées ultérieurement en fonctio
 
 		 
 	<footer>
-		<div class="bouton">
+		<div class="bouton_confirm">
 			<p>
-				<a href="prof_ajout?token=${ token }">Suivant</a>
+				<a class = "btn btn-primary" href="prof_ajout?token=${ token }" role="button" >Suivant</a>
 			</p>
 		</div>
 	</footer>

@@ -15,18 +15,22 @@
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body>   
-	<div class= "content">
-	<p>Triez les options dans l'ordre de préférence pour chaque options
-	allant de 1 à n</p>
+	<div class= "container">
+	   <c:if test="${ prefPerGroup == null }">
+	<p>Vous avez 2 * ( nombres d'UE) de points à répartir pour chaque Option, et vous devez pour chaque Options mettre des points dans au moins 75% des UE disponibles.  </p>
+	</c:if>
 	
 	   	<form method="post" action="eleve_choix?token=${ token }">
 	   		<c:forEach var="j"  begin="1" end="${ groupOp.size() }" >
+	   		<div class="trait"></div>
 	   			<h3>Option n°<c:out value="${ j }"></c:out></h3>
-		       	<table id="t01">
+		       	<table class = "table" id="t01">
+		       	<thead class = "thead-dark">
 		      	<tr>
-			      	<th>Nom de l'UE </th>
+			      	<th class = "thead-dark">Nom de l'UE </th>
 			      	<th>Crédit</th>
 		      	</tr>
+		      	</thead>
 		    	<c:forEach var="i"  begin="1" end="${ options.size() }">
 		    		<c:if test="${ groupOp.get(j).contains(options.get(i-1).getId()) }">
 			     	<p class="option">
@@ -40,7 +44,9 @@
 	    	</table>
 	    </c:forEach>
 	    <c:if test="${ prefPerGroup == null }">
-	        <input type="submit" value="Valider vos choix"/>
+	    <div class = "bouton_confirm">
+	        <input type="submit" class="btn btn-primary" value="Valider vos choix"  />
+	        </div>
 	        </c:if> 
 	    </form>
     
@@ -53,23 +59,18 @@
 	        </li>
 	    </c:forEach>
 	    <c:if test="${ prefPerGroup != null }">
-			<p class="erreur">Vos préférences ont été enregistré</p>
+			<p class="erreur">Vos préférences ont été enregistrées</p>
 		</c:if>
    	</ul> 
 	
 	<footer>
 	<c:if test="${ prefPerGroup != null }">
-			<div class="bouton" >
+			<div class="bouton_confirm" >
 				<p>
-					<a href="eleve_valider?token=${ token }">Valider</a>
+					<a class="btn btn-primary" href="eleve_valider?token=${ token }" role="button">Suivant</a>
 				</p>
 			</div>
 			</c:if>
-			<div class="bouton_retour">
-				<p>
-					<a href="eleve_desc?token=${ token }">Précédent</a>
-				</p>
-			</div>
 	</footer>
 	</div>
 </body>
