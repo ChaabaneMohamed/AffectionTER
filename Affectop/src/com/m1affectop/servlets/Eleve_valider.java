@@ -36,6 +36,10 @@ public class Eleve_valider extends HttpServlet {
         String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
         
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
+        
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
@@ -56,6 +60,10 @@ public class Eleve_valider extends HttpServlet {
         
         String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
+        
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);

@@ -33,15 +33,14 @@ public class Prof_valider extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
-		
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_valider.jsp").forward(request, response);
 	}
 
@@ -54,15 +53,14 @@ public class Prof_valider extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
-		
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_valider.jsp").forward(request, response);
 	}
 

@@ -36,6 +36,10 @@ public class Eleve_accueil extends HttpServlet {
         String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
         
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
+        
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
@@ -57,12 +61,16 @@ public class Eleve_accueil extends HttpServlet {
         String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
         
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
+        
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
         int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
-
+        request.setAttribute("numEtudiant", numEtudiant); 
+        
 		this.getServletContext().getRequestDispatcher("/WEB-INF/eleve_accueil.jsp").forward(request, response);
 	}
 

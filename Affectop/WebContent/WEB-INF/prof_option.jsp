@@ -79,11 +79,11 @@
 			   	<input type="number" class="form-control" name="size" id="size" required="required" aria-required="true">
 		   	</div>
 		   	
-		   	<p class="font">Donnez les Différentes UE<span class="fb-required">*</span> :</p>
+		   	<p class="font">Donnez les Différentes Options<span class="fb-required">*</span> :</p>
 		   	<div class="checkbox-group groupes">
 		   			<c:forEach var="i" begin="1" end="${ group }">
 		   			<input type="checkbox" id="groupe_${ i }" name="groupe_${ i }" value="groupe_${ i }" required>
-				    <label for="groupe_${ i }">UE <c:out value="${ i }"></c:out></label>
+				    <label for="groupe_${ i }">Option <c:out value="${ i }"></c:out></label>
 					</c:forEach>
 		   	</div>
 	   	</div>

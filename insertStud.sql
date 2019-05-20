@@ -1,17 +1,20 @@
 INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
-	VALUES(2018,'GABIOT','julien','16018927','test.test@etu.univ-amu.fr','1234','SIN301');
+	VALUES(2017,'GABIOT','julien','16018927','test.test@etu.univ-amu.fr','1234','SIN301');
 	
 INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
-	VALUES(2018,'AISSA','mohammed','13000771','test.test@etu.univ-amu.fr','1235','SIN301');
+	VALUES(2017,'AISSA','mohammed','13000771','test.test@etu.univ-amu.fr','1235','SIN301');
 	
 INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
-	VALUES(2018,'KHEDIJA','omar','15007622','test.test@etu.univ-amu.fr','1236','SIN301');
+	VALUES(2017,'KHEDIJA','omar','15007622','test.test@etu.univ-amu.fr','1236','SIN301');
 
 INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
-	VALUES(2018,'KHEDIJA','chriss','13000718','test.test@etu.univ-amu.fr','1237','SIN301');
+	VALUES(2017,'KHEDIJA','chriss','13000718','test.test@etu.univ-amu.fr','1237','SIN301');
 
 INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
-	VALUES(2018,'SBROGGIO','ilef','15026324','test.test@etu.univ-amu.fr','1238','SIN301');
+	VALUES(2017,'SBROGGIO','ilef','15026324','test.test@etu.univ-amu.fr','1238','SIN301');
+
+INSERT INTO Teachers (lastName,firstName,mail,token)
+	VALUES('ProfTest','ProfTest','test.test@etu.univ-amu.fr','1222');
 
 INSERT INTO GroupOp (groupId, optionId)
 	VALUES(1, 1);

@@ -16,7 +16,7 @@
 </head>
 <body>   
 	<div class= "content">
-	<p>Triez les options dans l'ordre de préférence pour chaque UE
+	<p>Triez les options dans l'ordre de préférence pour chaque options
 	allant de 1 à n</p>
 	
 	   	<form method="post" action="eleve_choix?token=${ token }">

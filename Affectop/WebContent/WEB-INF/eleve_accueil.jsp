@@ -8,7 +8,6 @@
 			<style>
 		<%@ include file="css/stylesheet.css"%>
 		</style>
-
 		<%@ include file="menu_eleve.jsp" %>
 	</head>
 	

@@ -40,17 +40,17 @@ public class Prof_confirmer extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
 		
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_confirmer.jsp").forward(request, response);
 	}
 
@@ -63,14 +63,11 @@ public class Prof_confirmer extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
 		
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
@@ -86,7 +83,9 @@ public class Prof_confirmer extends HttpServlet {
 		request.setAttribute("result", result);
 		
 		request.setAttribute("mail", mail);
-		
+		if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_confirmer.jsp").forward(request, response);
 	}
 

@@ -37,20 +37,26 @@
 		   				</c:if>
 		   			</c:forEach>
 		   		</tr>
-			    <c:forEach var="e"  begin="0" end="${ eleves.size()-1 }">
+			    <c:forEach var="e"  begin="1" end="${ eleves.size() }">
 			       <tr>
 			         <td class="eleve" id="gris">
-			           	<c:out value="${ eleves.get(e).getNom() }" />	
+			           	<c:out value="${ eleves.get(e-1).getNom() }" />	
 			         </td>
 			       	 <td id="gris">
-				        <c:out value="${ eleves.get(e).getPrenom() }" />
+				        <c:out value="${ eleves.get(e-1).getPrenom() }" />
 			         </td>
-			         <c:forEach var="o"  begin="1" end="${ options.size() }">
-			         	<c:if test="${ groupOp.get(j).contains(options.get(0).getId()) }">
-			         		<c:forEach var="p"  begin="1" end="${ prefs.get(eleves.get(e).getNumEtudiant()).size() }">
-			         			<td>a</td>
+			         <c:forEach var="o"  begin="0" end="${ options.size()-1 }">
+			         	
+			         	<c:if test="${ groupOp.get(j).contains(options.get(o).getId()) }">
+			         		<c:forEach var="p"  items="${ prefs.get(eleves.get(e-1).getNumEtudiant()) }">
+			         			<c:if test="${ p.getGroupId() == j }">
+				         			<c:if test="${ p.getOptionId() == options.get(o).getId() }">
+				         				<td><c:out value="${ p.getChoice() }"/></td>
+				         			</c:if>
+			         			</c:if>
 			         		</c:forEach>
 		   				</c:if>
+		   				
 		   			</c:forEach>
 			       </tr>
 			    </c:forEach>  

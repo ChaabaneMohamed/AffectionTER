@@ -43,29 +43,30 @@ public class Prof_apercu extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
 		
         request.setAttribute("options", basereader.getOptions(2018));
   
         ArrayList<Student> eleves = basereader.getStudents(2017);
         request.setAttribute("eleves", eleves);
         
-        request.setAttribute("prefs", basereader.getPreferencesPerStudent(eleves));
+        
+        request.setAttribute("prefs", basereader.getPreferencesPerStudent(eleves));      
         
         Map<Integer, List<Preference>> e = basereader.getPreferencesPerStudent(eleves);
-        List<Preference> a = e.get(1);
+
         
+        List<Preference> a = e.get(11520172);
         ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		
 		request.setAttribute("groupOp", basereader.getGroupOPs(tmp));
-        
+		if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
         this.getServletContext().getRequestDispatcher("/WEB-INF/prof_apercu.jsp").forward(request, response);
 	}
 
@@ -78,14 +79,11 @@ public class Prof_apercu extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
         
         request.setAttribute("options", basereader.getOptions(2018));
         
@@ -97,7 +95,9 @@ public class Prof_apercu extends HttpServlet {
         ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		
 		request.setAttribute("groupOp", basereader.getGroupOPs(tmp));
-		
+		if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
         this.getServletContext().getRequestDispatcher("/WEB-INF/prof_apercu.jsp").forward(request, response);
 	}
 

@@ -41,17 +41,17 @@ public class Prof_redoublant extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
         
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_redoublant.jsp").forward(request, response);
 	}
 
@@ -66,14 +66,11 @@ public class Prof_redoublant extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
 
         ArrayList<Option> options = basereader.getOptions(2018);
         ArrayList<Student> students = basereader.getStudents(2017);
@@ -81,16 +78,20 @@ public class Prof_redoublant extends HttpServlet {
 		request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
 		
-        for(int i = 1; i <= options.size(); i++) {
-        	for (int j = 1; j <= students.size(); j++) {
-        		if(request.getParameter("valide"+i+"_"+j) != null)
-        			bw.writeOneRepeater(basereader.numEtudiantRequest(token), options.get(i-1).id, 2017);
+        
+        for (int i = 0; i < students.size(); i++) {
+        	for(int j = 0; j < options.size(); j++) {
+        		if(request.getParameter("valide"+i+"_"+(j)) != null)
+        			bw.writeOneRepeater( students.get(i).getNumEtudiant(), options.get(j).id);
         	}
         }
         
         request.setAttribute("options", options);
         request.setAttribute("eleves", students);
         request.setAttribute("redoublants", basereader.getRepeater(2017));
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_redoublant.jsp").forward(request, response);
 	}
 

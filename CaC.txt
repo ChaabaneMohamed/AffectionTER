@@ -1,19 +1,12 @@
 /////////////////////////////////////TODO/////////////////////////////////
-option en UE et group en option
-
-Creer les token prof et comment en creer sans aller sur le site
 
 bouton valider pour élève choix
 
 prof choix message vert ou rouge selon test et update tableau
 
-Option pas UE
-
-afficher effectif prof_option
-
 tableau prof option
 
-ajouter mot redoublant prof_redoublant
+afficher effectif prof_option 
 
 UE deja validée : on ne l'affiche pas ( 0 pioints a l'interieur )
 nombre de points de l'étudiant redoublant : total des points ( comme un étudiant non redoublant)
@@ -38,3 +31,13 @@ commencer rapport
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\FINI\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ajouter num étu bandeau OK
+
+Creer les token prof et comment en creer sans aller sur le site OK
+
+faire les redoublant OK
+
+ajouter mot redoublant prof_redoublant OK
+
+Option pas UE OK
+
+option en UE et group en option OK

@@ -46,6 +46,10 @@ public class Eleve_choix extends HttpServlet {
         String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
         
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
+        
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
         
@@ -77,6 +81,10 @@ public class Eleve_choix extends HttpServlet {
         
         String name = basereader.nameRequest(token);
         request.setAttribute("name", name);
+        
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
         
         String firstname = basereader.firstNameRequest(token);
         request.setAttribute("firstname", firstname);
@@ -119,6 +127,7 @@ public class Eleve_choix extends HttpServlet {
 		request.setAttribute("prefPerGroup", prefPerGroup);
 		request.setAttribute("options", options);
 		request.setAttribute("choix", choix);
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/eleve_choix.jsp").forward(request, response);
 	}
 

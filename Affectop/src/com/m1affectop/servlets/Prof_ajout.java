@@ -51,14 +51,11 @@ public class Prof_ajout extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
         
         request.setAttribute("path", new File(".").getCanonicalPath());
         
@@ -85,7 +82,9 @@ public class Prof_ajout extends HttpServlet {
 
         //er.request("./opt/tomcat/Affectop/Webcontent/datas/Saint_Charles.xlsx");
         
-        
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_ajout.jsp").forward(request, response);
 	}
 
@@ -100,14 +99,11 @@ public class Prof_ajout extends HttpServlet {
         String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
         
         /*
          * Lecture du paramètre 'chemin' passé à la servlet via la déclaration
@@ -138,6 +134,9 @@ public class Prof_ajout extends HttpServlet {
             request.setAttribute(nomChamp, nomFichier);
         }
         er.request("C:/temp/Saint_Charles.xlsx");
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
         this.getServletContext().getRequestDispatcher("/WEB-INF/prof_ajout.jsp").forward(request, response);
     }
 	

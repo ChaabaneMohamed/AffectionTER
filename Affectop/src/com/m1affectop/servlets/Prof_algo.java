@@ -47,14 +47,11 @@ public class Prof_algo extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
-        
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
        
         // On lance l'algo avec des students et options aléatoire
 		//ArrayList<ArrayList<Option>> options= AffectopTest.randomOptions(nbDays,new int[]{2,2,2,2,2},new int[]{4,4,4,4,4},new int[]{40,40,40,40,40},new int[]{50,50,50,50,50});
@@ -65,7 +62,8 @@ public class Prof_algo extends HttpServlet {
 		
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
-		
+        
+
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_algo.jsp").forward(request, response);
 	}
 
@@ -78,15 +76,15 @@ public class Prof_algo extends HttpServlet {
 		String token = request.getParameter("token");
         request.setAttribute("token", token);
         
-        String name = basereader.nameRequest(token);
+        String name = basereader.nameRequestTeacher(token);
         request.setAttribute("name", name);
         
-        String firstname = basereader.firstNameRequest(token);
+        String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
         
-        int numEtudiant = basereader.numEtudiantRequest(token);
-        request.setAttribute("numEtudiant", numEtudiant);
-		
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_algo.jsp").forward(request, response);
 	}
 
