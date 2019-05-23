@@ -14,17 +14,17 @@
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body>   
-	<%@ include file="progress.jsp" %>
-	<script>
-		$('.progress .circle').removeClass().addClass('circle');
-		$('.progress .bar').removeClass().addClass('bar');
-		progress(1);
-	</script>
-	<div class= "content">
+	<div class= "container">
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 20%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+	
 	<p>Ajoutez un fichier excel dans le format suivant:</p>
+
 	<c:if test="${ empty fichier }">
-		<div class="tableau">
-		<table>
+		<div>
+		<table class="table" >
+		<thead class = "thead-dark">
 		  <tr>
 		    <td>Nom</td>
 		    <td>Prénom</td>
@@ -35,6 +35,7 @@
 		    <td>Année</td>
 		    <td>Courriel</td>
 		  </tr>
+		  </thead>
 		  <tr>
 		    <td>Martin</td>
 		    <td>Dupond</td>
@@ -117,9 +118,9 @@
     
 
 	<footer>
-		<div class="bouton">
+		<div class="bouton_confirm">
 			<p>
-				<a href="prof_option?token=${ token }">Suivant</a>
+				<a class="btn btn-primary" href="prof_option?token=${ token }" role="button" >Confirmer</a>
 			</p>
 		</div>
 	</footer>

@@ -13,10 +13,14 @@
 	</head>
 	<body>
 	<div class= "container">
+		<div class="progress">
+ 		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 10%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+	</div>	
 		<h2>Bienvenue sur Affectop !</h2>
 		
 		<p>Bienvenue sur le site Affectop, créé dans le but de permettre aux élèves de classer les choix de leurs options par ordre de préférence.
-Une fois triées, les options vous seront attribuées ultérieurement en fonction du nombre de places disponibles.</p>
+	Sur cette plateforme, vous devrez créer des ensembles d'options à proposer aux étudiants, qu'ils trieront ensuite par ordre de préférence, afin d'obtenir une attribution optimale pour chaque
+	étudiant.</p>
 
 		 
 	<footer>

@@ -37,8 +37,7 @@ display: block;
 	
 	margin-left: auto;
   	margin-right: auto;
-  	padding-left: 100px;
-  	padding-right: 100px;
+  	width: 100%;
   	overflow: auto;
   	z-index: 1;
 }
@@ -53,3 +52,17 @@ width: 100%;
 input:error {
   border-color: red;
 }
+
+.border {
+ border-collapse: collapse;
+}
+
+.my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+

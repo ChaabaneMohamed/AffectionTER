@@ -27,7 +27,7 @@
 		       	<table class = "table" id="t01">
 		       	<thead class = "thead-dark">
 		      	<tr>
-			      	<th class = "thead-dark">Nom de l'UE </th>
+			      	<th>Nom de l'UE </th>
 			      	<th>Crédit</th>
 		      	</tr>
 		      	</thead>

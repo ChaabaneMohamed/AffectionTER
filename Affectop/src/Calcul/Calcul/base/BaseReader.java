@@ -139,7 +139,7 @@ public class BaseReader extends BaseHandler {
 	
 	public List<Preference> getStudentPreferences(int numEtudiant){
 		String query = 
-			"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
+			"SELECT DISTINCT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
 		//System.out.println(query);
 		ResultSet rs = getResultOfQuery(query);
 		ArrayList<Preference> pref = new ArrayList<>();
