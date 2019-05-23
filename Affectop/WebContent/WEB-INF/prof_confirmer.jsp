@@ -37,13 +37,13 @@
     <h2>Liste des élèves :</h2>   
     <div class ="table-wrapper-scroll-y my-custom-scrollbar">
     <table class = "table table-bordered table-striped mb-0 ">
-    		<tr>
-	    		<thead class = "thead-dark">
+    		<thead class = "thead-dark">
+    			<tr>
 	    			<th>Prénom</th>
 	    			<th>Nom</th>
 	    			<th>email</th>
-	    		<thead>
-    		</tr>
+    			</tr>
+    		<thead>
 	    <c:forEach var="eleve"  items="${ eleves }">
 	       <tr>
 	         <td class="eleve" id="gris">
