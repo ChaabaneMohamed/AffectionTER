@@ -133,7 +133,11 @@ public class Prof_ajout extends HttpServlet {
 
             request.setAttribute(nomChamp, nomFichier);
         }
-        er.request("C:/temp/Saint_Charles.xlsx");
+        er.request("C:/temp/"+nomFichier);
+        
+        request.setAttribute("options", basereader.getOptions(2018));
+        request.setAttribute("eleves", basereader.getStudents(2017));
+        
         if(name == "") {
         	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
         }

@@ -23,7 +23,7 @@
 	   	<form method="post" action="eleve_choix?token=${ token }">
 	   		<c:forEach var="j"  begin="1" end="${ groupOp.size() }" >
 	   		<div class="trait"></div>
-	   			<h3>Option n°<c:out value="${ j }"></c:out></h3>
+	   			<h3>Option n°<c:out value="${ j }"></c:out> ( Crédits : <c:out value="${ groupOp.get(j).size() * 2 }"></c:out> ) </h3>
 		       	<table class = "table" id="t01">
 		       	<thead class = "thead-dark">
 		      	<tr>

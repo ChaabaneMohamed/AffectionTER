@@ -5,6 +5,19 @@
 	color : red;
 }
 
+.valid{
+	color : green;
+}
+
+.my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
 .logo{
 	  float: left; 
 }
@@ -37,6 +50,6 @@ height: 1pt;
 width: 100%;
 
 
-input:invalid {
+input:error {
   border-color: red;
 }

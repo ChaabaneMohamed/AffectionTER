@@ -107,7 +107,12 @@ public class Eleve_choix extends HttpServlet {
 			for(int i = 1; i<= options.size(); i++) {
 				if(request.getParameter("" + (i-1) + j) != null) {
 					Preference p = new Preference(j, Integer.parseInt(request.getParameter("" + (i-1) + j)), i, numEtudiant);
-					bw.writePreference(p);
+					if(basereader.preferenceExist(p)) {
+						bw.updatePreference(p);
+					}
+					else {
+						bw.writePreference(p);
+					}
 					prefs.add(p);
 				}
 			}

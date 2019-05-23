@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 
 import Calcul.Calcul.base.BaseReader;
+import Calcul.Calcul.bean.Student;
 import Calcul.Calcul.exceptions.UnexpectedFileException;
 import Calcul.Calcul.mail.MailManager;
 
@@ -82,8 +83,46 @@ public class TxtToMail {
 		
 		return table;
 	}
-
-	private static String listeTag = "NOM PRENOM DATE LISTE_AFFECTATION";
+	
+	public static String custom(Student student, String mail) {
+		Map<String, ArrayList<String>> map = tagChecker(mail);
+		ArrayList<String> list = map.get("Valid");
+		for (String balise : list) {
+			mail = mail.replace(balise, tagRequest(balise, student));
+		}
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private static String tagRequest(String balise, Student student) {
+		String result = "UNKNOWN TAG";
+		switch (balise) {
+		case "NOM":
+			result = student.getNom();
+			break;		
+		case "PRENOM":
+			result = student.getPrenom();		
+			break;
+		case "NUMETU":
+			result = Integer.toString(student.getNumEtudiant());
+			break;
+		case "LIEN_FORM":
+			result = "http://localhost:8080/Affectop/eleve_accueil?token=" + student.getToken();
+			break;
+		case "LIENPDF":
+			result = student.getNom();		
+			break;
+			
+		default:
+			break;
+		}
+		return result;
+	}
+	
+	
+	
+	
+	private static String listeTag = "NOM PRENOM NUMETU LIEN_FORM LIENPDF LISTE_AFFECTATION";
 
 	/**
 	 * Return all tag that don't belong to the listeTag, case sensitive
@@ -128,4 +167,6 @@ public class TxtToMail {
 		res.put("Invalid", result);
 		return res;
 	}
+
+	
 }

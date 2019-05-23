@@ -29,8 +29,8 @@
 	 		<h3>Option n°<c:out value="${ j }"></c:out></h3>
 			<table>
 		    	<tr>
-		    		<th id="gris">Prénom</th>
-		   			<th id="gris">Nom</th>
+		    		<th id="gris">Nom</th>
+		   			<th id="gris">Prénom</th>
 		   			<c:forEach var="option"  items="${ options }">
 		   				<c:if test="${ groupOp.get(j).contains(option.getId()) }">
 		   					<th><c:out value="${ option.nom }"/></th>

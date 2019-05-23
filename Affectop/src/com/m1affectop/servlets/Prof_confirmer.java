@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Calcul.Calcul.base.BaseReader;
 import Calcul.Calcul.bean.Student;
+import Calcul.Calcul.utils.SendEmailTLS2;
 import Calcul.Calcul.utils.TxtToMail;
 import Calcul.Calcul.bean.Option;
 /**
@@ -72,11 +73,26 @@ public class Prof_confirmer extends HttpServlet {
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
 		
+        ArrayList<Student> eleves = basereader.getStudents(2017);
+        
 		String mail = request.getParameter("mail");
 		
 		Map<String, ArrayList<String>> res = new HashMap<>();
 		
 		res = TxtToMail.tagChecker(mail);
+		
+		SendEmailTLS2 send = new SendEmailTLS2("741VhY741");
+		for (Student student : eleves) {
+			String customMail = TxtToMail.custom(student, mail);
+			send.setTo(student.getMail());
+			send.setContenu(customMail);
+			// mis en commentaire pour pas envoyer les mails
+			//send.sendMail();
+		}
+		
+		send.setTo("MASTERINFOLUMINY@gmail.com");
+		send.setContenu("Test envoie mail Affectop");
+		send.sendMail();
 		
 		ArrayList<String> result = res.get("Invalid");
 		

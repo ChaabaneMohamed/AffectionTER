@@ -21,6 +21,10 @@ public class SendEmailTLS2 {
     	this.contenu = contenu;
     	this.to = to;
     }
+    
+    public SendEmailTLS2(String password) {
+    	this.password = password;
+    } 
 
 	public String getUsername() {
 		return username;
@@ -54,7 +58,7 @@ public class SendEmailTLS2 {
 		this.to = to;
 	}
 	
-	public boolean sendMail(SendEmailTLS2 mail) {
+	public boolean sendMail() {
 	    Properties prop = new Properties();
 			prop.put("mail.smtp.host", "smtp.gmail.com");
 	        prop.put("mail.smtp.port", "587");
@@ -64,7 +68,7 @@ public class SendEmailTLS2 {
 	        Session session = Session.getInstance(prop,
 	                new javax.mail.Authenticator() {
 	                    protected PasswordAuthentication getPasswordAuthentication() {
-	                        return new PasswordAuthentication(mail.username, mail.password);
+	                        return new PasswordAuthentication(username, password);
 	                    }
 	                });
 
@@ -74,11 +78,10 @@ public class SendEmailTLS2 {
 	            message.setFrom(new InternetAddress("MASTERINFOLUMINY@gmail.com"));
 	            message.setRecipients(
 	                    Message.RecipientType.TO,
-	                    InternetAddress.parse(mail.to)
+	                    InternetAddress.parse(to)
 	            );
 	            message.setSubject("Affectation des options");
-	            message.setText("Dear Mail Crawler,"
-	                    + "\n\n Please do not spam my email!");
+	            message.setText(contenu);
 
 	            Transport.send(message);
 

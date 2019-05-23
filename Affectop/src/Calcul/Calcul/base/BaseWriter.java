@@ -185,6 +185,23 @@ public class BaseWriter extends BaseHandler{
         }
 	}
 	
+	public void updatePreference(Preference p) {
+		StringBuilder query = new StringBuilder();
+        query.append("UPDATE Preferences SET groupId =  , choice = , optionId = , numEtudiant = "
+        		+ "where numEtudiant = '"+p.getNumEtudiant()+"' "
+        				+ "AND groupId = "+ p.getGroupId()+" "
+        				+ "AND optionId = "+ p.getOptionId()+ " "
+        				+ "AND  choice = "+ p.getChoice() +";");
+        
+        try {
+            System.out.println(query);
+            st.executeUpdate(query.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+	
 	public void deleteOption(int id) {
 		String query = "DELETE FROM Options WHERE id ="+id+";";
 				

@@ -11,8 +11,6 @@ afficher effectif prof_option
 UE deja validée : on ne l'affiche pas ( 0 pioints a l'interieur )
 nombre de points de l'étudiant redoublant : total des points ( comme un étudiant non redoublant)
 
-Balises : NOM PRENOM NUMETU LIEN_FORM
-
 prof_apercu: ajouter pourcentage/ Nb eleve qui on répondu
 + popup algo
 
@@ -39,5 +37,8 @@ faire les redoublant OK
 ajouter mot redoublant prof_redoublant OK
 
 Option pas UE OK
+
+
+Balises : NOM PRENOM NUMETU LIEN_FORM OK
 
 option en UE et group en option OK

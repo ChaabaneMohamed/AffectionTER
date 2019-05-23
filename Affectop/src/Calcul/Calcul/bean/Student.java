@@ -16,6 +16,16 @@ public class Student {
 	 */
 	public String mail;
 	
+	public String token;
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	private int numEtudiant;
 	
 	/**
@@ -23,11 +33,12 @@ public class Student {
 	 * @param mail le mail de l'étudiant
 	 * @return un etudiant
 	 */
-	public Student(String prenom, String nom, String mail, int numEtudiant) {
+	public Student(String prenom, String nom, String mail, int numEtudiant, String token) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
 		this.numEtudiant = numEtudiant;
+		this.token = token;
 	}
 	
 	/*

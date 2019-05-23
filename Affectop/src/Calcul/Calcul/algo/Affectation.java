@@ -23,10 +23,10 @@ public class Affectation {
 	private ArrayList<Integer> effectif; // Récupère les effectifs des UE pour les changer a chaque affectation
 	private ArrayList<ArrayList<Etudiant>> optionList;
 
-	Affectation(int numAffectation) {
+	Affectation(int numAffectation, ArrayList<Etudiant> etudiants, ArrayList<UE> ue) {
 		this.numAffectation = numAffectation; // Le fichier qui contient toutes les informations pour affecter
-		listeAffectation = new ArrayList<Etudiant>();
-		optionData = new ArrayList<UE>();
+		listeAffectation = etudiants;
+		optionData = ue;
 		effectif = new ArrayList<Integer>();
 		optionList = new ArrayList<ArrayList<Etudiant>>();
 

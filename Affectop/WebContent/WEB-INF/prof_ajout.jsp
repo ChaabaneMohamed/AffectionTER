@@ -22,52 +22,80 @@
 	</script>
 	<div class= "content">
 	<p>Ajoutez un fichier excel dans le format suivant:</p>
-	<div class="tableau">
-	<table>
-	  <tr>
-	    <td>Nom</td>
-	    <td>Prénom</td>
-	    <td>Carte</td>
-	    <td>Étape</td>
-	    <td>Nom de l'étape</td>
-	    <td>VET</td>
-	    <td>Année</td>
-	    <td>Courriel</td>
-	  </tr>
-	  <tr>
-	    <td>Martin</td>
-	    <td>Dupond</td>
-	    <td>15019999</td>
-	    <td>xxx999</td>
-	    <td>AMU.Xx Informatique</td>
-	    <td>Vxxx</td>
-	    <td>xxxx</td>
-	    <td>martin.dupond@etu.univ-amu.fr</td>
-	  </tr>
-	  <tr>
-	    <td>Jacques</td>
-	    <td>Chirac</td>
-	    <td>15012086</td>
-	    <td>xxx916</td>
-	    <td>AMU.Xx Informatique</td>
-	    <td>Vxxx</td>
-	    <td>xxxx</td>
-	    <td>jacques.chirac@etu.univ-amu.fr</td>
-	  </tr>
-	  <tr>
-	    <td>...</td>
-	    <td>...</td>
-	    <td>...</td>
-	    <td>...</td>
-	    <td>...</td>
-	    <td>...</td>
-	    <td>...</td>
-	    <td>...</td>
-	  </tr>
-	</table>
-	</div>
-
-	<a href="datas/temp.xlsx" download>Cliquez ici pour télecharger un exemple</a>
+	<c:if test="${ empty fichier }">
+		<div class="tableau">
+		<table>
+		  <tr>
+		    <td>Nom</td>
+		    <td>Prénom</td>
+		    <td>Carte</td>
+		    <td>Étape</td>
+		    <td>Nom de l'étape</td>
+		    <td>VET</td>
+		    <td>Année</td>
+		    <td>Courriel</td>
+		  </tr>
+		  <tr>
+		    <td>Martin</td>
+		    <td>Dupond</td>
+		    <td>15019999</td>
+		    <td>xxx999</td>
+		    <td>AMU.Xx Informatique</td>
+		    <td>Vxxx</td>
+		    <td>xxxx</td>
+		    <td>martin.dupond@etu.univ-amu.fr</td>
+		  </tr>
+		  <tr>
+		    <td>Jacques</td>
+		    <td>Chirac</td>
+		    <td>15012086</td>
+		    <td>xxx916</td>
+		    <td>AMU.Xx Informatique</td>
+		    <td>Vxxx</td>
+		    <td>xxxx</td>
+		    <td>jacques.chirac@etu.univ-amu.fr</td>
+		  </tr>
+		  <tr>
+		    <td>...</td>
+		    <td>...</td>
+		    <td>...</td>
+		    <td>...</td>
+		    <td>...</td>
+		    <td>...</td>
+		    <td>...</td>
+		    <td>...</td>
+		  </tr>
+		</table>
+		</div>
+		
+		<a href="datas/temp.xlsx" download>Cliquez ici pour télecharger un exemple</a>
+	</c:if>
+	
+	<c:if test="${ !empty fichier }">
+	
+	  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+		<table class="table table-bordered table-striped mb-0">
+	    		<tr>
+	    			<th id="gris">Prénom</td>
+	    			<th id="gris">Nom</td>
+	    			<th>Email</td>
+	    		</tr>
+		    <c:forEach var="eleve"  items="${ eleves }">
+		       <tr>
+		         <td class="eleve" id="gris">
+		           	<c:out value="${ eleve.nom }" />	
+		         </td>
+		       	 <td id="gris">
+			        <c:out value="${ eleve.prenom }" />
+		         </td>
+		         <td>
+			        <c:out value="${ eleve.mail }" />
+		         </td>
+		       </tr>
+		    </c:forEach>  
+	   	</table>
+	  </div>
+   	</c:if>
 
     <form id="upload" method="post" action="prof_ajout?token=${ token }" enctype="multipart/form-data">
         <fieldset>
@@ -85,7 +113,7 @@
 		
 		</fieldset>
     </form>
-    <c:if test="${ !empty fichier }"><p class="erreur"><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
+    <c:if test="${ !empty fichier }"><p class="valid"><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
     
 
 	<footer>

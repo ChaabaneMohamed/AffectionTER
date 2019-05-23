@@ -93,10 +93,10 @@ public class BaseReader extends BaseHandler {
 	public String tagRequest(String tag, String token) {
 		String tagcontent = tag.substring(1, tag.length() - 1);
 		System.out.println(tagcontent);
-		if (tagcontent.equalsIgnoreCase("nom")) {
+		if (tagcontent.equalsIgnoreCase("NOM")) {
 			return nameRequest(token);
 		}
-		if (tagcontent.equalsIgnoreCase("prenom")) {
+		if (tagcontent.equalsIgnoreCase("PRENOM")) {
 			return firstNameRequest(token);
 		}
 		if (tagcontent.equalsIgnoreCase("LISTE_AFFECTATION")) {
@@ -123,8 +123,9 @@ public class BaseReader extends BaseHandler {
 				Integer numEtu = rs.getInt("numEtudiant");
 				String lastName = rs.getString("lastName");
 				String firstName = rs.getString("firstName");
+				String token = rs.getString("token");
 				
-				Student s = new Student(firstName, lastName, mail,  numEtu); 
+				Student s = new Student(firstName, lastName, mail,  numEtu, token); 
 				students.put(numEtu,s);
 				result.add(s);
 			}
@@ -156,6 +157,27 @@ public class BaseReader extends BaseHandler {
 		catch(Exception e) {
 			e.printStackTrace();
 			return pref;
+		}
+	}
+	
+	public boolean preferenceExist(Preference p){
+		String query = 
+			"SELECT * FROM Preferences where numEtudiant = '"+p.getNumEtudiant()+"' "
+					+ "AND groupId = "+ p.getGroupId()+" "
+					+ "AND optionId = "+ p.getOptionId()+";" ;
+		System.out.println(query);
+		ResultSet rs = getResultOfQuery(query);
+		try {
+			if(rs.next()) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
