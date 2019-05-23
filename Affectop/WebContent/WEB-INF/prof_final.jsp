@@ -14,13 +14,11 @@
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body>  
-	<%@ include file="progress.jsp" %>
-	<script>
-	$('.progress .bar').removeClass().addClass('bar');
-		progress(10);
-	</script> 
-	<div class= "content">
+<div class= "container">
+	<div class="progress">
+  		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 		<p>
+		</div>
 			Les mails ont été envoyés.
 		</p>
 	</div>

@@ -14,25 +14,24 @@
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body>  
-	<%@ include file="progress.jsp" %>
-	<script>
-	$('.progress .bar').removeClass().addClass('bar');
-		progress(6);
-	</script> 
-	<div class= "content">
+	<div class= "container">
+	<div class="progress">
+  		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+	</div>
 	
 	<p>
 		L'algorithme d'affectation a bien été lancé.
 	</p>
 	<p>Dans la prochaine page, vous pourrez envoyer des mails généralisés aux élèves avec leur affectation d'options, et un mail au secrétariat afin qu'ils aient connaissance de ces affectations.</p>
-	</div>
+	
 	
 	<footer>
-		<div class="bouton">
+		<div class="bouton_confirm">
 			<p>
-				<a href="prof_mail?token=${ token }">Suivant</a>
+				<a  class = "btn btn-primary" href="prof_mail?token=${ token }" role ="button">Suivant</a>
 			</p>
 		</div>
 	</footer>
+	</div>
 </body>
 </html>

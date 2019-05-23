@@ -14,29 +14,30 @@
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body>
-<%@ include file="progress.jsp" %>
-	<script>
-	$('.progress .bar').removeClass().addClass('bar');
-		progress(3);
-	</script>
-	<div class= "content">
+
+	<div class= "container">
+	<div class="progress">
+  		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+	</div>
 	<h2>Sélectionnez les UE validées pour chaque étudiant redoublant</h2>
 	</br>
 	<form method="post" action="prof_redoublant?token=${ token }" id="redform">  
-		<table>
+		<table class = "table table-striped">
+		<thead class = "thead-dark">
 	    	<tr>
-	    		<td id="gris">Prénom</td>
-	   			<td id="gris">Nom</td>
+	    		<th>Prénom</th>
+	   			<th>Nom</th>
 	   			<c:forEach var="option"  items="${ options }">
-	   			<td id="gris"><c:out value="${ option.nom }"/></td>
+	   			<th><c:out value="${ option.nom }"/></th>
 	   			</c:forEach>
 	   		</tr>
+	   	</thead>
 		    <c:forEach var="e"  begin="0" end="${ eleves.size()-1 }">
 		       <tr>
-		         <td class="eleve" id="gris">
+		         <td>
 		           	<c:out value="${ eleves.get(e).getNom() }" />	
 		         </td>
-		       	 <td id="gris">
+		       	 <td>
 			        <c:out value="${ eleves.get(e).getPrenom() }" />
 		         </td>
 		         <c:forEach var="o"  begin="0" end="${ options.size()-1 }">
@@ -49,20 +50,19 @@
 		    </c:forEach>  
 	   	</table>
 	   	<div>
-	    	<button type="submit">confirmer les redoublants</button>
+	    	<button class = "btn btn-info" type="submit">Confirmer les redoublants</button>
 	 	</div>
  	</form>
- 	
+ 	</br>
  	<footer>
-		<div class="bouton">
+		<div class="bouton_confirm">
 			<p>
-				<a href="prof_confirmer?token=${ token }">Suivant</a>
+				<a class="btn btn-primary"href="prof_confirmer?token=${ token }" role="button" >Suivant</a>
 			</p>
 		</div>
-		
-		<div class="bouton_retour">
+		<div>
 			<p>
-				<a href="prof_option?token=${ token }">Retour</a>
+				<a class="btn btn-dark" href="prof_option?token=${ token }" role="button">Retour</a>
 			</p>
 		</div>
 	</footer>

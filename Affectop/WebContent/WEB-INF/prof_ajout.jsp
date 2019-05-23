@@ -14,26 +14,26 @@
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body>   
-	<%@ include file="progress.jsp" %>
-	<script>
-		$('.progress .circle').removeClass().addClass('circle');
-		$('.progress .bar').removeClass().addClass('bar');
-		progress(1);
-	</script>
-	<div class= "content">
+	<div class= "container">
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 20%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+	
 	<p>Ajoutez un fichier excel dans le format suivant:</p>
-	<div class="tableau">
-	<table>
+	<div>
+	<table class="table" >
+	<thead class = "thead-dark">
 	  <tr>
-	    <td>Nom</td>
-	    <td>Prénom</td>
-	    <td>Carte</td>
-	    <td>Étape</td>
-	    <td>Nom de l'étape</td>
-	    <td>VET</td>
-	    <td>Année</td>
-	    <td>Courriel</td>
+	    <th>Nom</th>
+	    <th>Prénom</th>
+	    <th>Carte</th>
+	    <th>Étape</th>
+	    <th>Nom de l'étape</th>
+	    <th>VET</th>
+	    <th>Année</th>
+	    <th>Courriel</th>
 	  </tr>
+	  </thead>
 	  <tr>
 	    <td>Martin</td>
 	    <td>Dupond</td>
@@ -89,9 +89,9 @@
     
 
 	<footer>
-		<div class="bouton">
+		<div class="bouton_confirm">
 			<p>
-				<a href="prof_option?token=${ token }">Suivant</a>
+				<a class="btn btn-primary" href="prof_option?token=${ token }" role="button" >Confirmer</a>
 			</p>
 		</div>
 	</footer>

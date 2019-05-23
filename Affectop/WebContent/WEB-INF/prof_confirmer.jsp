@@ -16,15 +16,11 @@
 	<%@ include file="menu_eleve.jsp" %>
 </head>
 <body> 
-	<%@ include file="progress.jsp" %>
-	<script>
-	$('.progress .bar').removeClass().addClass('bar');
-		progress(4);
-	</script>
-	<div class= "content">
-	<section>  
-		<h2>Récapitulatif</h2>
-	</section>
+	<div class= "container">
+	<div class="progress">
+  		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width:60%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+	</div>
+	
 	
 	<h2>Contenu du mail à envoyer au élèves</h2> 
 	</br>
@@ -32,18 +28,21 @@
 	<form method="post" action="prof_confirmer?token=${ token }" id="mailform" class="mail">   
 		<textarea rows="10" cols="150" name="mail" form="mailform" required="required">${ !empty mail ? mail : 'Ecrivez le contenu du mail...' }</textarea>
 	    </br>
-	    <input type="submit" value="Valider le mail"/>
+	    <input class = "btn btn-info" type="submit" type="submit" value="Valider le mail"/>
     </form>
     <c:if test="${ result.size() > 0 }">
     	<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result }"><c:out value="${ r }"/> </c:forEach></p>
     </c:if>
-        
-    <h2>Liste des élèves :</h2>    
-    <table class="liste">
+ </br>
+    <h2>Liste des élèves :</h2>   
+    <div class ="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class = "table table-bordered table-striped mb-0 ">
     		<tr>
-    			<td id="gris">Prénom</td>
-    			<td id="gris">Nom</td>
-    			<td>email</td>
+    		<thead class = "thead-dark">
+    			<th>Prénom</th>
+    			<th>Nom</th>
+    			<th>email</th>
+    			<thead>
     		</tr>
 	    <c:forEach var="eleve"  items="${ eleves }">
 	       <tr>
@@ -59,33 +58,18 @@
 	       </tr>
 	    </c:forEach>  
    	</table>     
-        
-    <h2>Liste des UE :</h2>
-    <div class="list-group">	
-		<c:forEach var="option"  items="${ options }">
-			    <a class="list-group-item list-group-item-action flex-column align-items-start">
-			       <div class="d-flex w-100 justify-content-between">
-				      <h5 class="mb-1"><c:out value="${ option.nom }" /></h5>
-				   </div>
-			       <p class="mb-1">
-			       <c:out value="${ option.mail_prof }" /> 	
-			       </p>
-			       <small>Effectif: <c:out value="${ option.size }"/></small>
-			    </a> 
-		</c:forEach>
-   	</div>     
-   	
-	
+    </div>
+    </br>
 	<footer>
-		<div class="bouton">
+		<div class="bouton_confirm">
 			<p>
-				<a href="prof_valider?token=${ token }" onclick="return confirm('Etes vous sûr de vouloir envoyer les mails au eleves ?')">Envoyer les mails au elèves</a>
+				<a class = "btn btn-primary" type="submit"href="prof_valider?token=${ token }" onclick="return confirm('Etes vous sûr de vouloir envoyer les mails au eleves ?')" role = "button">Envoyer les mails au elèves</a>
 			</p>
 		</div>
 		
-		<div class="bouton_retour">
+		<div>
 			<p>
-				<a href="prof_redoublant?token=${ token }">Retour</a>
+				<a class="btn btn-dark" href="prof_redoublant?token=${ token }" role = "button">Retour</a>
 			</p>
 		</div>
 	</footer>
