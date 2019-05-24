@@ -51,16 +51,13 @@ public class BaseReader extends BaseHandler {
 
 	}
 	
-	public ArrayList<ArrayList<Option>> getOptionsPerDays(int groupId){
+	public ArrayList<Option> getOptionsPerDays(int groupId){
 		String query = "SELECT * FROM Options o;";
 
 		ResultSet rs = getResultOfQuery(query);		
-		ArrayList<ArrayList<Option>> result = new ArrayList<>();
+		ArrayList<Option> result = new ArrayList<>();
 		
-		int nbDays = getNbDays();
-		for(int d = 0 ; d < nbDays ; d++) {
-			result.add(new ArrayList<>());
-		}
+		ArrayList<GroupOp> groups = getGroupOptions();
 		
 		try {
 			while (rs.next()) {
@@ -69,12 +66,15 @@ public class BaseReader extends BaseHandler {
 				String codeModule = rs.getString("codeModule");
 				
 				int size = rs.getInt("size");
-				int id = rs.getInt("id");
+				int id = rs.getInt("optionId");
 				
-				Option o = new Option(size, intitule, mail, id, codeModule);
-				options.put(id,o);
-				result.get(groupId-1).add(o);
-				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
+				for (GroupOp groupOp : groups) {
+					if(groupOp.getGroupId() == groupId && groupOp.getOptionId() == id) {
+						Option o = new Option(size, intitule, mail, id, codeModule);
+						options.put(id,o);
+						result.add(o);
+					}
+				}
 			}
 			return result;
 		}

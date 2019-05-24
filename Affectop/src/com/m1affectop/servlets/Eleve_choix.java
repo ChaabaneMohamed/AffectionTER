@@ -129,6 +129,8 @@ public class Eleve_choix extends HttpServlet {
 			prefPerGroup.put(i, liste);
 		}
 		
+		request.setAttribute("groupOp", basereader.getGroupOPs(tmp));
+		
 		request.setAttribute("prefPerGroup", prefPerGroup);
 		request.setAttribute("options", options);
 		request.setAttribute("choix", choix);

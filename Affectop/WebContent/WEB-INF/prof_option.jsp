@@ -45,7 +45,35 @@
 	        </li>
 	       	 <a href="prof_option">Supprimer</a>
 	    </c:forEach>
-   	</ul>      
+   	</ul>     
+   	
+   	 <table class = table>
+           <tr>
+               <td>BLANK  </td>
+                   <c:forEach var="gr"  begin="1" end="${ opgr.size() }">
+                     <td>
+                         Option <c:out value="${ gr }" /> 
+                     </td>
+                   </c:forEach>
+           </tr>
+           
+	      	<c:forEach var="option"  items="${ options }">
+	      		<tr>
+	      			<td><c:out value="${ option.getNom() }" /></td>
+	           		<c:forEach var="gr"  begin="1" end="${ opgr.size() }">
+	           			<c:forEach var="g"  items="${ opgr.get(gr)}">
+		           			<c:if test="${ g.contains(option.getId()) }">
+	                             <td>X</td>
+	                         </c:if>
+	                         <c:if test="${ ! g.contains(option.getId()) }">
+	                             <td></td>
+	                         </c:if>
+                         </c:forEach>
+	           		</c:forEach>
+	           </tr>
+           </c:forEach>
+
+       </table>
 
 	</br>
 	<c:if test="${ group == null }">

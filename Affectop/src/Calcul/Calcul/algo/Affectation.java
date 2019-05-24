@@ -41,7 +41,7 @@ public class Affectation {
 	
 	void init() {
 		BaseReader basereader = new BaseReader();
-		ArrayList<Option> allUE = basereader.getOptions(2018);
+		ArrayList<Option> allUE = basereader.getOptionsPerDays(numAffectation);
         ArrayList<Student> eleves = basereader.getStudents(2017);
         
         ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
@@ -62,7 +62,8 @@ public class Affectation {
 		}
         optionData = UEs;
         
-        
+        nombreEtudiant = listeAffectation.size();
+        nombreUE = optionData.size();
         System.out.println("FIN INIT ______________________________________________________");
 	}
 
@@ -397,7 +398,7 @@ public class Affectation {
             for(int i=0; i<tableau.size(); i++){
                 int checkEtudiant = 0;
                 for(int j=0; j<listeEtudiant.size(); j++){
-                    if(tableau.get(i).idEtudiant == listeEtudiant.get(j).idEtudiant){   // On regarde si l'étudiant est déjà dans la liste
+                	if(tableau.get(i).idEtudiant.equals(listeEtudiant.get(j).idEtudiant) ){   // On regarde si l'étudiant est déjà dans la liste
                         if(listeEtudiant.get(j).nombreAffectation > 0){
                             //System.out.println("test nombre affectation");
                             checkEtudiant = 1;
