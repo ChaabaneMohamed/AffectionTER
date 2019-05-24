@@ -19,31 +19,40 @@
 		<div class="progress">
  		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 40%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 	</div>	
-	
+	</br>
 	<section>
 		<h2>Ajout des options</h2>
 	</section>
-    <ul>
-	    <c:forEach var="option"  items="${ options }">
-	       <li>
-	         <p class="option">
-	           	Nom : <c:out value="${ option.getNom() }" /> </br>  	
-	         </p>
-	         <p class="option">
-	        	 Option :
-	         	<c:forEach var="gr"  items="${ groupOp }" >
-	         		<c:if test="${ gr.getOptionId() == option.getId() }">
-	           			<c:out value="${ gr.getGroupId() }" /> 
-	           		</c:if>
-	           	</c:forEach>	
-	         </p>
-	       
-	       
-	        </li>
-	       	 <a href="prof_option">Supprimer</a>
-	    </c:forEach>
-   	</ul>      
-
+    
+   	
+   	<table class = "table table-bordered table-striped">
+   	<thead class = "thead-dark">
+   		<tr>
+   			<td>   </td>
+   				<c:forEach var="gr"  begin="1" end="${ opgr.size() }">
+	         		<th>
+	         			Option <c:out value="${ gr }" /> 
+	         		</th>
+	       		</c:forEach>	    
+   		</tr>
+   		
+   		 <c:forEach var="option"  items="${ options }">
+   		 <thead class = "thead-dark">
+   		<tr>
+   		 	<th><c:out value="${ option.getNom() }" /> </th>
+   		 	
+   		 	<c:forEach var="gr"  begin="1" end="${ opgr.size() }">
+	         		<td>
+	         			<c:if test="${opgr.get(gr).contains(option.getId()) }">
+	         				X
+	         			</c:if>
+	         		</td>
+	       		</c:forEach>	
+   		 	 
+   		</tr>	
+   			</c:forEach>	
+   	</table>  
+   	
 	</br>
 	<c:if test="${ group == null }">
 		<form method="post" action="prof_option?token=${ token }" id="groupform">

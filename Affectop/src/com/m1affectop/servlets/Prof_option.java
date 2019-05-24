@@ -3,6 +3,7 @@ package com.m1affectop.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -112,7 +113,12 @@ public class Prof_option extends HttpServlet {
 		
 		ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		
+		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
+
+        request.setAttribute("opgr", options);
+		
 		request.setAttribute("groupOp", tmp);
+		
 		
 		request.setAttribute("options", basereader.getOptions(2018));
 		if(name == "") {
