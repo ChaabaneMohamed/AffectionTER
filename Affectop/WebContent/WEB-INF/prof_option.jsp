@@ -19,65 +19,46 @@
 		<div class="progress">
  		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 40%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 	</div>	
-	
+	</br>
 	<section>
 		<h2>Ajout des options</h2>
 	</section>
-    <ul>
-	    <c:forEach var="option"  items="${ options }">
-	       <li>
-	         <p class="option">
-	           	Nom : <c:out value="${ option.getNom() }" /> </br>  	
-	         </p>
-	         <p class="option">
-	           	Mail de l'enseignant : <c:out value="${ option.getMail_prof() }" /> </br>  	
-	         </p>
-	         <p class="option">
-	        	 Option :
-	         	<c:forEach var="gr"  items="${ groupOp }" >
-	         		<c:if test="${ gr.getOptionId() == option.getId() }">
-	           			<c:out value="${ gr.getGroupId() }" /> 
-	           		</c:if>
-	           	</c:forEach>	
-	         </p>
-	       
-	       
-	        </li>
-	       	 <a href="prof_option">Supprimer</a>
-	    </c:forEach>
-   	</ul>     
+    
+   	<c:if test="${ group != null }">
+   	<table class = "table table-bordered table-striped">
+   	<thead class = "thead-dark">
+   		<tr>
+   			<th>   </th>
+   				<c:forEach var="gr"  begin="1" end="${ opgr.size() }">
+	         		<th style = "text-align:center;">
+	         			Option <c:out value="${ gr }" /> 
+	         		</th>
+	       		</c:forEach>	    
+   		</tr>
+   		</thead>
+   		 <c:forEach var="option"  items="${ options }">
+   		 <thead class = "thead-light">
+   		<tr>
+   		 	<th><c:out value="${ option.getNom() }" /> </th>
+   		 	
+   		 	<c:forEach var="gr"  begin="1" end="${ opgr.size() }">
+	         		<td style = "text-align: center; color: red; font-size:20px">
+
+	         			<c:if test="${opgr.get(gr).contains(option.getId()) }">
+	         				X
+	         			</c:if>
+	         		</td>
+	       		</c:forEach>	
+   		 	 
+   		</tr>
+   		</thead>	
+   			</c:forEach>	
+   	</table>  
+   	</c:if>
    	
-   	 <table class = table>
-           <tr>
-               <td>BLANK  </td>
-                   <c:forEach var="gr"  begin="1" end="${ opgr.size() }">
-                     <td>
-                         Option <c:out value="${ gr }" /> 
-                     </td>
-                   </c:forEach>
-           </tr>
-           
-	      	<c:forEach var="option"  items="${ options }">
-	      		<tr>
-	      			<td><c:out value="${ option.getNom() }" /></td>
-	           		<c:forEach var="gr"  begin="1" end="${ opgr.size() }">
-	           			<c:forEach var="g"  items="${ opgr.get(gr)}">
-		           			<c:if test="${ g.contains(option.getId()) }">
-	                             <td>X</td>
-	                         </c:if>
-	                         <c:if test="${ ! g.contains(option.getId()) }">
-	                             <td></td>
-	                         </c:if>
-                         </c:forEach>
-	           		</c:forEach>
-	           </tr>
-           </c:forEach>
-
-       </table>
-
 	</br>
 	<c:if test="${ group == null }">
-		<form method="post" action="prof_option?token=${ token }" id="groupform">
+		<form class="form-group" method="post" action="prof_option?token=${ token }" >
 			<div class="field-text">
 				   	<label for="group" class="font">Nombre d'options <span class="fb-required">*</span> :</label>
 				   	<input type="number" class="form-control" name="group" id="group" required="required" aria-required="true">
@@ -90,16 +71,11 @@
 	
 	<c:if test="${ group != null }">
 
-   	<form method="post" action="prof_option?token=${ token }" id="opform">
+   	<form class="form-group"  method="post" action="prof_option?token=${ token }" id="opform">
 	   	<div class="rendered-form">
 		   	<div class="field-text">
 			   	<label for="nom" class="font">Nom de l'UE<span class="fb-required">*</span> :</label>
 			   	<input type="text" class="form-control" name="nom" id="nom" required="required" aria-required="true">
-		   	</div>
-		   	
-		   	<div class="field-text">
-			   	<label for="nom" class="font">Code du module:<span class="fb-required">*</span> :</label>
-			   	<input type="text" class="form-control" name="codeModule" id="codeModule" required="required" aria-required="true">
 		   	</div>
 		   	
 		   	<!--<p class="font">Description<span class="fb-required">*</span> : </p>
@@ -124,7 +100,7 @@
 		   	</div>
 	   	</div>
 	   	</br>
-	   	<input class="btn btn-info" type="submit" value="Ajouter l'option"/>
+	   	<input class="btn btn-info" type="submit" value="Ajouter l'UE"/>
    	</form>
    	</c:if>
    	</br>

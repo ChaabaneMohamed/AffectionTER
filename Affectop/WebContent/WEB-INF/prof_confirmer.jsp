@@ -37,6 +37,7 @@
     <h2>Liste des élèves :</h2>   
     <div class ="table-wrapper-scroll-y my-custom-scrollbar">
     <table class = "table table-bordered table-striped mb-0 ">
+
     		<thead class = "thead-dark">
     			<tr>
 	    			<th>Prénom</th>

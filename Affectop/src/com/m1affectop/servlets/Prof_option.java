@@ -115,10 +115,12 @@ public class Prof_option extends HttpServlet {
 		ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		
 		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
-		
-		request.setAttribute("opgr", options);
+
+        request.setAttribute("opgr", options);
+
 		
 		request.setAttribute("groupOp", tmp);
+		
 		
 		request.setAttribute("options", basereader.getOptions(2018));
 		if(name == "") {
