@@ -23,7 +23,7 @@
 	<section>
 		<h2>Ajout des options</h2>
 	</section>
-    
+
    	
    	<table class = "table table-bordered table-striped">
    	<thead class = "thead-dark">
@@ -73,6 +73,11 @@
 		   	<div class="field-text">
 			   	<label for="nom" class="font">Nom de l'UE<span class="fb-required">*</span> :</label>
 			   	<input type="text" class="form-control" name="nom" id="nom" required="required" aria-required="true">
+		   	</div>
+		   	
+		   	<div class="field-text">
+			   	<label for="nom" class="font">Code du module:<span class="fb-required">*</span> :</label>
+			   	<input type="text" class="form-control" name="codeModule" id="codeModule" required="required" aria-required="true">
 		   	</div>
 		   	
 		   	<!--<p class="font">Description<span class="fb-required">*</span> : </p>

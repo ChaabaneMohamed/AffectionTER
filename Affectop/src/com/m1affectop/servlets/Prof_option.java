@@ -97,7 +97,7 @@ public class Prof_option extends HttpServlet {
 		String test = request.getParameter("nom");
 		if(test != null) {
 			int nbOptions = basereader.getNbOptions();
-			Option option = new Option(0, request.getParameter("nom"), null, nbOptions+1);
+			Option option = new Option(0, request.getParameter("nom"), null, nbOptions+1, request.getParameter("codeModule"));
 			for (String g : groupes) {
 				if(g != null)
 					basewriter.writeOneGroupOp(Integer.parseInt(g.substring(7)), option.getId());
@@ -105,6 +105,7 @@ public class Prof_option extends HttpServlet {
 			
 			option.setSize(Integer.parseInt(request.getParameter("size")));
 			option.setMail_prof(request.getParameter("mail_prof"));
+			option.setCodeModule(request.getParameter("codeModule"));
 			option.setYear(2018);
 			System.out.println(option.toString());
 			
@@ -116,6 +117,7 @@ public class Prof_option extends HttpServlet {
 		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
 
         request.setAttribute("opgr", options);
+
 		
 		request.setAttribute("groupOp", tmp);
 		

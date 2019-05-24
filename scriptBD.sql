@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS Options (
 	intitule VARCHAR(50),
 	mail VARCHAR(50),
 	size INTEGER,
+	codeModule VARCHAR(50),
 	year INTEGER)
 	DEFAULT CHARSET=utf8;
 

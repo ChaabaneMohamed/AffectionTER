@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import Calcul.Calcul.algo.UE;
 import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Preference;
@@ -65,11 +66,12 @@ public class BaseReader extends BaseHandler {
 			while (rs.next()) {
 				String intitule = rs.getString("intitule");
 				String mail = rs.getString("mail");
+				String codeModule = rs.getString("codeModule");
 				
 				int size = rs.getInt("size");
 				int id = rs.getInt("id");
 				
-				Option o = new Option(size, intitule, mail, id);
+				Option o = new Option(size, intitule, mail, id, codeModule);
 				options.put(id,o);
 				result.get(groupId-1).add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
@@ -139,7 +141,7 @@ public class BaseReader extends BaseHandler {
 	
 	public List<Preference> getStudentPreferences(int numEtudiant){
 		String query = 
-			"SELECT DISTINCT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
+			"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
 		//System.out.println(query);
 		ResultSet rs = getResultOfQuery(query);
 		ArrayList<Preference> pref = new ArrayList<>();
@@ -148,7 +150,7 @@ public class BaseReader extends BaseHandler {
 				int choice = rs.getInt("choice");
 				int optionId = rs.getInt("optionId");
 				int groupId = rs.getInt("groupId");
-				System.out.println("Preference " + groupId + " " + optionId + " " + choice);
+				//System.out.println("Preference " + groupId + " " + optionId + " " + choice);
 				Preference p = new Preference(groupId, choice, optionId, numEtudiant);
 				pref.add(p);
 			}
@@ -158,6 +160,41 @@ public class BaseReader extends BaseHandler {
 			e.printStackTrace();
 			return pref;
 		}
+	}
+	
+	
+	public Map<Integer, ArrayList<Integer>> getPreferencesPerGroupForOneStudent(int numEtudiant){
+		Map<Integer, ArrayList<Integer>> result = new HashMap<Integer, ArrayList<Integer>>();
+		List<Preference> pref = getStudentPreferences(numEtudiant);
+		Map<Integer, List<Option>> UEs = getUEForOneOption();
+		
+		//System.out.println("nb options = "+UEs.size());
+		for (int i = 0; i < UEs.size(); i++) {
+			List<Option> u = UEs.get(i);
+			//System.out.println("nb d'UE = "+u.size());
+			ArrayList<Integer> choice = new ArrayList<Integer>();
+			for (int j = 0; j < u.size(); j++) {
+				for (Preference p : pref) {
+					if(p.getGroupId() == i+1) {
+						if(p.getOptionId() == u.get(j).getId()) {
+							//System.out.println("p.opid= "+p.getOptionId()+" u.get =" +u.get(j).getId()+ " choice = "+p.getChoice());
+							choice.add(p.getChoice());
+						}
+					}
+				}
+			}
+			result.put(i, choice);
+		}
+		
+		
+		return result;
+	}
+	
+	public ArrayList<Integer> getChoiceForOneStudentOneGroup(int numEtudiant, int option){
+		Map<Integer, ArrayList<Integer>> AllOp = getPreferencesPerGroupForOneStudent(numEtudiant);
+		//System.out.println("op = "+option + " choix = " +AllOp.get(option));
+		
+		return AllOp.get(option-1);
 	}
 	
 	public boolean preferenceExist(Preference p){
@@ -189,6 +226,8 @@ public class BaseReader extends BaseHandler {
 		}
 		return prefs;
 	}
+	
+	
 	
 	/*
 	public Map<Integer, List<Option>> getStudentPreferencesbis(int studentID){
@@ -309,11 +348,12 @@ public class BaseReader extends BaseHandler {
 			while (rs.next()) {
 				String intitule = rs.getString("intitule");
 				String mail = rs.getString("mail");
+				String codeModule = rs.getString("codeModule");
 				
 				int size = rs.getInt("size");
 				int id = rs.getInt("optionId");
 				
-				Option o = new Option(size, intitule, mail, id);
+				Option o = new Option(size, intitule, mail, id, codeModule);
 				options.put(id,o);
 				result.add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
@@ -370,6 +410,26 @@ public class BaseReader extends BaseHandler {
 			groupOps.put(i, tmp);
 		}
 		return groupOps;
+	}
+	
+	public Map<Integer, List<Option>> getUEForOneOption(){		
+		Map<Integer, List<Option>> result =  new HashMap<Integer, List<Option>>();
+		
+		ArrayList<GroupOp> tmp = getGroupOptions();	
+		Map<Integer, List<Integer>> groupOp = getGroupOPs(tmp);
+		
+		ArrayList<Option> options = getOptions(2018);
+	
+		for (int i = 0 ; i < groupOp.size(); i++) {
+			List<Option> op = new ArrayList<Option>();
+			for (int j = 0; j < options.size(); j++) {
+				if(groupOp.get(i+1).contains(options.get(j).getId())) {
+					op.add(options.get(j));
+				}
+			}
+			result.put(i, op);
+		}
+		return result;
 	}
 	
 

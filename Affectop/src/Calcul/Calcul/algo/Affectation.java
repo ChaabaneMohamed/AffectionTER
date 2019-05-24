@@ -2,7 +2,13 @@ package Calcul.Calcul.algo;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+
+import Calcul.Calcul.base.BaseReader;
+import Calcul.Calcul.bean.Option;
+import Calcul.Calcul.bean.Student;
 
 public class Affectation {
 
@@ -23,15 +29,41 @@ public class Affectation {
 	private ArrayList<Integer> effectif; // Récupère les effectifs des UE pour les changer a chaque affectation
 	private ArrayList<ArrayList<Etudiant>> optionList;
 
-	Affectation(int numAffectation, ArrayList<Etudiant> etudiants, ArrayList<UE> ue) {
+	Affectation(int numAffectation) {
 		this.numAffectation = numAffectation; // Le fichier qui contient toutes les informations pour affecter
-		listeAffectation = etudiants;
-		optionData = ue;
+		optionData = new ArrayList<UE>();
 		effectif = new ArrayList<Integer>();
 		optionList = new ArrayList<ArrayList<Etudiant>>();
 
 		// Tableau de tableau avec la liste des étudiants trié par crédit pour chaque
 		// jour d'option
+	}
+	
+	void init() {
+		BaseReader basereader = new BaseReader();
+		ArrayList<Option> allUE = basereader.getOptions(2018);
+        ArrayList<Student> eleves = basereader.getStudents(2017);
+        
+        ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
+
+        for (Student s : eleves) {
+        	ArrayList<Integer> choix = basereader.getChoiceForOneStudentOneGroup(s.getNumEtudiant(), numAffectation);
+        	Etudiant e = new Etudiant(s.getNom(), s.getPrenom(), Integer.toString(s.getNumEtudiant()), choix);
+			etudiants.add(e);
+			//System.out.println("etu|"+e.getIdEtudiant()+"|"+e.creditOption.toString());
+		}
+        listeAffectation = new ArrayList<Etudiant>(etudiants);
+        
+        ArrayList<UE> UEs = new ArrayList<UE>();
+        for (Option u : allUE) {
+        	UEs.add(new UE(u.getCodeModule(), 
+					u.getNom(), 
+					u.getSize()));
+		}
+        optionData = UEs;
+        
+        
+        System.out.println("FIN INIT ______________________________________________________");
 	}
 
 	void readDataFromFile() {
@@ -361,35 +393,35 @@ public class Affectation {
 			}
 		}   
 		else{
-			//System.out.println("la liste est pas vide");
-			for(int i=0; i<tableau.size(); i++){
-				int checkEtudiant = 0;
-				for(int j=0; j<listeEtudiant.size(); j++){
-					if(tableau.get(i).idEtudiant == listeEtudiant.get(j).idEtudiant){   // On regarde si l'étudiant est déjà dans la liste
-						if(listeEtudiant.get(j).nombreAffectation > 0){
-							//System.out.println("test nombre affectation");
-							checkEtudiant = 1;
-							listeEtudiant.get(i).affectationS.add(null);
-							listeEtudiant.get(j).affectationS.set(compteurBricolage, tableau.get(i).affectation);
-							listeEtudiant.get(j).nombreAffectation ++;
-						}
-					}
+            //System.out.println("la liste est pas vide");
+            for(int i=0; i<tableau.size(); i++){
+                int checkEtudiant = 0;
+                for(int j=0; j<listeEtudiant.size(); j++){
+                    if(tableau.get(i).idEtudiant == listeEtudiant.get(j).idEtudiant){   // On regarde si l'étudiant est déjà dans la liste
+                        if(listeEtudiant.get(j).nombreAffectation > 0){
+                            //System.out.println("test nombre affectation");
+                            checkEtudiant = 1;
+                            listeEtudiant.get(i).affectationS.add(null);
+                            listeEtudiant.get(j).affectationS.set(compteurBricolage, tableau.get(i).affectation);
+                            listeEtudiant.get(j).nombreAffectation ++;
+                        }
+                    }
 
-				}
-				if(checkEtudiant == 0){ // L'étudiant n'est pas dans la liste donc on l'add
-					listeEtudiant.add(tableau.get(i));
-					listeEtudiant.get(listeEtudiant.size()-1).affectationS = new ArrayList<Integer>();
-					int fill = 0;
-					while(fill<compteurBricolage) {
-						listeEtudiant.get(listeEtudiant.size()-1).affectationS.add(-1);
-						listeEtudiant.get(listeEtudiant.size()-1).affectationS.set(fill, null);
-						fill++;
-					}
-					listeEtudiant.get(listeEtudiant.size()-1).affectationS.add(-1);
-					listeEtudiant.get(listeEtudiant.size()-1).affectationS.set(compteurBricolage, listeEtudiant.get(listeEtudiant.size()-1).affectation);
-				}
-			}
-		}
+                }
+                if(checkEtudiant == 0){ // L'étudiant n'est pas dans la liste donc on l'add
+                    listeEtudiant.add(tableau.get(i));
+                    listeEtudiant.get(listeEtudiant.size()-1).affectationS = new ArrayList<Integer>();
+                    int fill = 0;
+                    while(fill<compteurBricolage) {
+                        listeEtudiant.get(listeEtudiant.size()-1).affectationS.add(-1);
+                        listeEtudiant.get(listeEtudiant.size()-1).affectationS.set(fill, null);
+                        fill++;
+                    }
+                    listeEtudiant.get(listeEtudiant.size()-1).affectationS.add(-1);
+                    listeEtudiant.get(listeEtudiant.size()-1).affectationS.set(compteurBricolage, listeEtudiant.get(listeEtudiant.size()-1).affectation);
+                }
+            }
+        }
 
 		compteurBricolage ++;
 
@@ -451,7 +483,7 @@ public class Affectation {
 
 		}
 		
-		
+		/*
 		try {
 			PrintWriter out = new PrintWriter("output" + File.separator + "resultatEtudiant.txt");
 			out.print(resultatAffectation);
@@ -460,8 +492,8 @@ public class Affectation {
 			System.out.println("Echec de création sortie étudiant");			
 			e.printStackTrace();
 		}
-		
-
+		*/
+		System.out.println(resultatAffectation);
 		return resultatAffectation;
 	}
 
@@ -536,12 +568,15 @@ public class Affectation {
 
 
 	public void affecter() {
-		readDataFromFile();
+		//readDataFromFile();
+		init();
+		printListeEtudiant();
 		setupEffectif();
 		getChoiceforEveryone();
 		preventDoubleAffectation();
 		getChoiceforEveryone();
 		fillOptionList();
+		afficherOptionList();
 		triOptionList();
 		randomizeOptionList();
 		affectEveryone();
@@ -552,15 +587,26 @@ public class Affectation {
 
 
 	}
+	
+	public void printListeEtudiant(){
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        for(int i=0; i<listeAffectation.size(); i++){
+            System.out.println("\n" + listeAffectation.get(i).getNom() + " " + listeAffectation.get(i).idEtudiant + " : ");
+            for(int j=0; j<listeAffectation.get(i).creditOption.size(); j++) {
+                System.out.print(listeAffectation.get(i).creditOption.get(j) + " ");
+            }
+        }
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }
 
 	public static void main(String[] args) {
 		System.out.println("aaaaaaaaaaaa");
-
+		
 		Affectation a = new Affectation(1);
 		a.affecter();
 		allAffectation.add(a);
 		
-		System.out.println("bbbbbbbbbbbb");
+		//System.out.println("bbbbbbbbbbbb");
 
 		Affectation b = new Affectation(2);
 		b.affecter();
@@ -573,7 +619,7 @@ public class Affectation {
 //		System.out.println(b.creerListeScolarite());
 		
 		b.creerSortie();
-		b.creerListeScolarite();
+		//b.creerListeScolarite();
 		System.out.println("fichier de sortie créée");
 	}
 }

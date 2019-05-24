@@ -74,7 +74,7 @@ public class Eleve_choix extends HttpServlet {
 		BaseWriter bw = new BaseWriter();
 		bw.initConnection();
 		
-		Option op = new Option(0, null, null, 0);
+		Option op = new Option(0, null, null, 0, null);
         
 		String token = request.getParameter("token");
         request.setAttribute("token", token);

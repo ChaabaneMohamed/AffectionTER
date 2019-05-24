@@ -20,8 +20,18 @@ public class Option {
 	public String nom;	
 	
 	public int credit;
+	
+	public String codeModule;
 
 	
+	public String getCodeModule() {
+		return codeModule;
+	}
+
+	public void setCodeModule(String codeModule) {
+		this.codeModule = codeModule;
+	}
+
 	public int getSize() {
 		return size;
 	}
@@ -62,12 +72,13 @@ public class Option {
 		this.mail_prof = mail_prof;
 	}
 
-	public Option(int size, String intitule, String mail, int id){
+	public Option(int size, String intitule, String mail, int id, String codeModule){
 		accepted = new LinkedList<Student>();
 		this.size = size;
 		this.nom = intitule;
 		this.id = id;
 		this.mail_prof = mail;
+		this.codeModule = codeModule;
 	}
 
 	public String getNom() {
@@ -104,4 +115,5 @@ public class Option {
 		}
 		return null;
 	}
+
 }
