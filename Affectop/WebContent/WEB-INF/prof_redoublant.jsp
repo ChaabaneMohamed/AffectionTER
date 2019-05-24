@@ -19,6 +19,7 @@
 	<div class="progress">
   		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 	</div>
+	<c:if test="${ redoublants == null }">
 	<h2>Sélectionnez les UE validées pour chaque étudiant redoublant</h2>
 	</br>
 	<form method="post" action="prof_redoublant?token=${ token }" id="redform">  
@@ -50,16 +51,19 @@
 		    </c:forEach>  
 	   	</table>
 	   	<div>
-	    	<button class = "btn btn-info" type="submit">Confirmer les redoublants</button>
+	    	<button class = "btn btn-primary bouton_confirm" type="submit">Confirmer les redoublants</button>
 	 	</div>
  	</form>
+ 	</c:if>
  	</br>
  	<footer>
+ 		<c:if test="${ redoublants != null }">
 		<div class="bouton_confirm">
 			<p>
 				<a class="btn btn-primary"href="prof_confirmer?token=${ token }" role="button" >Suivant</a>
 			</p>
 		</div>
+		</c:if>
 		<div>
 			<p>
 				<a class="btn btn-dark" href="prof_option?token=${ token }" role="button">Retour</a>

@@ -28,10 +28,14 @@
 	<form method="post" action="prof_confirmer?token=${ token }" id="mailform" class="mail">   
 		<textarea rows="10" cols="150" name="mail" form="mailform" required="required">${ !empty mail ? mail : 'Ecrivez le contenu du mail...' }</textarea>
 	    </br>
-	    <input class = "btn btn-info" type="submit" type="submit" value="Valider le mail"/>
+	    <input class = "btn btn-info" type="submit" type="submit" value="Tester le contenu du mail"/>
     </form>
     <c:if test="${ result.size() > 0 }">
     	<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result }"><c:out value="${ r }"/> </c:forEach></p>
+    </c:if>
+    
+    <c:if test="${ result.size() == 0 }">
+    	<p class="valid">Contenu Valide, balise reconnu : <c:forEach var="r" items="${ vresult }"><c:out value="${ r }"/> </c:forEach></p>
     </c:if>
  	</br>
     <h2>Liste des élèves :</h2>   
@@ -60,9 +64,6 @@
 	    </c:forEach>  
    	</table>     
     </div>
-    <c:if test="${result.size() > 1}">
-    	<p class="error">Balises invalide: <c:forEach var="r"  items="${ result }"> <c:out value="${ r }"></c:out></c:forEach></p>
-	</c:if>
     </br>
 	<footer>
 		<c:if test="${result.size() == 0}">	

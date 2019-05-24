@@ -92,7 +92,7 @@ public class Prof_redoublant extends HttpServlet {
         if(name == "") {
         	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
         }
-		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_redoublant.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_confirmer.jsp").forward(request, response);
 	}
 
 }

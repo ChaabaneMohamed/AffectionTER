@@ -18,7 +18,7 @@
 	<div class= "container">
 	   <c:if test="${ prefPerGroup == null }">
 	<p>Vous avez 2 * ( nombres d'UE) de points à répartir pour chaque Option, et vous devez pour chaque Options mettre des points dans au moins 75% des UE disponibles.  </p>
-	</c:if>
+	
 	
 	   	<form method="post" action="eleve_choix?token=${ token }">
 	   		<c:forEach var="j"  begin="1" end="${ groupOp.size() }" >
@@ -49,6 +49,7 @@
 	        </div>
 	        </c:if> 
 	    </form>
+	    </c:if>
     
 	<ul>
 	    <c:forEach var="p"  items="${ prefPerGroup }">

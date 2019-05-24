@@ -82,21 +82,26 @@ public class Prof_confirmer extends HttpServlet {
 		res = TxtToMail.tagChecker(mail);
 		
 		SendEmailTLS2 send = new SendEmailTLS2("741VhY741");
-		for (Student student : eleves) {
-			String customMail = TxtToMail.custom(student, mail);
-			send.setTo(student.getMail());
-			send.setContenu(customMail);
-			// mis en commentaire pour pas envoyer les mails
-			//send.sendMail();
-		}
-		
-		send.setTo("MASTERINFOLUMINY@gmail.com");
-		send.setContenu("Test envoie mail Affectop");
-		send.sendMail();
 		
 		ArrayList<String> result = res.get("Invalid");
+		ArrayList<String> vresult = res.get("Valid");
+		
+		if(result.size()<=0) {
+			for (Student student : eleves) {
+				String customMail = TxtToMail.custom(student, mail);
+				send.setTo(student.getMail());
+				send.setContenu(customMail);
+				// mis en commentaire pour pas envoyer les mails
+				//send.sendMail();
+			}
+			
+			send.setTo("MASTERINFOLUMINY@gmail.com");
+			send.setContenu("Test envoie mail Affectop");
+			send.sendMail();
+		}
 		
 		request.setAttribute("result", result);
+		request.setAttribute("vresult", vresult);
 		
 		request.setAttribute("mail", mail);
 		if(name == "") {

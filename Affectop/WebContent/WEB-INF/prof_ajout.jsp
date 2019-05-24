@@ -98,6 +98,7 @@
 	  </div>
    	</c:if>
 
+	<c:if test="${ empty fichier }">
     <form id="upload" method="post" action="prof_ajout?token=${ token }" enctype="multipart/form-data">
         <fieldset>
 		<legend>Ajoutez votre fichier</legend>
@@ -105,25 +106,26 @@
 		<div>
 			<label for="fichier">Fichier à envoyer:</label>
 			<input type="file" id="fichier" name="fichier" accept=".xls,.xlsx"/>
-			<div id="filedrag">or drop file here</div>
 		</div>
 		</br>
 		<div id="submitbutton">
-			<button type="submit">Confirmer le fichier</button>
+			<button class="btn btn-primary bouton_confirm" type="submit">Confirmer le fichier</button>
 		</div>
 		
 		</fieldset>
     </form>
+    </c:if>
     <c:if test="${ !empty fichier }"><p class="valid"><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
     
-
+	<c:if test="${ !empty fichier }">
 	<footer>
 		<div class="bouton_confirm">
 			<p>
-				<a class="btn btn-primary" href="prof_option?token=${ token }" role="button" >Confirmer</a>
+				<a class="btn btn-primary" href="prof_option?token=${ token }" role="button" >Suivant</a>
 			</p>
 		</div>
 	</footer>
+	</c:if>
 	</div>
 </body>	
 </html>

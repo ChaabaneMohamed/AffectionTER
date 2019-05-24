@@ -87,6 +87,11 @@
 		   	</div>
 		   	
 		   	<div class="field-text">
+			   	<label for="codeModule" class="font">Code du Module<span class="fb-required">*</span> :</label>
+			   	<input type="text" class="form-control" name="codeModule" id="codeModule" required="required" aria-required="true">
+		   	</div>
+		   	
+		   	<div class="field-text">
 			   	<label for="size" class="font">Effectif<span class="fb-required">*</span> :</label>
 			   	<input type="number" class="form-control" name="size" id="size" required="required" aria-required="true">
 		   	</div>

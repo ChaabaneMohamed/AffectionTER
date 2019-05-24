@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Calcul.Calcul.base.BaseReader;
+import Calcul.Calcul.bean.Student;
+import Calcul.Calcul.utils.SendEmailTLS2;
 import Calcul.Calcul.utils.TxtToMail;
 /**
  * Servlet implementation class Prof_mail
@@ -69,8 +71,19 @@ public class Prof_mail extends HttpServlet {
 		String mail_secretariat = request.getParameter("mail_secretariat");
 		request.setAttribute("mail_secretariat", mail_secretariat);
 		
+		ArrayList<Student> eleves = basereader.getStudents(2017);
+		
 		Map<String, ArrayList<String>> res1 = new HashMap<>();
 		Map<String, ArrayList<String>> res2 = new HashMap<>();
+		
+		SendEmailTLS2 send = new SendEmailTLS2("741VhY741");
+		for (Student student : eleves) {
+			String customMail = TxtToMail.custom(student, mail_eleve);
+			send.setTo(student.getMail());
+			send.setContenu(customMail);
+			// mis en commentaire pour pas envoyer les mails
+			//send.sendMail();
+		}
 		
 		res1 = TxtToMail.tagChecker(mail_eleve);
 		res2 = TxtToMail.tagChecker(mail_secretariat);
