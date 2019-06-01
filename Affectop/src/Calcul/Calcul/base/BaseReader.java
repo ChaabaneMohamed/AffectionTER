@@ -22,10 +22,10 @@ public class BaseReader extends BaseHandler {
 	Map<Integer,Student> students = new HashMap<Integer, Student>();
 	Map<Integer,GroupOp> groupOp = new HashMap<Integer, GroupOp>();
 	Statement st;
-	
+
 	private Connection conn;
 
-	
+
 	public BaseReader() {
 
 		/**
@@ -38,7 +38,7 @@ public class BaseReader extends BaseHandler {
 			// create our mysql database connection
 			String myDriver = "com.mysql.cj.jdbc.Driver";
 			String myUrl = "jdbc:mysql://localhost:3306/affectop_BD?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC&autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf-8";
-			
+
 			System.out.println(myUrl);
 			Class.forName(myDriver);
 			System.out.println("test");
@@ -64,26 +64,23 @@ public class BaseReader extends BaseHandler {
 				String intitule = rs.getString("intitule");
 				String mail = rs.getString("mail");
 				String codeModule = rs.getString("codeModule");
-				
+
 				int size = rs.getInt("size");
-				int id = rs.getInt("optionId");
+				int id = rs.getInt("id");
 				
-				for (GroupOp groupOp : groups) {
-					if(groupOp.getGroupId() == groupId && groupOp.getOptionId() == id) {
-						Option o = new Option(size, intitule, mail, id, codeModule);
-						options.put(id,o);
-						result.add(o);
-					}
-				}
+				Option o = new Option(size, intitule, mail, id, codeModule);
+				options.put(id,o);
+				result.get(groupId-1).add(o);
+				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
 			}
 			return result;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 			return result;
+
 		}
 	}
-	
 	/**
 	 * Return the database content associated with the tag
 	 * 
@@ -109,24 +106,24 @@ public class BaseReader extends BaseHandler {
 		}
 		return "/!\\unknown tag/!\\ ";
 	}
-	
+
 	public ArrayList<Student> getStudents(int year){
 		String query = "SELECT * FROM Students where year = "+year+" ;";
 		ResultSet rs = getResultOfQuery(query);
-		
+
 		ArrayList<Student> result = new ArrayList<>();
-		
+
 		int nbDays = getNbDays();
 		// iterate through the java resultset
 		try {
 			while (rs.next()) {
-				
+
 				String mail = rs.getString("mail");
 				Integer numEtu = rs.getInt("numEtudiant");
 				String lastName = rs.getString("lastName");
 				String firstName = rs.getString("firstName");
 				String token = rs.getString("token");
-				
+
 				Student s = new Student(firstName, lastName, mail,  numEtu, token); 
 				students.put(numEtu,s);
 				result.add(s);
@@ -138,10 +135,10 @@ public class BaseReader extends BaseHandler {
 		}
 		return result;
 	}
-	
+
 	public List<Preference> getStudentPreferences(int numEtudiant){
 		String query = 
-			"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
+				"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
 		//System.out.println(query);
 		ResultSet rs = getResultOfQuery(query);
 		ArrayList<Preference> pref = new ArrayList<>();
@@ -161,13 +158,13 @@ public class BaseReader extends BaseHandler {
 			return pref;
 		}
 	}
-	
-	
+
+
 	public Map<Integer, ArrayList<Integer>> getPreferencesPerGroupForOneStudent(int numEtudiant){
 		Map<Integer, ArrayList<Integer>> result = new HashMap<Integer, ArrayList<Integer>>();
 		List<Preference> pref = getStudentPreferences(numEtudiant);
 		Map<Integer, List<Option>> UEs = getUEForOneOption();
-		
+
 		//System.out.println("nb options = "+UEs.size());
 		for (int i = 0; i < UEs.size(); i++) {
 			List<Option> u = UEs.get(i);
@@ -185,23 +182,23 @@ public class BaseReader extends BaseHandler {
 			}
 			result.put(i, choice);
 		}
-		
-		
+
+
 		return result;
 	}
-	
+
 	public ArrayList<Integer> getChoiceForOneStudentOneGroup(int numEtudiant, int option){
 		Map<Integer, ArrayList<Integer>> AllOp = getPreferencesPerGroupForOneStudent(numEtudiant);
 		//System.out.println("op = "+option + " choix = " +AllOp.get(option));
-		
+
 		return AllOp.get(option-1);
 	}
-	
+
 	public boolean preferenceExist(Preference p){
 		String query = 
-			"SELECT * FROM Preferences where numEtudiant = '"+p.getNumEtudiant()+"' "
-					+ "AND groupId = "+ p.getGroupId()+" "
-					+ "AND optionId = "+ p.getOptionId()+";" ;
+				"SELECT * FROM Preferences where numEtudiant = '"+p.getNumEtudiant()+"' "
+						+ "AND groupId = "+ p.getGroupId()+" "
+						+ "AND optionId = "+ p.getOptionId()+";" ;
 		System.out.println(query);
 		ResultSet rs = getResultOfQuery(query);
 		try {
@@ -217,7 +214,7 @@ public class BaseReader extends BaseHandler {
 			return false;
 		}
 	}
-	
+
 	public Map<Integer, List<Preference>> getPreferencesPerStudent(List<Student> liste){
 		Map<Integer, List<Preference>> prefs = new HashMap<Integer, List<Preference>>();
 		for (Student student : liste) {
@@ -226,25 +223,25 @@ public class BaseReader extends BaseHandler {
 		}
 		return prefs;
 	}
-	
-	
-	
+
+
+
 	/*
 	public Map<Integer, List<Option>> getStudentPreferencesbis(int studentID){
 		int nbGroup = getNbGroups();
 		 Map<Integer, List<Option>> tmp = new HashMap<Integer, List<Option>>();
-		
+
 		 for(int i = 1; i <= nbGroup; i++) {
 			 tmp.put(i, getStudentPreferenceByGroup(i, studentID));
 		 }
 		return tmp;
 	}*/
-	
+
 	private int getNbGroups() {
 		String query = 
 				"select COUNT(DISTINCT(groupId)) from GroupOp;" ;
 		ResultSet rs = getResultOfQuery(query);
-		
+
 		try {
 			if(rs.next())
 				return  rs.getInt("COUNT(DISTINCT(groupId))");
@@ -260,7 +257,7 @@ public class BaseReader extends BaseHandler {
 		String query = 
 				"select MAX(groupId) from GroupOp;" ;
 		ResultSet rs = getResultOfQuery(query);
-		
+
 		try {
 			if(rs.next())
 				return  rs.getInt("MAX(groupId)");
@@ -271,12 +268,12 @@ public class BaseReader extends BaseHandler {
 		}
 		return 1;
 	}
-	
+
 	public int getNbOptions() {
 		String query = 
 				"select COUNT(*) from Options;" ;
 		ResultSet rs = getResultOfQuery(query);
-		
+
 		try {
 			if(rs.next())
 				return  rs.getInt("COUNT(*)");
@@ -287,39 +284,39 @@ public class BaseReader extends BaseHandler {
 		}
 		return -1;
 	}
-	
+
 
 	public Map<Option,ArrayList<Option>> getIncompatibilities(){
 		Map<Option,ArrayList<Option>> incompatibilities = new HashMap<Option, ArrayList<Option>>();
-		
+
 		for(Option opt1 : options.values()) {
 			incompatibilities.put(opt1,new ArrayList<>());
 			for(Option opt2 : options.values()) {
-			if(opt1.nom == opt2.nom)
-				incompatibilities.get(opt1).add(opt2);
+				if(opt1.nom == opt2.nom)
+					incompatibilities.get(opt1).add(opt2);
 			}
 		}
 		return incompatibilities;
 	}
-	
+
 	public Map<Student, ArrayList<Option>> getRepeater(int year) {
 		String query = "SELECT * FROM Repeaters WHERE optionId IN ("
 				+ "SELECT id FROM Options WHERE year ="+year+") ;";
 		ResultSet rs = getResultOfQuery(query);
-		
+
 		Map<Student, ArrayList<Option>> repeaters = new HashMap<Student, ArrayList<Option>>();
-		
+
 
 		// iterate through the java resultset
 		try {
 			while (rs.next()) {
-				
+
 				int opt = rs.getInt("optionId");
 				int numEtu = rs.getInt("numEtudiant");
 
 				if(!repeaters.containsKey(students.get(numEtu)))
 					repeaters.put(students.get(numEtu), new ArrayList<>());
-					repeaters.put(students.get(numEtu), new ArrayList<>());
+				repeaters.put(students.get(numEtu), new ArrayList<>());
 				System.out.println();
 				System.out.println(students.get(numEtu));
 				System.out.println(numEtu);
@@ -335,24 +332,24 @@ public class BaseReader extends BaseHandler {
 		}
 		return repeaters;
 	}
-	
+
 	public ArrayList<Option> getOptions(int year){
 		String query = "SELECT * FROM Options where year = "+year+" ;";
 
 		ResultSet rs = getResultOfQuery(query);		
 		ArrayList<Option> result = new ArrayList<>();
-		
+
 		options.clear();
-		
+
 		try {
 			while (rs.next()) {
 				String intitule = rs.getString("intitule");
 				String mail = rs.getString("mail");
 				String codeModule = rs.getString("codeModule");
-				
+
 				int size = rs.getInt("size");
 				int id = rs.getInt("optionId");
-				
+
 				Option o = new Option(size, intitule, mail, id, codeModule);
 				options.put(id,o);
 				result.add(o);
@@ -365,20 +362,20 @@ public class BaseReader extends BaseHandler {
 			return result;
 		}
 	}
-	
+
 	public ArrayList<GroupOp> getGroupOptions() {
 		String query = "SELECT * FROM GroupOp;";
 
 		ResultSet rs = getResultOfQuery(query);		
 		ArrayList<GroupOp> result = new ArrayList<>();
-		
+
 		groupOp.clear();
-		
+
 		try {
 			while (rs.next()) {
 				int groupId = rs.getInt("groupId");
 				int optionId = rs.getInt("optionId");
-				
+
 				GroupOp grOp = new GroupOp(groupId, optionId);
 				groupOp.put(groupId, grOp);
 				result.add(grOp);
@@ -390,7 +387,7 @@ public class BaseReader extends BaseHandler {
 			return result;
 		}
 	}
-	
+
 	public Map<Integer, List<Integer>> getGroupOPs(ArrayList<GroupOp> result){
 		Map<Integer, List<Integer>> groupOps = new HashMap<Integer, List<Integer>>();
 		int Max = 0;
@@ -398,7 +395,7 @@ public class BaseReader extends BaseHandler {
 			if(groupOp.getGroupId() > Max) {
 				Max = groupOp.getGroupId();
 			}
-				
+
 		}
 		for(int i = 1; i <= Max; i++) {
 			List<Integer> tmp = new ArrayList<Integer>();
@@ -411,15 +408,15 @@ public class BaseReader extends BaseHandler {
 		}
 		return groupOps;
 	}
-	
+
 	public Map<Integer, List<Option>> getUEForOneOption(){		
 		Map<Integer, List<Option>> result =  new HashMap<Integer, List<Option>>();
-		
+
 		ArrayList<GroupOp> tmp = getGroupOptions();	
 		Map<Integer, List<Integer>> groupOp = getGroupOPs(tmp);
-		
+
 		ArrayList<Option> options = getOptions(2018);
-	
+
 		for (int i = 0 ; i < groupOp.size(); i++) {
 			List<Option> op = new ArrayList<Option>();
 			for (int j = 0; j < options.size(); j++) {
@@ -431,7 +428,7 @@ public class BaseReader extends BaseHandler {
 		}
 		return result;
 	}
-	
+
 
 	private String studentsQueryBuilder(String col, String token) {
 
@@ -510,8 +507,8 @@ public class BaseReader extends BaseHandler {
 
 		return studentsQueryRequest("firstname", token);
 	}
-	
-	
+
+
 	public String nameRequestTeacher(String token) {
 		return teachersQueryRequest("lastname", token);
 
@@ -521,8 +518,8 @@ public class BaseReader extends BaseHandler {
 
 		return teachersQueryRequest("firstname", token);
 	}
-	
-	
+
+
 	public int numEtudiantRequest(String token) {
 
 		return Integer.parseInt(studentsQueryRequest("numEtudiant", token));
@@ -546,7 +543,7 @@ public class BaseReader extends BaseHandler {
 		ArrayList<String> students = new ArrayList<>();
 
 		String query = "SELECT token FROM Students WHERE numEtudiant in (SELECT DISTINCT numEtudiant FROM  Preferences );";
-	//	String query = "SELECT * FROM Students INNER JOIN Teachers ON table1.id = table2.fk_id ;";
+		//	String query = "SELECT * FROM Students INNER JOIN Teachers ON table1.id = table2.fk_id ;";
 		Statement st;
 		String res = "";
 		try {

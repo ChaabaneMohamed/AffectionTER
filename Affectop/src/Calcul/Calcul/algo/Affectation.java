@@ -6,6 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import Calcul.Calcul.base.BaseReader;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Student;
@@ -22,11 +32,11 @@ public class Affectation {
 
 
 	private int numAffectation;
-	private int nombreUE; // Nombre d'UE proposé pour une journée d'option
-	private int nombreEtudiant; // Nombre d'étudiant qui participe a une journée d'option
-	private ArrayList<Etudiant> listeAffectation; // Liste des étudiants qu'on doit affecter
+	private int nombreUE; // Nombre d'UE proposï¿½ pour une journï¿½e d'option
+	private int nombreEtudiant; // Nombre d'ï¿½tudiant qui participe a une journï¿½e d'option
+	private ArrayList<Etudiant> listeAffectation; // Liste des ï¿½tudiants qu'on doit affecter
 	private ArrayList<UE> optionData; // Tableau de toute les UE d'un jour d'option
-	private ArrayList<Integer> effectif; // Récupère les effectifs des UE pour les changer a chaque affectation
+	private ArrayList<Integer> effectif; // Rï¿½cupï¿½re les effectifs des UE pour les changer a chaque affectation
 	private ArrayList<ArrayList<Etudiant>> optionList;
 
 	Affectation(int numAffectation) {
@@ -35,7 +45,7 @@ public class Affectation {
 		effectif = new ArrayList<Integer>();
 		optionList = new ArrayList<ArrayList<Etudiant>>();
 
-		// Tableau de tableau avec la liste des étudiants trié par crédit pour chaque
+		// Tableau de tableau avec la liste des ï¿½tudiants triï¿½ par crï¿½dit pour chaque
 		// jour d'option
 	}
 	
@@ -124,8 +134,8 @@ public class Affectation {
 
 			this.optionData.add(new UE("LNAMU2018", "Langage Natuel", 2));
 			this.optionData.add(new UE("IAAMU2018", "Intelligence artificielle", 2));
-			this.optionData.add(new UE("PIAAMU2018", "Projet informatique appliqué", 2));
-			this.optionData.add(new UE("GLAMU2018", "Génie Logiciel", 2));
+			this.optionData.add(new UE("PIAAMU2018", "Projet informatique appliquï¿½", 2));
+			this.optionData.add(new UE("GLAMU2018", "Gï¿½nie Logiciel", 2));
 
 
 		}
@@ -193,7 +203,7 @@ public class Affectation {
 
 			this.optionData.add(new UE("LNAMU2018", "Langage Natuel", 4));
 			this.optionData.add(new UE("IAAMU2018", "Intelligence artificielle", 4));
-			this.optionData.add(new UE("PIAAMU2018", "Projet informatique appliqué",4));
+			this.optionData.add(new UE("PIAAMU2018", "Projet informatique appliquï¿½",4));
 			this.optionData.add(new UE("JEEAMU2019", "JEE", 4));
 			this.optionData.add(new UE("TERAMU2019", "TER",4));
 
@@ -214,7 +224,9 @@ public class Affectation {
 			}
 			for(int i=0; i<nombreUE; i++) {
 				int meilleurChoix = -1;
+				System.out.println("CO = " + etu.creditOption.size() + "------ nombre UE = " + nombreUE);
 				for(int j=0; j<nombreUE;j++){
+
 					if(meilleurChoix<etu.creditOption.get(j)){
 						if(!isInArrayList(etu.choice, j)){
 							meilleurChoix=etu.creditOption.get(j);
@@ -236,7 +248,7 @@ public class Affectation {
 		return false;
 	}
 
-	/* Fonction pour regarder si un élément appartient au tableau */
+	/* Fonction pour regarder si un ï¿½lï¿½ment appartient au tableau */
 	public boolean isInArray(int[] tab, int varCheck){
 		for(int i=0; i<tab.length; i++){
 			if(tab[i]==varCheck){
@@ -262,8 +274,8 @@ public class Affectation {
 		for(int indiceUE=0; indiceUE<optionList.size(); indiceUE++){   // On tri chaque liste du tableau
 			for(int i=0; i<optionList.get(indiceUE).size(); i++){
 				for(int j=0; j<optionList.get(indiceUE).size(); j++){
-					if(optionList.get(indiceUE).get(i).creditOption.get(indiceUE) > optionList.get(indiceUE).get(j).creditOption.get(indiceUE)){  // On compare les crédits pour trier par ordre décroissant
-						tmp = optionList.get(indiceUE).get(i);         // On swap les deux éléments du tableaux
+					if(optionList.get(indiceUE).get(i).creditOption.get(indiceUE) > optionList.get(indiceUE).get(j).creditOption.get(indiceUE)){  // On compare les crï¿½dits pour trier par ordre dï¿½croissant
+						tmp = optionList.get(indiceUE).get(i);         // On swap les deux ï¿½lï¿½ments du tableaux
 						optionList.get(indiceUE).set(i, optionList.get(indiceUE).get(j));
 						optionList.get(indiceUE).set(j, tmp);
 					}
@@ -273,35 +285,35 @@ public class Affectation {
 
 	}
 
-	// Si plusieus étudiants ont le meme nombre de crédit pour matière on les echange aléatoirement pour pas avoir ordre AlphaB
+	// Si plusieus ï¿½tudiants ont le meme nombre de crï¿½dit pour matiï¿½re on les echange alï¿½atoirement pour pas avoir ordre AlphaB
 	public void randomizeOptionList(){
 		//System.out.println("in randomize optlist gen");
-		for(int i=0; i<optionList.size(); i++){    // On doit mettre une touch d'aléatoire pour chaque liste
+		for(int i=0; i<optionList.size(); i++){    // On doit mettre une touch d'alï¿½atoire pour chaque liste
 			int currentCredit = -1;
-			int nbRandom = 0;   // nombre d'étudiant avec le meme nombre de crédit qu'on va devoir randomiser
-			for(int j=0; j<optionList.get(i).size()-1; j++){   // On parcourt notre liste d'étudiant
-				if (currentCredit != optionList.get(i).get(j).creditOption.get(i)){ // Si on a pas déjà traité le cas alors on le traite
+			int nbRandom = 0;   // nombre d'ï¿½tudiant avec le meme nombre de crï¿½dit qu'on va devoir randomiser
+			for(int j=0; j<optionList.get(i).size()-1; j++){   // On parcourt notre liste d'ï¿½tudiant
+				if (currentCredit != optionList.get(i).get(j).creditOption.get(i)){ // Si on a pas dï¿½jï¿½ traitï¿½ le cas alors on le traite
 					currentCredit = optionList.get(i).get(j).creditOption.get(i);
 					int k=j+1;
 					if(k<optionList.get(i).size()){    // Si on est pas a la fin de la liste
-						while (this.optionList.get(i).get(k).creditOption.get(i) == currentCredit){ // On la parcours pour savoir combien d'autre étudiant ont le meme nombre de crédit pour l'UE
-							nbRandom ++;    // On incrémente notre nombre tant qu'on a le meme nombre de crédit
+						while (this.optionList.get(i).get(k).creditOption.get(i) == currentCredit){ // On la parcours pour savoir combien d'autre ï¿½tudiant ont le meme nombre de crï¿½dit pour l'UE
+							nbRandom ++;    // On incrï¿½mente notre nombre tant qu'on a le meme nombre de crï¿½dit
 							k ++;
-							if(k == this.optionList.get(i).size()){ // Quand on a passé le dernier étudiant on arete
+							if(k == this.optionList.get(i).size()){ // Quand on a passï¿½ le dernier ï¿½tudiant on arete
 								break;
 							}
 						}
 					}
-					if(nbRandom > 0){   // Si on a plusieurs étu avec le meme nombre 
+					if(nbRandom > 0){   // Si on a plusieurs ï¿½tu avec le meme nombre 
 						int[] randomizedRange = randomGeneration(j, (j+nbRandom));
-						for(int change=0; change<randomizedRange.length; change++){ // Et on swap tout les étu entre eux pour avoir un ordre !=
+						for(int change=0; change<randomizedRange.length; change++){ // Et on swap tout les ï¿½tu entre eux pour avoir un ordre !=
 							Etudiant tmp = optionList.get(i).get(j+change);
 							optionList.get(i).set(j+change, optionList.get(i).get(randomizedRange[change])) ;
 							optionList.get(i).set(randomizedRange[change], tmp);
 						}
 					}   
 				}
-				nbRandom = 0; // On reset notre nombre d'étu avec même nombre de crédit
+				nbRandom = 0; // On reset notre nombre d'ï¿½tu avec mï¿½me nombre de crï¿½dit
 
 			}
 		}
@@ -312,6 +324,8 @@ public class Affectation {
 	public void affectEveryone(){
 		//System.out.println("affect in");
 		int remaining = nombreEtudiant;
+		
+		System.out.println("nombre etu = " + nombreEtudiant);
 
 		while(remaining > 0){
 			Etudiant bestEtu = null;
@@ -345,7 +359,7 @@ public class Affectation {
 		//System.out.println("affect out");
 	}
 
-	/* On enlève un étudiant de toutes les listes a quand on lui affecte une option */
+	/* On enlï¿½ve un ï¿½tudiant de toutes les listes a quand on lui affecte une option */
 	public void removeWhenAssigned(Etudiant etudiantCourant){
 		for(int i=0; i<this.nombreUE; i++){
 			for(int j=0; j<optionList.get(i).size(); j++) {
@@ -357,7 +371,7 @@ public class Affectation {
 		}
 	}
 
-	// on rempli le tableau tab de nombre appartenant à [min;max] sans doublon dans un ordre aléatoire
+	// on rempli le tableau tab de nombre appartenant ï¿½ [min;max] sans doublon dans un ordre alï¿½atoire
 	public int[] randomGeneration(int min, int max){
 		
 		int tab[] = new int[max-min+1];
@@ -384,9 +398,9 @@ public class Affectation {
 		ArrayList<Etudiant> tableau = new ArrayList<Etudiant>(listeAffectation);
 
 
-		if(listeEtudiant.size() == 0){   // La liste est vide donc on vient de faire la première affectation
+		if(listeEtudiant.size() == 0){   // La liste est vide donc on vient de faire la premiï¿½re affectation
 			for(int i=0; i<tableau.size(); i++){
-				listeEtudiant.add(tableau.get(i));     // On ajoute les étudiants de "tableau" à notre listeEtudiants
+				listeEtudiant.add(tableau.get(i));     // On ajoute les ï¿½tudiants de "tableau" ï¿½ notre listeEtudiants
 				listeEtudiant.get(i).affectationS = new ArrayList<Integer>();
 				listeEtudiant.get(i).affectationS.add(null);
 				listeEtudiant.get(i).affectationS.set(compteurBricolage, listeEtudiant.get(i).affectation);
@@ -394,13 +408,13 @@ public class Affectation {
 			}
 		}   
 		else{
-            //System.out.println("la liste est pas vide");
+            System.out.println("la liste est pas vide");
             for(int i=0; i<tableau.size(); i++){
                 int checkEtudiant = 0;
                 for(int j=0; j<listeEtudiant.size(); j++){
-                	if(tableau.get(i).idEtudiant.equals(listeEtudiant.get(j).idEtudiant) ){   // On regarde si l'étudiant est déjà dans la liste
+                	if(tableau.get(i).idEtudiant.equals(listeEtudiant.get(j).idEtudiant) ){   // On regarde si l'ï¿½tudiant est dï¿½jï¿½ dans la liste
                         if(listeEtudiant.get(j).nombreAffectation > 0){
-                            //System.out.println("test nombre affectation");
+                            System.out.println("test nombre affectation");
                             checkEtudiant = 1;
                             listeEtudiant.get(i).affectationS.add(null);
                             listeEtudiant.get(j).affectationS.set(compteurBricolage, tableau.get(i).affectation);
@@ -409,7 +423,7 @@ public class Affectation {
                     }
 
                 }
-                if(checkEtudiant == 0){ // L'étudiant n'est pas dans la liste donc on l'add
+                if(checkEtudiant == 0){ // L'ï¿½tudiant n'est pas dans la liste donc on l'add
                     listeEtudiant.add(tableau.get(i));
                     listeEtudiant.get(listeEtudiant.size()-1).affectationS = new ArrayList<Integer>();
                     int fill = 0;
@@ -426,7 +440,7 @@ public class Affectation {
 
 		compteurBricolage ++;
 
-		// On complète avec des null pour pas avoir des missing item
+		// On complï¿½te avec des null pour pas avoir des missing item
 		for(int i=0; i<listeEtudiant.size(); i++){
 			if(listeEtudiant.get(i).affectationS.size() != compteurBricolage){
 				listeEtudiant.get(i).affectationS.add(null);
@@ -440,7 +454,7 @@ public class Affectation {
 		////            delete listeEtudiant[i].choice;
 		////            delete listeEtudiant[i].affectation;
 		//        }
-		//        // On complète avec des null pour pas avoir des missing item
+		//        // On complï¿½te avec des null pour pas avoir des missing item
 		//        for(var i=0; i<listeEtudiant.length; i++){
 		//            if(listeEtudiant[i].affectationS.length != compteurBricolage){
 		//                listeEtudiant[i].affectationS.push(null);
@@ -468,10 +482,16 @@ public class Affectation {
 			i++;
 		}
 	}
+	
+	public void afficherAffectation() {
+		for(int i=0; i<listeAffectation.size(); i++) {
+			System.out.println(listeAffectation.get(i).getIdEtudiant() + " Affectation " + listeAffectation.get(i).affectation);			
+		}
+	}
 
 	public String creerSortie() {
 		for(int i=0; i<listeEtudiant.size(); i++) {
-			resultatAffectation += "• " + listeEtudiant.get(i).nom;
+			resultatAffectation += "ï¿½ " + listeEtudiant.get(i).nom;
 			resultatAffectation += " " + listeEtudiant.get(i).prenom;
 			resultatAffectation += " " + listeEtudiant.get(i).idEtudiant + " :\n";
 			for(int j=0; j<listeEtudiant.get(i).affectationS.size(); j++) {
@@ -490,7 +510,7 @@ public class Affectation {
 			out.print(resultatAffectation);
 			out.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Echec de création sortie étudiant");			
+			System.out.println("Echec de crï¿½ation sortie ï¿½tudiant");			
 			e.printStackTrace();
 		}
 		*/
@@ -500,10 +520,10 @@ public class Affectation {
 
 	public String creerListeScolarite(){
 		for(int i=0; i<affectationTab.size(); i++){
-			resultatScolarite += "\n\n\t\t$ Option n°" + i + ",";
+			resultatScolarite += "\n\n\t\t Option nï¿½" + i + ",";
 			for(int j=0; j<allAffectation.get(i).optionData.size(); j++){
 				UE current = allAffectation.get(i).optionData.get(j);
-				resultatScolarite += "\n\t $ * " + current.getName() + "\t" + current.getCodeModule() +",\n";
+				resultatScolarite += "\n\t  * " + current.getName() + "\t" + current.getCodeModule() +",\n";
 				for(int k=0; k<allAffectation.get(i).listeAffectation.size(); k++){
 					if(allAffectation.get(i).listeAffectation.get(k).affectation == j){
 						//console.log(allAffectation[i].listeAffectation[k].affectation);
@@ -519,7 +539,7 @@ public class Affectation {
 			out.print(resultatScolarite);
 			out.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Echec de création sortie scolarité");			
+			System.out.println("Echec de crï¿½ation sortie scolaritï¿½");			
 			e.printStackTrace();
 		}
 		
@@ -532,22 +552,22 @@ public class Affectation {
 		for(int i=0; i<listeAffectation.size(); i++){
 			int creditRedistribuer = 0;
 			for(int find=0; find<listeEtudiant.size(); find++){
-				if(listeAffectation.get(i).idEtudiant == listeEtudiant.get(find).idEtudiant){ // On cherche l'étudiant dans la liste générale
-					Etudiant current = listeAffectation.get(i);  // l'étudiant courant sur l'affectation actuelle
-					Etudiant same = listeEtudiant.get(find);     // le même étudiant sur une affectation antérieure
+				if(listeAffectation.get(i).idEtudiant == listeEtudiant.get(find).idEtudiant){ // On cherche l'ï¿½tudiant dans la liste gï¿½nï¿½rale
+					Etudiant current = listeAffectation.get(i);  // l'ï¿½tudiant courant sur l'affectation actuelle
+					Etudiant same = listeEtudiant.get(find);     // le mï¿½me ï¿½tudiant sur une affectation antï¿½rieure
 					for(int j=0; j<this.nombreUE; j++){
-						if(current.creditOption.get(j) > 0){   // Pour chaque matière ou il y a des crédits
+						if(current.creditOption.get(j) > 0){   // Pour chaque matiï¿½re ou il y a des crï¿½dits
 							String codeUE = this.optionData.get(j).getCodeModule();
-							for(int check=0; check<same.affectationS.size(); check++){  // On regarde dans toutes les affectations déja faite
+							for(int check=0; check<same.affectationS.size(); check++){  // On regarde dans toutes les affectations dï¿½ja faite
 								Integer estAffecte = same.affectationS.get(check);
 								if(estAffecte != null){
-									if(codeUE == allAffectation.get(check).optionData.get(estAffecte).getCodeModule()){   // On a des crédits dans une matière ou on est déjà affecté
+									if(codeUE == allAffectation.get(check).optionData.get(estAffecte).getCodeModule()){   // On a des crï¿½dits dans une matiï¿½re ou on est dï¿½jï¿½ affectï¿½
 										creditRedistribuer = current.creditOption.get(j);
 										int indiceOption = 0;
 										while (creditRedistribuer > 0){     // On redistribue les credits
 											if(current.choice.get(indiceOption) != j){
 												int tmp = current.choice.get(indiceOption);
-												if(current.creditOption.get(tmp) < ((this.nombreUE*2)*70)/100){ // inférieur à 70% des credits totaux
+												if(current.creditOption.get(tmp) < ((this.nombreUE*2)*70)/100){ // infï¿½rieur ï¿½ 70% des credits totaux
 													current.creditOption.set(tmp, current.creditOption.get(tmp) +1);
 													creditRedistribuer --;
 												}
@@ -581,6 +601,7 @@ public class Affectation {
 		triOptionList();
 		randomizeOptionList();
 		affectEveryone();
+		afficherAffectation();
 
 		affectationTab.add(listeAffectation);
 		completerListeEtudiant();
@@ -599,28 +620,112 @@ public class Affectation {
         }
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
+	
+	
+	public static void createCSV() {
+		try {
+			FileWriter fw = new FileWriter("output" + File.separator + "Affectation.csv");
+			for(int i=0; i<listeEtudiant.size(); i++) {
+				fw.write(listeEtudiant.get(i).nom + ";" + listeEtudiant.get(i).prenom + ";" + listeEtudiant.get(i).idEtudiant);
+				for(int j=0; j<listeEtudiant.get(i).affectationS.size(); j++) {
+					if(listeEtudiant.get(i).affectationS.get(j) == null) {
+						fw.write(";" + "null");
+					}
+					else {
+						int cur = listeEtudiant.get(i).affectationS.get(j);
+						fw.write(";" + "(" + allAffectation.get(j).optionData.get(cur).getName() + " / " +  allAffectation.get(j).optionData.get(cur).getCodeModule() + ")");
+					}
+				}
+				fw.write("\r");
+				
+			}
+			fw.close();
 
-	public static void main(String[] args) {
-		System.out.println("aaaaaaaaaaaa");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void createPDF() {
+        Document document = new Document(PageSize.A4, 20, 20, 20, 20 );		
+        try {
+			PdfWriter.getInstance(document, new FileOutputStream("output" + File.separator + "listeEtudiant.pdf"));
+		} catch (FileNotFoundException | DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		document.open();
+		Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 16, BaseColor.BLACK);
+		Chunk chunk = new Chunk("\n\n                                 Résultat des affectations des étudiants :", font);	
+		Font font2 = FontFactory.getFont(FontFactory.defaultEncoding, 16, BaseColor.BLACK);
+		Chunk chunk2 = new Chunk(resultatAffectation, font2);
 		
-		Affectation a = new Affectation(1);
-		a.affecter();
-		allAffectation.add(a);
+		try {
+			document.add(new Paragraph(chunk));
+			document.add(new Paragraph(chunk2));
+
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		document.close();
+		
+		/***
+		 * Liste scolarité
+		 */
+		
+        Document document2 = new Document(PageSize.A4, 20, 20, 20, 20 );		
+        try {
+			PdfWriter.getInstance(document2, new FileOutputStream("output" + File.separator + "listeScolarite.pdf"));
+		} catch (FileNotFoundException | DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		document2.open();
+		Chunk chunkSco = new Chunk("\n\n                                 Résultat des affectations par UE :", font);	
+		Chunk chunkSco2 = new Chunk(resultatScolarite, font2);	
+
+		
+		try {
+			document2.add(new Paragraph(chunkSco));
+			document2.add(new Paragraph(chunkSco2));
+
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		document2.close();
+		
+		System.out.println("okok");
+	}
+	
+	public static void main(String[] args) {
+//		System.out.println("aaaaaaaaaaaa");
+//		
+//		Affectation a = new Affectation(1);
+//		a.affecter();
+//		allAffectation.add(a);
 		
 		//System.out.println("bbbbbbbbbbbb");
 
-		Affectation b = new Affectation(2);
-		b.affecter();
-		allAffectation.add(b);
+//		Affectation b = new Affectation(2);
+//		b.affecter();
+//		allAffectation.add(b);
 
 //		System.out.println("Sortie normale :");
 //		System.out.println(b.creerSortie());
 //
-//		System.out.println("\n\n\nSortie scolarité :");
+//		System.out.println("\n\n\nSortie scolaritï¿½ :");
 //		System.out.println(b.creerListeScolarite());
 		
-		b.creerSortie();
+//		b.creerSortie();
 		//b.creerListeScolarite();
-		System.out.println("fichier de sortie créée");
+		System.out.println("fichier de sortie crï¿½ï¿½e");
+		createPDF();
 	}
 }
