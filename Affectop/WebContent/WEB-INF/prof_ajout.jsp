@@ -113,10 +113,10 @@
 		</div>
 		
 		</fieldset>
+		<c:if test="${ error }"><p class="erreur"><c:out value="Le fichier est non valide !" /></p></c:if>
     </form>
     </c:if>
     <c:if test="${ !empty fichier }"><p class="valid"><c:out value="Le fichier ${ fichier } (${ description }) a été uploadé !" /></p></c:if>
-    <c:if test="${ error }"><p class="erreur"><c:out value="Le fichier est non valide !" /></p></c:if>
     
 	<c:if test="${ !empty fichier }">
 	<footer>

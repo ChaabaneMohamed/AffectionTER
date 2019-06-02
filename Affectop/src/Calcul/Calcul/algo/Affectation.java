@@ -21,15 +21,12 @@ import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Student;
 
 public class Affectation {
-	
 
 	public static ArrayList<Etudiant> listeEtudiant = new ArrayList<Etudiant>();
 	public static ArrayList<Affectation> allAffectation = new ArrayList<Affectation>();
 	public static ArrayList<ArrayList<Etudiant>> affectationTab = new ArrayList<ArrayList<Etudiant>>();
 	public static int compteurBricolage = 0;
-	
-	
-	public static String statAffect = "";
+
 	public static String resultatAffectation = "";
 	public static String resultatScolarite = "";
 
@@ -605,7 +602,6 @@ public class Affectation {
 		randomizeOptionList();
 		affectEveryone();
 		afficherAffectation();
-		buildSatisfaction();
 
 		affectationTab.add(listeAffectation);
 		completerListeEtudiant();
@@ -625,31 +621,6 @@ public class Affectation {
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 	
-	
-    public void buildSatisfaction(){
-        int tabStat [] = new int[this.nombreUE];
-        for(int i=0; i<this.nombreUE; i++){
-            tabStat[i] = 0;
-        }
-        for(int i=0; i<this.nombreEtudiant; i++){
-            for(int j=0; j<this.nombreUE; j++){
-                if(this.listeAffectation.get(i).choice.get(j) == this.listeAffectation.get(i).affectation){
-                    tabStat[j]++;
-                }
-            }
-        }
-        
-        for(int i=0; i<this.nombreUE; i++){
-            statAffect += ("CHOIX n°" + i + " : " + tabStat[i] + " sur " + this.nombreEtudiant + 
-            " étudians = " + (tabStat[i]/this.nombreEtudiant)*100 + "%");
-        }
-    }
-    
-    
-    public static String getSatisfaction() {
-    	return statAffect;
-    }
-    
 	
 	public static void createCSV() {
 		try {

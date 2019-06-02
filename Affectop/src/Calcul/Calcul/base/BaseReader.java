@@ -66,7 +66,7 @@ public class BaseReader extends BaseHandler {
 				String codeModule = rs.getString("codeModule");
 
 				int size = rs.getInt("size");
-				int id = rs.getInt("id");
+				int id = rs.getInt("optionId");
 				
 				Option o = new Option(size, intitule, mail, id, codeModule);
 				options.put(id,o);

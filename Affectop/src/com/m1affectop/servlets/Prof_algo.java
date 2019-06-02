@@ -53,11 +53,7 @@ public class Prof_algo extends HttpServlet {
         String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
        
-        // On lance l'algo avec des students et options aléatoire
-		//ArrayList<ArrayList<Option>> options= AffectopTest.randomOptions(nbDays,new int[]{2,2,2,2,2},new int[]{4,4,4,4,4},new int[]{40,40,40,40,40},new int[]{50,50,50,50,50});
-		//ArrayList<Student> students = AffectopTest.randomStudents(300,options, nbDays);
-		//HashMap<Option, LinkedList<Option>> incompatibilities = AffectopTest.makeRandomIncompatibilities(options);
-		//System.out.println(">>>"+Affectop.affectTop(students, options, incompatibilities, 5, 2));
+        
         
 		
         request.setAttribute("options", basereader.getOptions(2018));
