@@ -21,15 +21,13 @@ import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Student;
 
 public class Affectation {
-	
 
 	public static ArrayList<Etudiant> listeEtudiant = new ArrayList<Etudiant>();
 	public static ArrayList<Affectation> allAffectation = new ArrayList<Affectation>();
 	public static ArrayList<ArrayList<Etudiant>> affectationTab = new ArrayList<ArrayList<Etudiant>>();
 	public static int compteurBricolage = 0;
-	
-	
-	public static String statAffect = "";
+
+	public static String statAffect = ""; 
 	public static String resultatAffectation = "";
 	public static String resultatScolarite = "";
 
@@ -42,7 +40,7 @@ public class Affectation {
 	private ArrayList<Integer> effectif; // Rï¿½cupï¿½re les effectifs des UE pour les changer a chaque affectation
 	private ArrayList<ArrayList<Etudiant>> optionList;
 
-	Affectation(int numAffectation) {
+	public Affectation(int numAffectation) {
 		this.numAffectation = numAffectation; // Le fichier qui contient toutes les informations pour affecter
 		optionData = new ArrayList<UE>();
 		effectif = new ArrayList<Integer>();
@@ -50,6 +48,9 @@ public class Affectation {
 
 		// Tableau de tableau avec la liste des ï¿½tudiants triï¿½ par crï¿½dit pour chaque
 		// jour d'option
+	}
+	
+	public Affectation() {
 	}
 	
 	void init() {
@@ -83,6 +84,16 @@ public class Affectation {
 	void readDataFromFile() {
 		waitingForDataRead();
 	}
+	
+	public void noChoice() {
+        for (Etudiant etu : listeAffectation) {
+            if(etu.creditOption.size() == 0) {
+                for(int i=0; i<nombreUE; i++) {
+                    etu.creditOption.add(0);
+                }    
+            }
+        }
+    }
 
 	void waitingForDataRead() {
 		if (this.numAffectation == 1) { // Data a la con pour test
@@ -594,6 +605,7 @@ public class Affectation {
 	public void affecter() {
 		//readDataFromFile();
 		init();
+		noChoice();
 		printListeEtudiant();
 		setupEffectif();
 		getChoiceforEveryone();
@@ -605,7 +617,8 @@ public class Affectation {
 		randomizeOptionList();
 		affectEveryone();
 		afficherAffectation();
-		buildSatisfaction();
+		buildSatisfaction(); 
+
 
 		affectationTab.add(listeAffectation);
 		completerListeEtudiant();
@@ -625,31 +638,6 @@ public class Affectation {
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 	
-	
-    public void buildSatisfaction(){
-        int tabStat [] = new int[this.nombreUE];
-        for(int i=0; i<this.nombreUE; i++){
-            tabStat[i] = 0;
-        }
-        for(int i=0; i<this.nombreEtudiant; i++){
-            for(int j=0; j<this.nombreUE; j++){
-                if(this.listeAffectation.get(i).choice.get(j) == this.listeAffectation.get(i).affectation){
-                    tabStat[j]++;
-                }
-            }
-        }
-        
-        for(int i=0; i<this.nombreUE; i++){
-            statAffect += ("CHOIX n°" + i + " : " + tabStat[i] + " sur " + this.nombreEtudiant + 
-            " étudians = " + (tabStat[i]/this.nombreEtudiant)*100 + "%");
-        }
-    }
-    
-    
-    public static String getSatisfaction() {
-    	return statAffect;
-    }
-    
 	
 	public static void createCSV() {
 		try {
@@ -678,6 +666,33 @@ public class Affectation {
 
 	}
 
+	
+    public void buildSatisfaction(){ 
+        int tabStat [] = new int[this.nombreUE]; 
+        for(int i=0; i<this.nombreUE; i++){ 
+            tabStat[i] = 0; 
+        } 
+        for(int i=0; i<this.nombreEtudiant; i++){ 
+            for(int j=0; j<this.nombreUE; j++){ 
+                if(this.listeAffectation.get(i).choice.get(j) == this.listeAffectation.get(i).affectation){ 
+                    tabStat[j]++; 
+                } 
+            } 
+        } 
+         
+        for(int i=0; i<this.nombreUE; i++){ 
+            statAffect += ("CHOIX n" + i + " : " + tabStat[i] + " sur " + this.nombreEtudiant +  
+            " etudiants = " + (tabStat[i]/this.nombreEtudiant)*100 + "%"); 
+        } 
+    } 
+     
+     
+    public static String getSatisfaction() { 
+    	return statAffect; 
+    } 
+     
+    
+    
 	public static void createPDF() {
         Document document = new Document(PageSize.A4, 20, 20, 20, 20 );		
         try {
@@ -735,26 +750,41 @@ public class Affectation {
 	
 	public static void main(String[] args) {
 //		System.out.println("aaaaaaaaaaaa");
-//		
-//		Affectation a = new Affectation(1);
-//		a.affecter();
-//		allAffectation.add(a);
+		
+		Affectation a = new Affectation(1);
+		a.affecter();
+		allAffectation.add(a);
 		
 		//System.out.println("bbbbbbbbbbbb");
 
-//		Affectation b = new Affectation(2);
-//		b.affecter();
-//		allAffectation.add(b);
+		Affectation b = new Affectation(2);
+		b.affecter();
+		allAffectation.add(b);
 
-//		System.out.println("Sortie normale :");
-//		System.out.println(b.creerSortie());
+		System.out.println("Sortie normale :");
+		System.out.println(b.creerSortie());
 //
-//		System.out.println("\n\n\nSortie scolaritï¿½ :");
-//		System.out.println(b.creerListeScolarite());
+		System.out.println("\n\n\nSortie scolaritï¿½ :");
+		System.out.println(b.creerListeScolarite());
 		
-//		b.creerSortie();
-		//b.creerListeScolarite();
+		b.creerSortie();
+		b.creerListeScolarite();
 		System.out.println("fichier de sortie crï¿½ï¿½e");
 		createPDF();
+	}
+	
+	public void algo(int size) {
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		for (int i = 1; i <= size; i++) {
+			Affectation a = new Affectation(i);
+			a.affecter();
+			allAffectation.add(a);
+			System.out.println("ADD");
+		}
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		allAffectation.get(1).creerSortie();
+		allAffectation.get(1).creerListeScolarite();
+		System.out.println("fichier de sortie crï¿½ï¿½e");
+		//createPDF();
 	}
 }

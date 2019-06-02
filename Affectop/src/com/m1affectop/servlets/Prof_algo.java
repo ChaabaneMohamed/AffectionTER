@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Calcul.Calcul.algo.Affectation;
 import Calcul.Calcul.algorithms.calcul.Affectop;
 import Calcul.Calcul.algorithms.test.AffectopTest;
 import Calcul.Calcul.base.BaseReader;
 import Calcul.Calcul.base.BaseWriter;
+import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Student;
 
@@ -38,6 +42,7 @@ public class Prof_algo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Affectation> allAffectation = new ArrayList<Affectation>();
 		BaseReader basereader = new BaseReader();
 		BaseWriter bw = new BaseWriter();
 		bw.initConnection();
@@ -53,12 +58,12 @@ public class Prof_algo extends HttpServlet {
         String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
        
-        // On lance l'algo avec des students et options aléatoire
-		//ArrayList<ArrayList<Option>> options= AffectopTest.randomOptions(nbDays,new int[]{2,2,2,2,2},new int[]{4,4,4,4,4},new int[]{40,40,40,40,40},new int[]{50,50,50,50,50});
-		//ArrayList<Student> students = AffectopTest.randomStudents(300,options, nbDays);
-		//HashMap<Option, LinkedList<Option>> incompatibilities = AffectopTest.makeRandomIncompatibilities(options);
-		//System.out.println(">>>"+Affectop.affectTop(students, options, incompatibilities, 5, 2));
+        ArrayList<GroupOp> tmp = basereader.getGroupOptions();
+		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
+		
+		Affectation main = new Affectation();
         
+		main.algo(options.size());
 		
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
