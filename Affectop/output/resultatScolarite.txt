@@ -1,0 +1,48 @@
+
+
+		 Option n�0,
+	  * Complexite	FZ5FE698,
+GABIOT julien 16018927 ,
+AISSA mohammed 13000771 ,
+KHEDIJA omar 15007622 ,
+KHEDIJA chriss 13000718 ,
+SBROGGIO ilef 15026324 ,
+
+	  * Architecture JEE	FZ5FE698,
+
+	  * Fiabilite Logiciel	FZ5FE698,
+
+
+		 Option n�1,
+	  * Architecture JEE	FZ5FE698,
+GABIOT julien 16018927 ,
+AISSA mohammed 13000771 ,
+KHEDIJA omar 15007622 ,
+
+	  * Genie Logiciel	FZ5FE698,
+KHEDIJA chriss 13000718 ,
+SBROGGIO ilef 15026324 ,
+
+
+		 Option n�0,
+	  * Complexite	FZ5FE698,
+GABIOT julien 16018927 ,
+AISSA mohammed 13000771 ,
+KHEDIJA omar 15007622 ,
+KHEDIJA chriss 13000718 ,
+SBROGGIO ilef 15026324 ,
+
+	  * Architecture JEE	FZ5FE698,
+
+	  * Fiabilite Logiciel	FZ5FE698,
+
+
+		 Option n�1,
+	  * Architecture JEE	FZ5FE698,
+GABIOT julien 16018927 ,
+AISSA mohammed 13000771 ,
+KHEDIJA omar 15007622 ,
+
+	  * Genie Logiciel	FZ5FE698,
+KHEDIJA chriss 13000718 ,
+SBROGGIO ilef 15026324 ,

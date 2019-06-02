@@ -54,32 +54,33 @@ public class BaseReader extends BaseHandler {
 	public ArrayList<Option> getOptionsPerDays(int groupId){
 		String query = "SELECT * FROM Options o;";
 
-		ResultSet rs = getResultOfQuery(query);		
-		ArrayList<Option> result = new ArrayList<>();
-		
-		ArrayList<GroupOp> groups = getGroupOptions();
-		
-		try {
-			while (rs.next()) {
-				String intitule = rs.getString("intitule");
-				String mail = rs.getString("mail");
-				String codeModule = rs.getString("codeModule");
-
-				int size = rs.getInt("size");
-				int id = rs.getInt("optionId");
-				
-				Option o = new Option(size, intitule, mail, id, codeModule);
-				options.put(id,o);
-				result.add(o);
-				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
-			}
-			return result;
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return result;
-
-		}
+		ResultSet rs = getResultOfQuery(query);        
+        ArrayList<Option> result = new ArrayList<>();
+        
+        ArrayList<GroupOp> groups = getGroupOptions();
+        
+        try {
+            while (rs.next()) {
+                String intitule = rs.getString("intitule");
+                String mail = rs.getString("mail");
+                String codeModule = rs.getString("codeModule");
+                
+                int size = rs.getInt("size");
+                int id = rs.getInt("optionId");
+                for (GroupOp groupOp : groups) {
+                    if(groupOp.getGroupId() == groupId && groupOp.getOptionId() == id) {
+                        Option o = new Option(size, intitule, mail, id, codeModule);
+                        options.put(id,o);
+                        result.add(o);
+                    }
+                }
+            }
+            return result;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return result;
+        }
 	}
 	/**
 	 * Return the database content associated with the tag
