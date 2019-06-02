@@ -105,36 +105,91 @@ public class Eleve_choix extends HttpServlet {
 		Map<Integer, List<Integer>> groupOps = basereader.getGroupOPs(tmp);
 		
 		List<Preference> prefs = new ArrayList<Preference>();
-		 
+		Map<Integer, List<Preference>> prefGroup = new HashMap<Integer, List<Preference>>();
+		
 		for (int j = 1; j <= groupOps.size(); j++) {
-			for(int i = 1; i<= options.size(); i++) {
-				if(request.getParameter("" + (i-1) + j) != null) {
-					Preference p = new Preference(j, Integer.parseInt(request.getParameter("" + (i-1) + j)), i, numEtudiant);
-					if(basereader.preferenceExist(p)) {
-						bw.updatePreference(p);
+            List<Preference> listp = new ArrayList<Preference>();
+            for(int i = 1; i<= options.size(); i++) {
+                if(request.getParameter("" + (i-1) + j) != null) {
+                    Preference p = new Preference(j, Integer.parseInt(request.getParameter("" + (i-1) + j)), i, numEtudiant);
+                    listp.add(p);
+                }
+            }
+            prefGroup.put(j, listp);
+        }
+
+		boolean validation = true;
+		for (int i = 1; i <= groupOps.size(); i++) {
+			int max=0;
+			int nb =0;
+			List<Preference> a = prefGroup.get(i);
+			for (Preference p : a) {
+				if(a.size() < 5) {
+					max += p.getChoice();
+					if(p.getChoice() != 0)
+						nb+=1;
+					if (max > 10 || p.getChoice() > 7) {
+						validation = false;
 					}
-					else {
-						bw.writePreference(p);
+				} else {
+					max += p.getChoice();
+					if (p.getChoice() != 0)
+						nb += 1;
+					if (max > (Math.round((a.size()) * (a.size() - 1)) / 2)
+							|| p.getChoice() > Math.round(0.7 * ((a.size()) * (a.size() - 1)) / 2)) {
+						validation = false;
 					}
-					prefs.add(p);
 				}
 			}
-		}
-		
-		Map<Integer, List<Preference>> prefPerGroup = new HashMap<Integer, List<Preference>>();
-		
-		for(int i = 1; i <= basereader.getNbDays(); i++) {
-			List<Preference> liste = new ArrayList<Preference>();
-			for (Preference preference : prefs) {
-				if(preference.getGroupId() == i)
-					liste.add(preference);
+			if (a.size() < 5) {
+				if (max != 10) {
+					validation = false;
+				}
+			} else {
+				if (max != (Math.round((a.size()) * (a.size() - 1)) / 2)) {
+					validation = false;
+				}
+
+				if (nb < 0.5 * a.size()) {
+					validation = false;
+				}
+
 			}
-			prefPerGroup.put(i, liste);
+		}
+		Map<Integer, List<Preference>> prefPerGroup = null;
+
+		if (validation == true) {
+			for (int j = 1; j <= groupOps.size(); j++) {
+				for (int i = 1; i <= options.size(); i++) {
+					if (request.getParameter("" + (i - 1) + j) != null) {
+						Preference p = new Preference(j, Integer.parseInt(request.getParameter("" + (i - 1) + j)), i,
+								numEtudiant);
+						if (basereader.preferenceExist(p)) {
+							bw.updatePreference(p);
+						} else {
+							bw.writePreference(p);
+						}
+						prefs.add(p);
+					}
+				}
+			}
+			
+			prefPerGroup = new HashMap<Integer, List<Preference>>();
+
+			for (int i = 1; i <= basereader.getNbDays(); i++) {
+				List<Preference> liste = new ArrayList<Preference>();
+				for (Preference preference : prefs) {
+					if (preference.getGroupId() == i)
+						liste.add(preference);
+				}
+				prefPerGroup.put(i, liste);
+			}
 		}
 		
 		request.setAttribute("groupOp", basereader.getGroupOPs(tmp));
 		
 		request.setAttribute("prefPerGroup", prefPerGroup);
+		request.setAttribute("validation", validation);
 		request.setAttribute("options", options);
 		request.setAttribute("choix", choix);
 		
