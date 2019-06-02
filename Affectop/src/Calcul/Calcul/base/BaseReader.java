@@ -70,7 +70,7 @@ public class BaseReader extends BaseHandler {
 				
 				Option o = new Option(size, intitule, mail, id, codeModule);
 				options.put(id,o);
-				result.get(groupId-1).add(o);
+				result.add(o);
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
 			}
 			return result;
