@@ -57,7 +57,7 @@ public class Eleve_choix extends HttpServlet {
         request.setAttribute("numEtudiant", numEtudiant);
         
 		request.setAttribute("options", basereader.getOptions(2018));
-		System.out.println(basereader.getOptions(2018).size()+"AAA");
+		//System.out.println(basereader.getOptions(2018).size()+"AAA");
 		
 		Map<Student, ArrayList<Option>> repeater = basereader.getRepeater(2018);
 		request.setAttribute("repeater", repeater);

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Calcul.Calcul.algo.Affectation;
 import Calcul.Calcul.algorithms.calcul.Affectop;
 import Calcul.Calcul.algorithms.test.AffectopTest;
 import Calcul.Calcul.base.BaseReader;
 import Calcul.Calcul.base.BaseWriter;
+import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Student;
 
@@ -53,7 +57,14 @@ public class Prof_algo extends HttpServlet {
         String firstname = basereader.firstNameRequestTeacher(token);
         request.setAttribute("firstname", firstname);
        
-        
+        ArrayList<GroupOp> tmp = basereader.getGroupOptions();
+		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
+		
+		//Affectation min = new 
+		
+		for (int i = 1; i <= options.size(); i++) {
+			
+		}
         
 		
         request.setAttribute("options", basereader.getOptions(2018));
