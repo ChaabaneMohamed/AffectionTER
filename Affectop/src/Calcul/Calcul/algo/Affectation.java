@@ -40,7 +40,7 @@ public class Affectation {
 	private ArrayList<Integer> effectif; // R�cup�re les effectifs des UE pour les changer a chaque affectation
 	private ArrayList<ArrayList<Etudiant>> optionList;
 
-	Affectation(int numAffectation) {
+	public Affectation(int numAffectation) {
 		this.numAffectation = numAffectation; // Le fichier qui contient toutes les informations pour affecter
 		optionData = new ArrayList<UE>();
 		effectif = new ArrayList<Integer>();
@@ -48,6 +48,9 @@ public class Affectation {
 
 		// Tableau de tableau avec la liste des �tudiants tri� par cr�dit pour chaque
 		// jour d'option
+	}
+	
+	public Affectation() {
 	}
 	
 	void init() {
@@ -81,6 +84,16 @@ public class Affectation {
 	void readDataFromFile() {
 		waitingForDataRead();
 	}
+	
+	public void noChoice() {
+        for (Etudiant etu : listeAffectation) {
+            if(etu.creditOption.size() == 0) {
+                for(int i=0; i<nombreUE; i++) {
+                    etu.creditOption.add(0);
+                }    
+            }
+        }
+    }
 
 	void waitingForDataRead() {
 		if (this.numAffectation == 1) { // Data a la con pour test
@@ -592,6 +605,7 @@ public class Affectation {
 	public void affecter() {
 		//readDataFromFile();
 		init();
+		noChoice();
 		printListeEtudiant();
 		setupEffectif();
 		getChoiceforEveryone();
@@ -757,5 +771,20 @@ public class Affectation {
 		b.creerListeScolarite();
 		System.out.println("fichier de sortie cr��e");
 		createPDF();
+	}
+	
+	public void algo(int size) {
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		for (int i = 1; i <= size; i++) {
+			Affectation a = new Affectation(i);
+			a.affecter();
+			allAffectation.add(a);
+			System.out.println("ADD");
+		}
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		allAffectation.get(1).creerSortie();
+		allAffectation.get(1).creerListeScolarite();
+		System.out.println("fichier de sortie cr��e");
+		//createPDF();
 	}
 }

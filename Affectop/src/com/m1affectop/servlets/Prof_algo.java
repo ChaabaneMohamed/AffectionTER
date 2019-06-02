@@ -42,6 +42,7 @@ public class Prof_algo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Affectation> allAffectation = new ArrayList<Affectation>();
 		BaseReader basereader = new BaseReader();
 		BaseWriter bw = new BaseWriter();
 		bw.initConnection();
@@ -60,12 +61,9 @@ public class Prof_algo extends HttpServlet {
         ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
 		
-		//Affectation min = new 
-		
-		for (int i = 1; i <= options.size(); i++) {
-			
-		}
+		Affectation main = new Affectation();
         
+		main.algo(options.size());
 		
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
