@@ -133,7 +133,12 @@ public class Prof_ajout extends HttpServlet {
 
             request.setAttribute(nomChamp, nomFichier);
         }
-        er.request("C:/temp/"+nomFichier);
+        try {
+        	er.request("C:/temp/"+nomFichier);
+        }
+        catch (Exception e) {
+        	request.setAttribute("error", true);
+		}
         
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
