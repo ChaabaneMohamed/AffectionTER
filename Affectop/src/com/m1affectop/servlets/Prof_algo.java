@@ -61,9 +61,39 @@ public class Prof_algo extends HttpServlet {
         ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
 		
-		Affectation main = new Affectation();
-        
-		main.algo(options.size());
+		
+		
+//		Affectation main = new Affectation();
+//		main.algo(options.size());
+//		
+		
+		for (int i = 1; i <= options.size(); i++) {
+			if(i==1) {
+				Affectation a = new Affectation(i, allAffectation);
+				a.reset();			
+				a.affecter();
+				allAffectation.add(a);
+				
+			}
+			else {
+				Affectation a = new Affectation(i, allAffectation);
+				a.affecter();
+				allAffectation.add(a);
+				//System.out.println("ADD");
+			}
+
+		}
+		
+		Affectation ok = new Affectation(0, allAffectation);
+		String sortie = ok.creerSortie();
+		String sco = ok.creerListeScolarite();
+		//System.out.println(sortie);
+		ok.createPDF(sortie, sco);
+//		ok.createCSV(allAffectation);
+
+		
+		//System.out.println(ok.creerSortie());
+		
 		
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));

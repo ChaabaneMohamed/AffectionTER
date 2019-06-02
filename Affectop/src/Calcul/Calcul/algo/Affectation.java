@@ -23,7 +23,6 @@ import Calcul.Calcul.bean.Student;
 public class Affectation {
 
 	public static ArrayList<Etudiant> listeEtudiant = new ArrayList<Etudiant>();
-	public static ArrayList<Affectation> allAffectation = new ArrayList<Affectation>();
 	public static ArrayList<ArrayList<Etudiant>> affectationTab = new ArrayList<ArrayList<Etudiant>>();
 	public static int compteurBricolage = 0;
 
@@ -39,12 +38,17 @@ public class Affectation {
 	private ArrayList<UE> optionData; // Tableau de toute les UE d'un jour d'option
 	private ArrayList<Integer> effectif; // Rï¿½cupï¿½re les effectifs des UE pour les changer a chaque affectation
 	private ArrayList<ArrayList<Etudiant>> optionList;
+	public  ArrayList<Affectation> allAffectation;
 
-	public Affectation(int numAffectation) {
+
+	public Affectation(int numAffectation, ArrayList<Affectation> aff ) {
 		this.numAffectation = numAffectation; // Le fichier qui contient toutes les informations pour affecter
+		this.allAffectation = aff;
 		optionData = new ArrayList<UE>();
 		effectif = new ArrayList<Integer>();
 		optionList = new ArrayList<ArrayList<Etudiant>>();
+		
+		
 
 		// Tableau de tableau avec la liste des ï¿½tudiants triï¿½ par crï¿½dit pour chaque
 		// jour d'option
@@ -83,6 +87,16 @@ public class Affectation {
 
 	void readDataFromFile() {
 		waitingForDataRead();
+	}
+	
+	public void reset() {
+		statAffect = "";
+		resultatAffectation = "";
+		resultatScolarite = "";
+		
+		compteurBricolage = 0;
+		listeEtudiant.clear();
+		affectationTab.clear();
 	}
 	
 	public void noChoice() {
@@ -505,12 +519,13 @@ public class Affectation {
 
 	public String creerSortie() {
 		for(int i=0; i<listeEtudiant.size(); i++) {
-			resultatAffectation += "ï¿½ " + listeEtudiant.get(i).nom;
+			resultatAffectation += "- " + listeEtudiant.get(i).nom;
 			resultatAffectation += " " + listeEtudiant.get(i).prenom;
 			resultatAffectation += " " + listeEtudiant.get(i).idEtudiant + " :\n";
 			for(int j=0; j<listeEtudiant.get(i).affectationS.size(); j++) {
 				if(listeEtudiant.get(i).affectationS.get(j) != null) {
 					int indice = listeEtudiant.get(i).affectationS.get(j);
+					//System.out.println("allAffectation = " + allAffectation.size());
 					UE ue = allAffectation.get(j).optionData.get(indice);
 					resultatAffectation += "\t\t" + ue.getCodeModule() + " " + ue.getName() + "\n";
 				}
@@ -528,7 +543,7 @@ public class Affectation {
 			e.printStackTrace();
 		}
 		*/
-		System.out.println(resultatAffectation);
+		//System.out.println(resultatAffectation);
 		return resultatAffectation;
 	}
 
@@ -548,14 +563,14 @@ public class Affectation {
 			}
 		}
 		
-		try {
-			PrintWriter out = new PrintWriter("output" + File.separator + "resultatScolarite.txt");
-			out.print(resultatScolarite);
-			out.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Echec de crï¿½ation sortie scolaritï¿½");			
-			e.printStackTrace();
-		}
+//		try {
+//			PrintWriter out = new PrintWriter("output" + File.separator + "resultatScolarite.txt");
+//			out.print(resultatScolarite);
+//			out.close();
+//		} catch (FileNotFoundException e) {
+//			System.out.println("Echec de crï¿½ation sortie scolaritï¿½");			
+//			e.printStackTrace();
+//		}
 		
 		return resultatScolarite;
 	}
@@ -639,7 +654,7 @@ public class Affectation {
     }
 	
 	
-	public static void createCSV() {
+	public void createCSV(ArrayList<Affectation> allAff) {
 		try {
 			FileWriter fw = new FileWriter("output" + File.separator + "Affectation.csv");
 			for(int i=0; i<listeEtudiant.size(); i++) {
@@ -650,7 +665,7 @@ public class Affectation {
 					}
 					else {
 						int cur = listeEtudiant.get(i).affectationS.get(j);
-						fw.write(";" + "(" + allAffectation.get(j).optionData.get(cur).getName() + " / " +  allAffectation.get(j).optionData.get(cur).getCodeModule() + ")");
+						fw.write(";" + "(" + allAff.get(j).optionData.get(cur).getName() + " / " +  allAff.get(j).optionData.get(cur).getCodeModule() + ")");
 					}
 				}
 				fw.write("\r");
@@ -693,7 +708,7 @@ public class Affectation {
      
     
     
-	public static void createPDF() {
+	public void createPDF(String etu, String sco) {
         Document document = new Document(PageSize.A4, 20, 20, 20, 20 );		
         try {
 			PdfWriter.getInstance(document, new FileOutputStream("output" + File.separator + "listeEtudiant.pdf"));
@@ -706,7 +721,7 @@ public class Affectation {
 		Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 16, BaseColor.BLACK);
 		Chunk chunk = new Chunk("\n\n                                 Résultat des affectations des étudiants :", font);	
 		Font font2 = FontFactory.getFont(FontFactory.defaultEncoding, 16, BaseColor.BLACK);
-		Chunk chunk2 = new Chunk(resultatAffectation, font2);
+		Chunk chunk2 = new Chunk(etu, font2);
 		
 		try {
 			document.add(new Paragraph(chunk));
@@ -732,7 +747,7 @@ public class Affectation {
 		 
 		document2.open();
 		Chunk chunkSco = new Chunk("\n\n                                 Résultat des affectations par UE :", font);	
-		Chunk chunkSco2 = new Chunk(resultatScolarite, font2);	
+		Chunk chunkSco2 = new Chunk(sco, font2);	
 
 		
 		try {
@@ -748,43 +763,43 @@ public class Affectation {
 		System.out.println("okok");
 	}
 	
-	public static void main(String[] args) {
-//		System.out.println("aaaaaaaaaaaa");
-		
-		Affectation a = new Affectation(1);
-		a.affecter();
-		allAffectation.add(a);
-		
-		//System.out.println("bbbbbbbbbbbb");
-
-		Affectation b = new Affectation(2);
-		b.affecter();
-		allAffectation.add(b);
-
-		System.out.println("Sortie normale :");
-		System.out.println(b.creerSortie());
+//	public static void main(String[] args) {
+////		System.out.println("aaaaaaaaaaaa");
+//		
+//		Affectation a = new Affectation(1);
+//		a.affecter();
+//		allAffectation.add(a);
+//		
+//		//System.out.println("bbbbbbbbbbbb");
 //
-		System.out.println("\n\n\nSortie scolaritï¿½ :");
-		System.out.println(b.creerListeScolarite());
-		
-		b.creerSortie();
-		b.creerListeScolarite();
-		System.out.println("fichier de sortie crï¿½ï¿½e");
-		createPDF();
-	}
+//		Affectation b = new Affectation(2);
+//		b.affecter();
+//		allAffectation.add(b);
+//
+//		System.out.println("Sortie normale :");
+//		System.out.println(b.creerSortie());
+////
+//		System.out.println("\n\n\nSortie scolaritï¿½ :");
+//		System.out.println(b.creerListeScolarite());
+//		
+//		b.creerSortie();
+//		b.creerListeScolarite();
+//		System.out.println("fichier de sortie crï¿½ï¿½e");
+//		createPDF();
+//	}
 	
-	public void algo(int size) {
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		for (int i = 1; i <= size; i++) {
-			Affectation a = new Affectation(i);
-			a.affecter();
-			allAffectation.add(a);
-			System.out.println("ADD");
-		}
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		allAffectation.get(1).creerSortie();
-		allAffectation.get(1).creerListeScolarite();
-		System.out.println("fichier de sortie crï¿½ï¿½e");
-		//createPDF();
-	}
+//	public void algo(int size) {
+//		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//		for (int i = 1; i <= size; i++) {
+//			Affectation a = new Affectation(i);
+//			a.affecter();
+//			allAffectation.add(a);
+//			System.out.println("ADD");
+//		}
+//		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//		allAffectation.get(1).creerSortie();
+//		allAffectation.get(1).creerListeScolarite();
+//		System.out.println("fichier de sortie crï¿½ï¿½e");
+//		//createPDF();
+//	}
 }
