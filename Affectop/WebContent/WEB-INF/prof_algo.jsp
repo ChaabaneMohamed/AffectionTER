@@ -19,13 +19,18 @@
   		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 	</div>
 	
-	<p>
-		L'algorithme d'affectation a bien été lancé.
-	</p>
-	<p>Dans la prochaine page, vous pourrez envoyer des mails généralisés aux élèves avec leur affectation d'options, et un mail au secrétariat afin qu'ils aient connaissance de ces affectations.</p>
-	
+	<h2>
+		Résultats:
+	</h2>
+	<p><c:out value="${ aff }"></c:out></p>
+	<a href="output/listeEtudiant.pdf">Pdf des résultats</a>
 	
 	<footer>
+		<div class="bouton">
+			<p>
+				<a  class = "btn btn-primary" href="prof_algo?token=${ token }" role ="button">Relancer l'Algorithme</a>
+			</p>
+		</div>
 		<div class="bouton_confirm">
 			<p>
 				<a  class = "btn btn-primary" href="prof_mail?token=${ token }" role ="button">Suivant</a>

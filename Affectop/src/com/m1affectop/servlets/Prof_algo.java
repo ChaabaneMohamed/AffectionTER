@@ -61,12 +61,6 @@ public class Prof_algo extends HttpServlet {
         ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
 		
-		
-		
-//		Affectation main = new Affectation();
-//		main.algo(options.size());
-//		
-		
 		for (int i = 1; i <= options.size(); i++) {
 			if(i==1) {
 				Affectation a = new Affectation(i, allAffectation);
@@ -95,6 +89,8 @@ public class Prof_algo extends HttpServlet {
 
 		
 		//System.out.println(ok.creerSortie());
+		
+		request.setAttribute("aff", ok.getSatisfaction());
 		
 		
         request.setAttribute("options", basereader.getOptions(2018));
