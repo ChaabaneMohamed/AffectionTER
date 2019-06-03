@@ -82,7 +82,9 @@ public class Prof_algo extends HttpServlet {
 		String sortie = ok.creerSortie();
 		String sco = ok.creerListeScolarite();
 		//System.out.println(sortie);
+		
 		ok.createPDF(sortie, sco);
+		ok.createCSV(allAffectation);
 //		ok.createCSV(allAffectation);
 
 		
