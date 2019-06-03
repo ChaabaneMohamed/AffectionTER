@@ -7,13 +7,13 @@ public class Etudiant {
 	String nom;
 	String prenom;
 	String idEtudiant;
-	ArrayList<Integer> creditOption;
+	ArrayList<Float> creditOption;
 	ArrayList<Integer> choice;
 	int affectation;
 	int nombreAffectation;
 	ArrayList<Integer> affectationS;
 
-	Etudiant(String nom, String prenom, String idEtudiant, ArrayList<Integer> creditOption){
+	Etudiant(String nom, String prenom, String idEtudiant, ArrayList<Float> creditOption){
 		this.nom = nom;
 		this.prenom = prenom;
 		this.idEtudiant = idEtudiant;
@@ -27,7 +27,7 @@ public class Etudiant {
 	
 	
 	Etudiant(){
-	        this.creditOption = new ArrayList<Integer>();
+	        this.creditOption = new ArrayList<Float>();
 	        this.choice = new ArrayList<Integer>();
 	        this.affectation = -1;
 	        this.nombreAffectation = 0;
