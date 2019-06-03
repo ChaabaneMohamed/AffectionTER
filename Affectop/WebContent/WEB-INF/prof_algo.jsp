@@ -20,12 +20,17 @@
 	</div>
 	
 	<p>
-		L'algorithme d'affectation a bien été lancé.
+		Résultats:
 	</p>
-	<p>Dans la prochaine page, vous pourrez envoyer des mails généralisés aux élèves avec leur affectation d'options, et un mail au secrétariat afin qu'ils aient connaissance de ces affectations.</p>
+	<p><c:out value="${ aff }"></c:out></p>
 	
 	
 	<footer>
+		<div class="bouton">
+			<p>
+				<a  class = "btn btn-primary" href="prof_algo?token=${ token }" role ="button">Relancer l'Algorithme</a>
+			</p>
+		</div>
 		<div class="bouton_confirm">
 			<p>
 				<a  class = "btn btn-primary" href="prof_mail?token=${ token }" role ="button">Suivant</a>
