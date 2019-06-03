@@ -23,7 +23,7 @@
 		Résultats:
 	</h2>
 	<p><c:out value="${ aff }"></c:out></p>
-	<a href="output/listeEtudiant.pdf">Pdf des résultats</a>
+	<a href="${ path }">Pdf des résultats</a>
 	
 	<footer>
 		<div class="bouton">

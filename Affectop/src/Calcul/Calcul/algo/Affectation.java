@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.Servlet;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -624,16 +626,16 @@ public class Affectation {
      
     
     
-	public void createPDF(String etu, String sco, String path) {
+	public static void createPDF(String etu, String sco, FileOutputStream path) {
         Document document = new Document(PageSize.A4, 20, 20, 20, 20 );		
         try {
-			PdfWriter.getInstance(document, new FileOutputStream(path + "output" + File.separator + "listeEtudiant.pdf"));
+        	PdfWriter.getInstance(document, path);
+			//PdfWriter.getInstance(document, new FileOutputStream(path + "output" + File.separator + "listeEtudiant.pdf"));
 
-		} catch (FileNotFoundException | DocumentException e) {
+		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        System.out.println("gros pd");
 		 
 		document.open();
 		Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 16, BaseColor.BLACK);
@@ -655,60 +657,41 @@ public class Affectation {
 		 * Liste scolarité
 		 */
 		
-        Document document2 = new Document(PageSize.A4, 20, 20, 20, 20 );		
-        try {
-			PdfWriter.getInstance(document2, new FileOutputStream(path + "output" + File.separator + "listeScolarite.pdf"));
-
-		} catch (FileNotFoundException | DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        System.out.println("ooooooooooooook");
-		 
-		document2.open();
-		Chunk chunkSco = new Chunk("\n\n                                 Résultat des affectations par UE :", font);	
-		Chunk chunkSco2 = new Chunk(sco, font2);	
-
-		
-		try {
-			document2.add(new Paragraph(chunkSco));
-			document2.add(new Paragraph(chunkSco2));
-
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		document2.close();
-		
-		System.out.println("okok");
+//        Document document2 = new Document(PageSize.A4, 20, 20, 20, 20 );		
+//        try {
+//			PdfWriter.getInstance(document2, new FileOutputStream(path + "output" + File.separator + "listeScolarite.pdf"));
+//
+//		} catch (FileNotFoundException | DocumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        
+//        System.out.println("ooooooooooooook");
+//		 
+//		document2.open();
+//		Chunk chunkSco = new Chunk("\n\n                                 Résultat des affectations par UE :", font);	
+//		Chunk chunkSco2 = new Chunk(sco, font2);	
+//
+//		
+//		try {
+//			document2.add(new Paragraph(chunkSco));
+//			document2.add(new Paragraph(chunkSco2));
+//
+//		} catch (DocumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		document2.close();
+//		
+//		System.out.println("okok");
 	}
 	
+//	
 //	public static void main(String[] args) {
-////		System.out.println("aaaaaaaaaaaa");
-//		
-//		Affectation a = new Affectation(1);
-//		a.affecter();
-//		allAffectation.add(a);
-//		
-//		//System.out.println("bbbbbbbbbbbb");
 //
-//		Affectation b = new Affectation(2);
-//		b.affecter();
-//		allAffectation.add(b);
-//
-//		System.out.println("Sortie normale :");
-//		System.out.println(b.creerSortie());
-////
-//		System.out.println("\n\n\nSortie scolaritï¿½ :");
-//		System.out.println(b.creerListeScolarite());
-//		
-//		b.creerSortie();
-//		b.creerListeScolarite();
-//		System.out.println("fichier de sortie crï¿½ï¿½e");
-//		createPDF();
+//		createPDF("a", "b", "");
 //	}
-	
+//	
 //	public void algo(int size) {
 //		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 //		for (int i = 1; i <= size; i++) {

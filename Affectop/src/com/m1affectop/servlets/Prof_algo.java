@@ -1,5 +1,7 @@
 package com.m1affectop.servlets;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,20 +85,26 @@ public class Prof_algo extends HttpServlet {
 		String sco = ok.creerListeScolarite();
 		//System.out.println(sortie);
 		
-		ok.createPDF(sortie, sco);
-		ok.createCSV(allAffectation);
+		String path = getServletContext().getRealPath("WEB-INF" + File.separator + "output" + File.separator + "listeEtudiant.pdf");
+		
+		FileOutputStream file = new FileOutputStream(new  File(path));
+		
+		Affectation.createPDF(sortie, sco, file);
+		//ok.createCSV(allAffectation, "");
 //		ok.createCSV(allAffectation);
 
 		
 		//System.out.println(ok.creerSortie());
 		
 		request.setAttribute("aff", ok.getSatisfaction());
-		
-		
+		request.setAttribute("path", path);
+		 
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));
         
-
+        if(name == "") {
+        	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
+        }
 		this.getServletContext().getRequestDispatcher("/WEB-INF/prof_algo.jsp").forward(request, response);
 	}
 
