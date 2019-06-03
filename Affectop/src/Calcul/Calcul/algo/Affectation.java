@@ -697,7 +697,7 @@ public class Affectation {
          
         for(int i=0; i<this.nombreUE; i++){ 
             statAffect += ("CHOIX n" + i + " : " + tabStat[i] + " sur " + this.nombreEtudiant +  
-            " etudiants = " + (tabStat[i]/this.nombreEtudiant)*100 + "%"); 
+            " etudiants = " + (tabStat[i]/this.nombreEtudiant)*100 + "% "); 
         } 
     } 
      

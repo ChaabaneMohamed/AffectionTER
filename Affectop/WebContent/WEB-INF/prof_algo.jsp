@@ -19,11 +19,11 @@
   		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 	</div>
 	
-	<p>
+	<h2>
 		Résultats:
-	</p>
+	</h2>
 	<p><c:out value="${ aff }"></c:out></p>
-	
+	<a href="output/listeEtudiant.pdf">Pdf des résultats</a>
 	
 	<footer>
 		<div class="bouton">
