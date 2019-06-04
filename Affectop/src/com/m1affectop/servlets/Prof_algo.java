@@ -63,10 +63,14 @@ public class Prof_algo extends HttpServlet {
         ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
 		
+		ArrayList<Student> eleves = basereader.getStudents(2017);
+		
+		System.out.println("Affectation0");
 		for (int i = 1; i <= options.size(); i++) {
-			System.out.println("Affectation");
+			System.out.println("Affectation"+i);
 			if(i==1) {
-				Affectation a = new Affectation(i, allAffectation);
+				System.out.println("Affectation"+1+"test");
+				Affectation a = new Affectation(i, allAffectation, eleves);
 				
 				a.reset();			
 				a.affecter();
@@ -74,7 +78,7 @@ public class Prof_algo extends HttpServlet {
 				
 			}
 			else {
-				Affectation a = new Affectation(i, allAffectation);
+				Affectation a = new Affectation(i, allAffectation , eleves);
 				a.affecter();
 				allAffectation.add(a);
 				//System.out.println("ADD");
@@ -82,17 +86,26 @@ public class Prof_algo extends HttpServlet {
 
 		}
 		
-		Affectation ok = new Affectation(0, allAffectation);
+		Affectation ok = new Affectation(0, allAffectation, eleves);
 		String sortie = ok.creerSortie();
 		String sco = ok.creerListeScolarite();
 		//System.out.println(sortie);
 		
 		String path = getServletContext().getRealPath("WEB-INF" + File.separator + "output" + File.separator + "listeEtudiant.pdf");
 		
+		String pathSco = getServletContext().getRealPath("WEB-INF" + File.separator + "output" + File.separator + "listeScolarite.pdf");
+		
+		String pathCSV = getServletContext().getRealPath("WEB-INF" + File.separator + "output" + File.separator + "Affectation.csv");
+		
 		FileOutputStream file = new FileOutputStream(new  File(path));
 		
-		Affectation.createPDF(sortie, sco, file);
-		//ok.createCSV(allAffectation, "");
+		FileOutputStream fileSco = new FileOutputStream(new  File(pathSco));
+		
+		//FileOutputStream fileCSV = new FileOutputStream(new  File(pathCSV));
+		
+		Affectation.createPDF(sortie, file);
+		Affectation.createPDFSco(sco, fileSco);
+		ok.createCSV(allAffectation, pathCSV);
 //		ok.createCSV(allAffectation);
 
 		
@@ -100,6 +113,10 @@ public class Prof_algo extends HttpServlet {
 		
 		request.setAttribute("aff", ok.getSatisfaction());
 		request.setAttribute("path", path);
+		
+		request.setAttribute("pathCSV", pathCSV);
+		
+		
 		 
         request.setAttribute("options", basereader.getOptions(2018));
         request.setAttribute("eleves", basereader.getStudents(2017));

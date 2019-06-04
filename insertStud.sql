@@ -32,13 +32,13 @@ INSERT INTO GroupOp (groupId, optionId)
 	VALUES(2, 4);
 	
 INSERT INTO Options (intitule, mail,size, codeModule , year)
-	VALUES('Complexite', 'kevin.perrot@lis-lab.fr', 6, 'FZ5FE698', 2018);
+	VALUES('Complexite', 'kevin.perrot@lis-lab.fr', 50, 'FZ5FE698', 2018);
 	
 INSERT INTO Options (intitule, mail,size, codeModule,year)
-	VALUES('Architecture JEE','jean-luc.massat@univ-amu.fr', 3, 'FZ5FE698', 2018);
+	VALUES('Architecture JEE','jean-luc.massat@univ-amu.fr', 30, 'FZ5FE698', 2018);
 
 INSERT INTO Options (intitule, mail,size, codeModule,year)
-	VALUES('Fiabilite Logiciel', 'denis.lugiez@univ-amu.fr', 3, 'FZ5FE698', 2018);
+	VALUES('Fiabilite Logiciel', 'denis.lugiez@univ-amu.fr', 30, 'FZ5FE698', 2018);
 	
 INSERT INTO Options (intitule, mail,size, codeModule,year)
-	VALUES('Genie Logiciel', 'pablo.ARRIGHI@univ-amu.fr',6, 'FZ5FE698', 2018);
+	VALUES('Genie Logiciel', 'pablo.ARRIGHI@univ-amu.fr', 30, 'FZ5FE698', 2018);

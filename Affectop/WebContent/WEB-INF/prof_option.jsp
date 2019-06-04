@@ -92,7 +92,7 @@
 		   	</div>
 		   	
 		   	<div class="field-text">
-			   	<label for="size" class="font">Effectif<span class="fb-required">*</span> :</label>
+			   	<label for="size" class="font">Capacité<span class="fb-required">*</span> :</label>
 			   	<input type="number" class="form-control" name="size" id="size" required="required" aria-required="true">
 		   	</div>
 		   	

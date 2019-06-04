@@ -31,6 +31,7 @@ public class Affectation {
 	public static String statAffect = ""; 
 	public static String resultatAffectation = "";
 	public static String resultatScolarite = "";
+	ArrayList<Student> eleves;
 
 
 	private int numAffectation;
@@ -43,12 +44,13 @@ public class Affectation {
 	public  ArrayList<Affectation> allAffectation;
 
 
-	public Affectation(int numAffectation, ArrayList<Affectation> aff ) {
+	public Affectation(int numAffectation, ArrayList<Affectation> aff, ArrayList<Student> eleves ) {
 		this.numAffectation = numAffectation; // Le fichier qui contient toutes les informations pour affecter
 		this.allAffectation = aff;
 		optionData = new ArrayList<UE>();
 		effectif = new ArrayList<Integer>();
 		optionList = new ArrayList<ArrayList<Etudiant>>();
+		this.eleves = eleves;
 		
 		
 
@@ -60,12 +62,13 @@ public class Affectation {
 	}
 	
 	void init() {
+		System.out.println("aaaaaa1");
 		BaseReader basereader = new BaseReader();
+		System.out.println("aaaaaa2");
 		ArrayList<Option> allUE = basereader.getOptionsPerDays(numAffectation);
-        ArrayList<Student> eleves = basereader.getStudents(2017);
-        
+		System.out.println("aaaaaa3");
         ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
-
+        System.out.println("aaaaaa4");
         for (Student s : eleves) {
         	ArrayList<Integer> choix = basereader.getChoiceForOneStudentOneGroup(s.getNumEtudiant(), numAffectation);
         	ArrayList<Float> floatChoix = new ArrayList<Float>();
@@ -76,14 +79,17 @@ public class Affectation {
 			etudiants.add(e);
 			//System.out.println("etu|"+e.getIdEtudiant()+"|"+e.creditOption.toString());
 		}
+        System.out.println("aaaaaa5");
         listeAffectation = new ArrayList<Etudiant>(etudiants);
         
+        System.out.println("aaaaaa6");
         ArrayList<UE> UEs = new ArrayList<UE>();
         for (Option u : allUE) {
         	UEs.add(new UE(u.getCodeModule(), 
 					u.getNom(), 
 					u.getSize()));
 		}
+        System.out.println("aaaaaa7");
         optionData = UEs;
         
         nombreEtudiant = listeAffectation.size();
@@ -231,6 +237,7 @@ public class Affectation {
 		System.out.println("nombre etu = " + nombreEtudiant);
 
 		while(remaining > 0){
+			System.out.println("re="+remaining);
 			Etudiant bestEtu = null;
 			int besti = -1;
 			float bestCredit = -1;
@@ -248,6 +255,7 @@ public class Affectation {
 
 			for(int i=0; i<this.listeAffectation.size(); i++){
 				//console.log(bestEtu + "VS " + this.listeAffectation[i]);
+				System.out.println(i);
 				if(listeAffectation.get(i).idEtudiant == bestEtu.idEtudiant){
 					listeAffectation.get(i).affectation = besti;
 				}
@@ -393,8 +401,9 @@ public class Affectation {
 	}
 
 	public String creerSortie() {
+		resultatAffectation+="\n\n";
 		for(int i=0; i<listeEtudiant.size(); i++) {
-			resultatAffectation += "- " + listeEtudiant.get(i).nom;
+			resultatAffectation += "• " + listeEtudiant.get(i).nom;
 			resultatAffectation += " " + listeEtudiant.get(i).prenom;
 			resultatAffectation += " " + listeEtudiant.get(i).idEtudiant + " :\n";
 			for(int j=0; j<listeEtudiant.get(i).affectationS.size(); j++) {
@@ -402,7 +411,7 @@ public class Affectation {
 					int indice = listeEtudiant.get(i).affectationS.get(j);
 					//System.out.println("allAffectation = " + allAffectation.size());
 					UE ue = allAffectation.get(j).optionData.get(indice);
-					resultatAffectation += "\t\t" + ue.getCodeModule() + " " + ue.getName() + "\n";
+					resultatAffectation += "        " + ue.getCodeModule() + " " + ue.getName() + "\n";
 				}
 			}
 
@@ -537,11 +546,18 @@ public class Affectation {
 
 	public void affecter() {
 		//readDataFromFile();
+		
+		System.out.println("init");
 		init();
+		System.out.println("noChoice");
 		noChoice();
+		System.out.println("printListeEtudiant");
 		printListeEtudiant();
+		System.out.println("setupEffectif");
 		setupEffectif();
+		System.out.println("getChoiceforEveryone");
 		getChoiceforEveryone();
+		System.out.println("preventDoubleAffectation");
 		preventDoubleAffectation();
 		getChoiceforEveryone();
 		fillOptionList();
@@ -626,7 +642,7 @@ public class Affectation {
      
     
     
-	public static void createPDF(String etu, String sco, FileOutputStream path) {
+	public static void createPDF(String etu, FileOutputStream path) {
         Document document = new Document(PageSize.A4, 20, 20, 20, 20 );		
         try {
         	PdfWriter.getInstance(document, path);
@@ -638,9 +654,9 @@ public class Affectation {
 		}
 		 
 		document.open();
-		Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 16, BaseColor.BLACK);
+		Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLACK);
 		Chunk chunk = new Chunk("\n\n                                 Résultat des affectations des étudiants :", font);	
-		Font font2 = FontFactory.getFont(FontFactory.defaultEncoding, 16, BaseColor.BLACK);
+		Font font2 = FontFactory.getFont(FontFactory.defaultEncoding, 14, BaseColor.BLACK);
 		Chunk chunk2 = new Chunk(etu, font2);
 		
 		try {
@@ -652,38 +668,44 @@ public class Affectation {
 			e.printStackTrace();
 		}
 		document.close();
+	}
+	
+	public static void createPDFSco(String sco, FileOutputStream path) {
 		
 		/***
 		 * Liste scolarité
 		 */
 		
-//        Document document2 = new Document(PageSize.A4, 20, 20, 20, 20 );		
-//        try {
-//			PdfWriter.getInstance(document2, new FileOutputStream(path + "output" + File.separator + "listeScolarite.pdf"));
-//
-//		} catch (FileNotFoundException | DocumentException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//        
-//        System.out.println("ooooooooooooook");
-//		 
-//		document2.open();
-//		Chunk chunkSco = new Chunk("\n\n                                 Résultat des affectations par UE :", font);	
-//		Chunk chunkSco2 = new Chunk(sco, font2);	
-//
-//		
-//		try {
-//			document2.add(new Paragraph(chunkSco));
-//			document2.add(new Paragraph(chunkSco2));
-//
-//		} catch (DocumentException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		document2.close();
-//		
-//		System.out.println("okok");
+        Document document2 = new Document(PageSize.A4, 20, 20, 20, 20 );		
+        try {
+			PdfWriter.getInstance(document2, path);
+
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        System.out.println("ooooooooooooook");
+		 
+		document2.open();
+		Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLACK);
+		Font font2 = FontFactory.getFont(FontFactory.defaultEncoding, 14, BaseColor.BLACK);
+		
+		Chunk chunkSco = new Chunk("\n\n                                 Résultat des affectations par UE :", font);	
+		Chunk chunkSco2 = new Chunk(sco, font2);	
+
+		
+		try {
+			document2.add(new Paragraph(chunkSco));
+			document2.add(new Paragraph(chunkSco2));
+
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		document2.close();
+		
+		System.out.println("okok");
 	}
 	
 //	

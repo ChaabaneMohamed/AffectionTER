@@ -25,6 +25,8 @@
 	<p><c:out value="${ aff }"></c:out></p>
 	<a href="${ path }">Pdf des résultats</a>
 	
+	<a href="${ pathCSV }">CSV des résultats</a>
+	
 	<footer>
 		<div class="bouton">
 			<p>

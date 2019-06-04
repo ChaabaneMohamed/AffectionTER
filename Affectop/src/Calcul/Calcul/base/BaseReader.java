@@ -143,11 +143,13 @@ public class BaseReader extends BaseHandler {
 	public List<Preference> getStudentPreferences(int numEtudiant){
 		String query = 
 				"SELECT * FROM Preferences where numEtudiant = '"+numEtudiant+"' ORDER BY optionId;" ;
-		//System.out.println(query);
+		System.out.println(query);
 		ResultSet rs = getResultOfQuery(query);
+		System.out.println("1pppp");
 		ArrayList<Preference> pref = new ArrayList<>();
 		try {
 			while (rs.next()) {
+				System.out.println("2pppp");
 				int choice = rs.getInt("choice");
 				int optionId = rs.getInt("optionId");
 				int groupId = rs.getInt("groupId");
@@ -155,6 +157,7 @@ public class BaseReader extends BaseHandler {
 				Preference p = new Preference(groupId, choice, optionId, numEtudiant);
 				pref.add(p);
 			}
+			System.out.println("3pppp");
 			return pref;
 		}
 		catch(Exception e) {
@@ -165,10 +168,13 @@ public class BaseReader extends BaseHandler {
 
 
 	public Map<Integer, ArrayList<Integer>> getPreferencesPerGroupForOneStudent(int numEtudiant){
+		System.out.println("1dddd");
 		Map<Integer, ArrayList<Integer>> result = new HashMap<Integer, ArrayList<Integer>>();
+		System.out.println("2dddd");
 		List<Preference> pref = getStudentPreferences(numEtudiant);
+		System.out.println("3dddd");
 		Map<Integer, List<Option>> UEs = getUEForOneOption();
-
+		System.out.println("4dddd");
 		//System.out.println("nb options = "+UEs.size());
 		for (int i = 0; i < UEs.size(); i++) {
 			List<Option> u = UEs.get(i);
@@ -192,7 +198,9 @@ public class BaseReader extends BaseHandler {
 	}
 
 	public ArrayList<Integer> getChoiceForOneStudentOneGroup(int numEtudiant, int option){
+		System.out.println("1aaa");
 		Map<Integer, ArrayList<Integer>> AllOp = getPreferencesPerGroupForOneStudent(numEtudiant);
+		System.out.println("2aaa");
 		//System.out.println("op = "+option + " choix = " +AllOp.get(option));
 
 		return AllOp.get(option-1);
