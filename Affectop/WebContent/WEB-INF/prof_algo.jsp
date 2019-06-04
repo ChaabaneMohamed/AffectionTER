@@ -18,17 +18,18 @@
 	<div class="progress">
   		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 90%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 	</div>
-	
+	</br>
+	<div class = "jumbotron">
 	<h2>
 		Résultats:
 	</h2>
 	<p><c:out value="${ aff }"></c:out></p>
-	<a href="${ path }">Pdf des résultats</a>
+	<a role ="button" class ="btn btn-outline-success" href="${ path }">Pdf des résultats</a>
 	
-	<a href="${ pathCSV }">CSV des résultats</a>
-	
+	<a role ="button" class ="btn btn-outline-info" href="${ pathCSV }">CSV des résultats</a>
+	</div>
 	<footer>
-		<div class="bouton">
+		<div>
 			<p>
 				<a  class = "btn btn-primary" href="prof_algo?token=${ token }" role ="button">Relancer l'Algorithme</a>
 			</p>
