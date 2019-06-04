@@ -3,6 +3,7 @@ package com.m1affectop.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import Calcul.Calcul.base.BaseWriter;
 import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Preference;
+import Calcul.Calcul.bean.Repeater;
 import Calcul.Calcul.bean.Student;
 
 /**
@@ -58,9 +60,34 @@ public class Eleve_choix extends HttpServlet {
         
 		request.setAttribute("options", basereader.getOptions(2018));
 		//System.out.println(basereader.getOptions(2018).size()+"AAA");
+		Student s = new Student("", "", "", 0, "");
+		
+		
+		ArrayList<Student> a = basereader.getStudents(2017);
+		
+		for (Student student : a) {
+			if(student.getNumEtudiant() == numEtudiant) {
+				s = student;
+				break;
+			}
+		}
 		
 		Map<Student, ArrayList<Option>> repeater = basereader.getRepeater(2018);
+		
+		ArrayList<Option> op = repeater.get(s);
+		
+		if(op != null){
+			for (Option option : op) {
+				System.out.println(option.getNom());
+			}
+		}
+		
+		
 		request.setAttribute("repeater", repeater);
+		
+		//ArrayList<Repeater> optionRep = basereader.getRepeaterStudent(numEtudiant);
+		
+		request.setAttribute("optionRep", op);
 		
 		ArrayList<GroupOp> tmp = basereader.getGroupOptions();
 		

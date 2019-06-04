@@ -90,7 +90,7 @@ public class Affectation {
         nombreUE = optionData.size();
         System.out.println("FIN INIT ______________________________________________________");
 	}
-
+	
 	
 	public void reset() {
 		statAffect = "";

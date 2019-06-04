@@ -50,16 +50,16 @@
 						</thead>
 						<c:forEach var="i" begin="1" end="${ options.size() }">
 							<c:if
-								test="${ groupOp.get(j).contains(options.get(i-1).getId()) }">
-								<p class="option">
-								<tr>
-									<td><label for="option"><c:out
-												value="${ options.get(i-1).nom }" /> </label></td>
-									<td><input type="number" min = "0"
-										name="<c:out value="${ i-1 }"/><c:out value="${j}"></c:out>"
-										value="" required></td>
-								</tr>
-								</p>
+								test="${ groupOp.get(j).contains(options.get(i-1).getId()) && (! optionRep.contains(options.get(i-1)))}">
+									<p class="option">
+									<tr>
+										<td><label for="option"><c:out
+													value="${ options.get(i-1).nom }" /> </label></td>
+										<td><input type="number" min = "0"
+											name="<c:out value="${ i-1 }"/><c:out value="${j}"></c:out>"
+											value="" required></td>
+									</tr>
+									</p>
 							</c:if>
 						</c:forEach>
 					</table>

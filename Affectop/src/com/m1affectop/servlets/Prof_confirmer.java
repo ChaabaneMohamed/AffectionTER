@@ -105,7 +105,7 @@ public class Prof_confirmer extends HttpServlet {
 				send.sendMail();
 				
 				index++;
-				if(index >= 15)
+				if(index >= 10)
 					break;
 			}
 			

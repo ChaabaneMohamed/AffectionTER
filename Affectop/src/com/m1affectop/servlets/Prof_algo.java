@@ -64,8 +64,10 @@ public class Prof_algo extends HttpServlet {
 		Map<Integer, List<Integer>> options = basereader.getGroupOPs(tmp);
 		
 		for (int i = 1; i <= options.size(); i++) {
+			System.out.println("Affectation");
 			if(i==1) {
 				Affectation a = new Affectation(i, allAffectation);
+				
 				a.reset();			
 				a.affecter();
 				allAffectation.add(a);

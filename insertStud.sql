@@ -14,7 +14,7 @@ INSERT INTO Students (year,lastName,firstName,numEtudiant,mail,token,step)
 	VALUES(2017,'SBROGGIO','ilef','15026324','test.test@etu.univ-amu.fr','1238','SIN301');
 
 INSERT INTO Teachers (lastName,firstName,mail,token)
-	VALUES('ProfTest','ProfTest','test.test@etu.univ-amu.fr','1222');
+	VALUES('Jean','Dubois','Jean.Dubois@etu.univ-amu.fr','kbshidm6x3d3ggvvg2kf');
 
 INSERT INTO GroupOp (groupId, optionId)
 	VALUES(1, 1);

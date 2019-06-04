@@ -1,5 +1,6 @@
 package Calcul.Calcul.base;
 
+import java.security.Principal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import Calcul.Calcul.algo.UE;
 import Calcul.Calcul.bean.GroupOp;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Preference;
+import Calcul.Calcul.bean.Repeater;
 import Calcul.Calcul.bean.Student;
 
 /**
@@ -21,6 +23,7 @@ public class BaseReader extends BaseHandler {
 	Map<Integer,Option> options = new HashMap<Integer, Option>();
 	Map<Integer,Student> students = new HashMap<Integer, Student>();
 	Map<Integer,GroupOp> groupOp = new HashMap<Integer, GroupOp>();
+	Map<Integer, Repeater> repeaters = new HashMap<Integer, Repeater>();
 	Statement st;
 
 	private Connection conn;
@@ -302,11 +305,11 @@ public class BaseReader extends BaseHandler {
 
 	public Map<Student, ArrayList<Option>> getRepeater(int year) {
 		String query = "SELECT * FROM Repeaters WHERE optionId IN ("
-				+ "SELECT id FROM Options WHERE year ="+year+") ;";
+				+ "SELECT optionId FROM Options WHERE year ="+year+") ;";
 		ResultSet rs = getResultOfQuery(query);
 
 		Map<Student, ArrayList<Option>> repeaters = new HashMap<Student, ArrayList<Option>>();
-
+		System.out.println("début");
 
 		// iterate through the java resultset
 		try {
@@ -314,15 +317,16 @@ public class BaseReader extends BaseHandler {
 
 				int opt = rs.getInt("optionId");
 				int numEtu = rs.getInt("numEtudiant");
+				System.out.println(numEtu+"ttttttttttttttttt");
 
 				if(!repeaters.containsKey(students.get(numEtu)))
 					repeaters.put(students.get(numEtu), new ArrayList<>());
 				repeaters.put(students.get(numEtu), new ArrayList<>());
-				System.out.println();
-				System.out.println(students.get(numEtu));
-				System.out.println(numEtu);
-				System.out.println(students);
-				System.out.println();
+//				System.out.println();
+//				System.out.println(students.get(numEtu));
+//				System.out.println(numEtu);
+//				System.out.println(students);
+//				System.out.println();
 				repeaters.get(students.get(numEtu)).add(options.get(opt));
 				//System.out.format("%s, %s, %s, %s, %s, %s, %s\n", firstName, lastName,numetu,mail,token,step,year);
 			}
@@ -332,6 +336,30 @@ public class BaseReader extends BaseHandler {
 			return repeaters;
 		}
 		return repeaters;
+	}
+	
+	public ArrayList<Repeater> getRepeaterStudent(int numEtudiant){
+		String query = "SELECT * FROM Repeaters where numEtudiant = "+numEtudiant+" ;";
+		ResultSet rs = getResultOfQuery(query);
+
+		ArrayList<Repeater> result = new ArrayList<>();
+		
+		// iterate through the java resultset
+		try {
+			while (rs.next()) {
+				
+				Integer optionId = rs.getInt("optionId");
+
+				Repeater r = new Repeater(optionId, numEtudiant); 
+				repeaters.put(numEtudiant,r);
+				result.add(r);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return result;
+		}
+		return result;
 	}
 
 	public ArrayList<Option> getOptions(int year){
@@ -466,7 +494,7 @@ public class BaseReader extends BaseHandler {
 	}
 
 	private String teachersQueryBuilder(String col, String token) {
-		return "SELECT " + col + " FROM Teachers WHERE token=" + token + ";";
+		return "SELECT " + col + " FROM Teachers WHERE token='" + token + "';";
 
 	}
 
