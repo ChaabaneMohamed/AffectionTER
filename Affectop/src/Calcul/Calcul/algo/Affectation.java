@@ -616,7 +616,8 @@ public class Affectation {
 	}
 
 	
-    public void buildSatisfaction(){ 
+	public void buildSatisfaction(){ 
+        statAffect += "\nOption numéro " + numAffectation;
         int tabStat [] = new int[this.nombreUE]; 
         for(int i=0; i<this.nombreUE; i++){ 
             tabStat[i] = 0; 
@@ -630,10 +631,10 @@ public class Affectation {
         } 
          
         for(int i=0; i<this.nombreUE; i++){ 
-            statAffect += ("CHOIX n" + i + " : " + tabStat[i] + " sur " + this.nombreEtudiant +  
+            statAffect += ("\nCHOIX n" + i + " : " + tabStat[i] + " sur " + this.nombreEtudiant +  
             " etudiants = " + (tabStat[i]/this.nombreEtudiant)*100 + "% "); 
         } 
-    } 
+    }  
      
      
     public static String getSatisfaction() { 

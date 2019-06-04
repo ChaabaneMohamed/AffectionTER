@@ -26,15 +26,20 @@
 
 	<form method="post" action="prof_mail?token=${ token }">   
 		<h4>Mail pour les élèves</h4>
-		<p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;NUMETU&gt; &lt;LIENPDF&gt; &lt;LIENSCO&gt;</p>
-		<textarea rows="10" cols="150" name="mail_eleve" form="mailform" required="required">${ !empty mail_eleve ? mail_eleve : 'Ecrivez le contenu du mail...' }</textarea>
+		<p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;NUMETU&gt; &lt;LIENPDF&gt;</p>
+		<textarea rows="10" cols="150" name="mail_eleve" form="mailform" required="required">${ !empty mail_eleve ? mail_eleve : "Mail adressé à <NOM> <PRENOM>, numéro étudiant <NUMETU>
+L'attribution de vos options est terminée. Vous trouverez dans le lien suivant les unités d'enseignement qui vous ont été affectées : <LIENPDF>.
+Adressez-vous à vos enseignants si vous avez une question sur l'affectation proposée.
+Mail envoyé automatiquement." }</textarea>
 	    <c:if test="${ result1.size() > 0 }">
     		<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result1 }"><c:out value="${ r }"/> </c:forEach></p>
  		</c:if>
 	    
 	    <h4>Mail pour le secrétariat</h4>
-	    <p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;NUMETU&gt; &lt;LIENPDF&gt;</p>
-	    <textarea rows="10" cols="150" name="mail_secretariat" form="mailform" required="required">${ !empty mail_secretariat ? mail_secretariat : 'Ecrivez le contenu du mail...' }</textarea>
+	    <p>Balise autorisées: &lt;LIENSCO&gt;</p>
+	    <textarea rows="10" cols="150" name="mail_secretariat" form="mailform" required="required">${ !empty mail_secretariat ? mail_secretariat : "Mail adressé au secrétariat.
+Ci-joint le PDF comprenant l'affectation aux UE proposées pour chaque élève : <LIENSCO>
+	    " }</textarea>
 	    <c:if test="${ result2.size() > 0 }">
     		<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result2 }"><c:out value="${ r }"/> </c:forEach></p>
    		</c:if>

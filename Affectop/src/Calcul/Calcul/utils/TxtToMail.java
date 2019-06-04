@@ -115,6 +115,9 @@ public class TxtToMail {
 		case "<LIENPDF>":
 			result = student.getNom();		
 			break;
+		case "<LIENSCO>":
+			result = student.getNom();		
+			break;
 			
 		default:
 			break;
