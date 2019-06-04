@@ -88,28 +88,31 @@ public class TxtToMail {
 		Map<String, ArrayList<String>> map = tagChecker(mail);
 		ArrayList<String> list = map.get("Valid");
 		for (String balise : list) {
+			System.out.println("On remplace "+balise+ " par "+ tagRequest(balise, student));
 			mail = mail.replace(balise, tagRequest(balise, student));
 		}
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println("voici le mail: "+mail);
+		return mail;
 	}
 	
 	private static String tagRequest(String balise, Student student) {
 		String result = "UNKNOWN TAG";
+		
 		switch (balise) {
-		case "NOM":
+		case "<NOM>":
 			result = student.getNom();
 			break;		
-		case "PRENOM":
+		case "<PRENOM>":
 			result = student.getPrenom();		
 			break;
-		case "NUMETU":
+		case "<NUMETU>":
 			result = Integer.toString(student.getNumEtudiant());
 			break;
-		case "LIEN_FORM":
+		case "<LIEN_FORM>":
 			result = "http://localhost:8080/Affectop/eleve_accueil?token=" + student.getToken();
 			break;
-		case "LIENPDF":
+		case "<LIENPDF>":
 			result = student.getNom();		
 			break;
 			

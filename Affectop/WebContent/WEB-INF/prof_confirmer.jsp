@@ -26,9 +26,11 @@
 	</br>
 	<p>Balises autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;NUMETU&gt; &lt;LIEN_FORM&gt;</p> 
 	<form method="post" action="prof_confirmer?token=${ token }" id="mailform" class="mail">   
-		<textarea rows="10" cols="150" name="mail" form="mailform" required="required">${ !empty mail ? mail : 'Ecrivez le contenu du mail...' }</textarea>
+		<textarea rows="10" cols="150" name="mail" form="mailform" required="required">${ !empty mail ? mail : 'Mail adressé à <NOM> <PRENOM>, Numéro étudiant: <NUMETU>.
+Vous avez été contacté par vos enseignants dans le but de choisir vos options pour le prochain semestre.
+Pour ce faire, rendez-vous sur ce site avec le lien suivant : <LIEN_FORM>, et suivez les étapes indiquées.' }</textarea>
 	    </br>
-	    <input class = "btn btn-info" type="submit" type="submit" value="Tester le contenu du mail"/>
+	    <input class = "btn btn-info" type="submit" type="submit" value="Tester le contenu du mail et Envoyer" onclick="return confirm('Etes vous sûr de vouloir envoyer les mails au eleves ?')" role = "button"/>
     </form>
     <c:if test="${ result.size() > 0 }">
     	<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result }"><c:out value="${ r }"/> </c:forEach></p>
@@ -69,7 +71,7 @@
 		<c:if test="${result.size() == 0}">	
 		<div class="bouton_confirm">
 			<p>
-				<a class = "btn btn-primary" type="submit"href="prof_valider?token=${ token }" onclick="return confirm('Etes vous sûr de vouloir envoyer les mails au eleves ?')" role = "button">Envoyer les mails au elèves</a>
+				<a class = "btn btn-primary" type="submit"href="prof_valider?token=${ token }" role = "button">Suivant</a>
 			</p>
 		</div>
 		</c:if>

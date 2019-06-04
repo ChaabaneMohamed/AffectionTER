@@ -26,7 +26,7 @@
 
 	<form method="post" action="prof_mail?token=${ token }">   
 		<h4>Mail pour les élèves</h4>
-		<p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;NUMETU&gt; &lt;LIENPDF&gt;</p>
+		<p>Balise autorisées: &lt;NOM&gt; &lt;PRENOM&gt; &lt;NUMETU&gt; &lt;LIENPDF&gt; &lt;LIENSCO&gt;</p>
 		<textarea rows="10" cols="150" name="mail_eleve" form="mailform" required="required">${ !empty mail_eleve ? mail_eleve : 'Ecrivez le contenu du mail...' }</textarea>
 	    <c:if test="${ result1.size() > 0 }">
     		<p class="erreur">Balise incorrect : <c:forEach var="r" items="${ result1 }"><c:out value="${ r }"/> </c:forEach></p>
@@ -45,7 +45,7 @@
 	<footer>
 		<div class="bouton_confirm ">
 			<p>
-				<a class = "btn btn-primary" href="prof_final?token=${ token }" onclick="return confirm('Etes vous sûr de vouloir envoyer les mails ?')" role="button">Envoyer les mails</a>
+				<a class = "btn btn-primary" href="prof_final?token=${ token }" onclick="return confirm('Etes vous sûr de vouloir envoyer les mails ?')">Envoyer les mails</a>
 			</p>
 		</div>
 	</footer>

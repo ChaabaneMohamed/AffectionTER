@@ -433,7 +433,7 @@ public class BaseReader extends BaseHandler {
 
 	private String studentsQueryBuilder(String col, String token) {
 
-		return "SELECT " + col + " FROM Students WHERE token=" + token + ";";
+		return "SELECT " + col + " FROM Students WHERE token='" + token + "';";
 	}
 
 	private String studentsQueryRequest(String col, String token) {
