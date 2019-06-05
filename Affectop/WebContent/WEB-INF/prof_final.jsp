@@ -19,7 +19,9 @@
   		<div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 		<p>
 		</div>
-			Les mails ont été envoyés.
+			</br>
+			Les mails ont été envoyés.</br>
+			Nous vous remercions d'avoir choisi la plateforme Affectop.
 		</p>
 	</div>
 </body>

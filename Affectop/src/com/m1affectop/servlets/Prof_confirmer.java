@@ -86,7 +86,7 @@ public class Prof_confirmer extends HttpServlet {
 		ArrayList<String> result = res.get("Invalid");
 		ArrayList<String> vresult = res.get("Valid");
 		int index = 0;
-		System.out.println("NB ELEVES = " + eleves.size());
+		//System.out.println("NB ELEVES = " + eleves.size());
 		if(result.size()<=0) {
 			for (Student student : eleves) {
 				
@@ -100,18 +100,16 @@ public class Prof_confirmer extends HttpServlet {
 				
 				// Contenu du mail
 				send.setContenu(customMail);
+				System.out.println(customMail);
 				
 				// Décommenter pour envoyer
-				send.sendMail();
+				//send.sendMail();
 				
 				index++;
 				if(index >= 10)
 					break;
 			}
 			
-//			send.setTo("MASTERINFOLUMINY@gmail.com");
-//			send.setContenu("Test envoie mail Affectop");
-//			send.sendMail();
 		}
 		
 		request.setAttribute("result", result);

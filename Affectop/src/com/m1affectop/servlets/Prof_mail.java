@@ -73,26 +73,70 @@ public class Prof_mail extends HttpServlet {
 		
 		ArrayList<Student> eleves = basereader.getStudents(2017);
 		
-		Map<String, ArrayList<String>> res1 = new HashMap<>();
-		Map<String, ArrayList<String>> res2 = new HashMap<>();
+		Map<String, ArrayList<String>> resEleve = new HashMap<>();
+		Map<String, ArrayList<String>> resSco = new HashMap<>();
+		
+		
+		// Envoie mail aux élèves
+		resEleve = TxtToMail.tagChecker(mail_eleve);
+		
+		// Envoie mail au secrétariat
+		resSco = TxtToMail.tagChecker(mail_secretariat);
 		
 		SendEmailTLS2 send = new SendEmailTLS2("741VhY741");
-		for (Student student : eleves) {
-			String customMail = TxtToMail.custom(student, mail_eleve);
-			send.setTo(student.getMail());
-			send.setContenu(customMail);
-			// mis en commentaire pour pas envoyer les mails
+		
+		ArrayList<String> resultEleve = resEleve.get("Invalid");
+		ArrayList<String> resultSco = resSco.get("Invalid");
+		
+		ArrayList<String> vresultEleve = resEleve.get("Valid");
+		ArrayList<String> vresultSco = resSco.get("Valid");
+		
+		int index = 0;
+		if(resultEleve.size()<=0 && resultSco.size()<= 0) {
+			for (Student student : eleves) {
+				
+				String customMail = TxtToMail.custom(student, mail_eleve);
+				
+				// Pour envoyer au élève
+				//send.setTo(student.getMail());
+				
+				// Pour envoyer a l'adresse de test
+				send.setTo("MASTERINFOLUMINY@gmail.com");
+				
+				// Contenu du mail
+				send.setContenu(customMail);
+				System.out.println(customMail);
+				
+				// Décommenter pour envoyer
+				//send.sendMail();
+				
+				index++;
+				if(index >= 10)
+					break;
+			}
+			
+			
+			String customMailSco = mail_secretariat.replace("<LIENSCO>", "<LIENSCO>");
+			
+			// Pour envoyer au secrétariat
+			//send.setTo(sciences-luminy-scol@univ-amu.fr);
+			
+			// Pour envoyer a l'adresse de test
+			send.setTo("MASTERINFOLUMINY@gmail.com");
+			
+			// Contenu du mail
+			send.setContenu(customMailSco);
+			System.out.println(customMailSco);
+			
+			// Décommenter pour envoyer
 			//send.sendMail();
+			
+			
 		}
 		
-		res1 = TxtToMail.tagChecker(mail_eleve);
-		res2 = TxtToMail.tagChecker(mail_secretariat);
+		request.setAttribute("result1", resultEleve);
+		request.setAttribute("result2", resultSco);
 		
-		ArrayList<String> result1 = res1.get("Invalid");
-		ArrayList<String> result2 = res2.get("Invalid");
-		
-		request.setAttribute("result1", result1);
-		request.setAttribute("result2", result2);
 		if(name == "") {
         	this.getServletContext().getRequestDispatcher("/WEB-INF/error_token.jsp").forward(request, response);
         }

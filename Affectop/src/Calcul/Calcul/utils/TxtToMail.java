@@ -68,7 +68,7 @@ public class TxtToMail {
 		Map<String, ArrayList<String>> map = tagChecker(txt);
 		ArrayList<String> list = map.get("Valid");
 		for (String balise : list) {
-			System.out.println("la balise " + balise + " est valide");
+			//System.out.println("la balise " + balise + " est valide");
 
 			txt = txt.replace(balise, br.tagRequest(balise, token));
 		}
@@ -88,11 +88,11 @@ public class TxtToMail {
 		Map<String, ArrayList<String>> map = tagChecker(mail);
 		ArrayList<String> list = map.get("Valid");
 		for (String balise : list) {
-			System.out.println("On remplace "+balise+ " par "+ tagRequest(balise, student));
+			//System.out.println("On remplace "+balise+ " par "+ tagRequest(balise, student));
 			mail = mail.replace(balise, tagRequest(balise, student));
 		}
 		// TODO Auto-generated method stub
-		System.out.println("voici le mail: "+mail);
+//		System.out.println("voici le mail: "+mail);
 		return mail;
 	}
 	
@@ -113,10 +113,7 @@ public class TxtToMail {
 			result = "http://localhost:8080/Affectop/eleve_accueil?token=" + student.getToken();
 			break;
 		case "<LIENPDF>":
-			result = student.getNom();		
-			break;
-		case "<LIENSCO>":
-			result = student.getNom();		
+			result = "<LIENPDF>";		
 			break;
 			
 		default:
@@ -149,7 +146,7 @@ public class TxtToMail {
 
 		// Si un tag est valide on le stocke dans une arraylist
 		while (matcher.find()) {
-			System.out.println("Valid " + matcher.group(0));
+			//System.out.println("Valid " + matcher.group(0));
 			result.add(matcher.group(0));
 
 		}
@@ -163,9 +160,9 @@ public class TxtToMail {
 		patern = Pattern.compile("<[a-zA-Z0-9]*>");
 		matcher = patern.matcher(s);
 		result = new ArrayList<>();
-		System.out.println("Detection balises invalides");
+		//System.out.println("Detection balises invalides");
 		while (matcher.find()) {
-			System.out.println("invalide " + matcher.group(0));
+			//System.out.println("invalide " + matcher.group(0));
 			result.add(matcher.group(0));
 
 		}

@@ -37,7 +37,7 @@ Pour ce faire, rendez-vous sur ce site avec le lien suivant : <LIEN_FORM>, et su
     </c:if>
     
     <c:if test="${ result.size() == 0 }">
-    	<p class="valid">Contenu Valide, balise reconnu : <c:forEach var="r" items="${ vresult }"><c:out value="${ r }"/> </c:forEach></p>
+    	<p class="valid">Contenu Valide, Email Envoyé </p>
     </c:if>
  	</br>
     <h2>Liste des élèves :</h2>   

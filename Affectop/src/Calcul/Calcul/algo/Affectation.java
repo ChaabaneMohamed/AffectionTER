@@ -590,7 +590,7 @@ public class Affectation {
 	
 	public void createCSV(ArrayList<Affectation> allAff, String path) {
 		try {
-			FileWriter fw = new FileWriter(path + "output" + File.separator + "Affectation.csv");
+			FileWriter fw = new FileWriter(path);
 			for(int i=0; i<listeEtudiant.size(); i++) {
 				fw.write(listeEtudiant.get(i).nom + ";" + listeEtudiant.get(i).prenom + ";" + listeEtudiant.get(i).idEtudiant);
 				for(int j=0; j<listeEtudiant.get(i).affectationS.size(); j++) {
@@ -618,7 +618,7 @@ public class Affectation {
 	
 	public void buildSatisfaction(){ 
         statAffect += "\nOption numéro " + numAffectation;
-        int tabStat [] = new int[this.nombreUE]; 
+        float tabStat [] = new float[this.nombreUE]; 
         for(int i=0; i<this.nombreUE; i++){ 
             tabStat[i] = 0; 
         } 
