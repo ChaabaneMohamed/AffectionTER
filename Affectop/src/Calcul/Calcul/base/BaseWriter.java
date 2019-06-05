@@ -12,8 +12,6 @@ import java.util.Map;
 import Calcul.Calcul.bean.Option;
 import Calcul.Calcul.bean.Preference;
 import Calcul.Calcul.bean.Student;
-import Calcul.Calcul.algorithms.calcul.Result;
-import Calcul.Calcul.algorithms.calcul.Result.Affectation;
 
 
 public class BaseWriter extends BaseHandler{
@@ -80,21 +78,21 @@ public class BaseWriter extends BaseHandler{
 	}
 	
 	
-	public void writeResults(int year,Result r ){
-		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO Results (optionId, numEtudiant)\n"); 
-		try {
-			for (Affectation aff : r.results) {
-				for(Option opt : aff.options)
-					query.append("(" +opt.id+" "+aff.s.getNumEtudiant()+"),\n"); 
-			}
-			query.replace (query.length()-2,query.length()-1,";");
-			System.out.println(query.toString());
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}	
+//	public void writeResults(int year,Result r ){
+//		StringBuilder query = new StringBuilder();
+//		query.append("INSERT INTO Results (optionId, numEtudiant)\n"); 
+//		try {
+//			for (Affectation aff : r.results) {
+//				for(Option opt : aff.options)
+//					query.append("(" +opt.id+" "+aff.s.getNumEtudiant()+"),\n"); 
+//			}
+//			query.replace (query.length()-2,query.length()-1,";");
+//			System.out.println(query.toString());
+//		}
+//		catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}	
 
 	public void writeStudent(int year,
 							String lastName,
